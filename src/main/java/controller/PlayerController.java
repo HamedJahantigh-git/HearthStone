@@ -75,16 +75,7 @@ public class PlayerController {
         return player;
     }
 
-    public void savePlayerToFile(Player player) {
-        try {
-            Writer writer = new FileWriter(
-                    FilesPath.playerDataPath + "/" + player.getUserName() + ".txt");
-            gson.toJson(player, writer);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public void deleteAccount(Player player) {
         player.setDeletePlayer(true);
@@ -113,7 +104,7 @@ public class PlayerController {
 
     private static boolean checkExistUsername(String username) {
         boolean answer = false;
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result;
         result = FileManagement.allFileNameInPath(FilesPath.playerDataPath);
         String compare;
         for (int i = 0; i < result.size(); i++) {

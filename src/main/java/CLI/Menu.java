@@ -1,6 +1,7 @@
 package CLI;
 
 import controller.CardController;
+import controller.FileManagement;
 import controller.PlayerController;
 import controller.StoreController;
 import initializer.InitCLI;
@@ -83,7 +84,7 @@ public class Menu {
 
     public static void userMenu(Player player, PlayerController playerController) {
         while (true) {
-            playerController.savePlayerToFile(player);
+            FileManagement.savePlayerToFile(player);
             String[] description = {" - cards management", " - store",
                     " - delete account", " - sign out", " - help", " - exit game"};
             InitCLI.frameCreator(" Account Menu->" + player.getUserName(), description);
@@ -106,7 +107,7 @@ public class Menu {
                         System.out.println(" - Oops!! your password is wrong.");
                         System.out.println("   Please try again.");
                     } else {
-                        playerController.savePlayerToFile(player);
+                        FileManagement.savePlayerToFile(player);
                         PlayerLogs.addToLogBody("delete_account", "account_deleted_successful", player);
                         playerController.deleteAccount(player);
                         System.out.println(" - Account deleted successful");
@@ -115,7 +116,7 @@ public class Menu {
                     break;
                 case "sign out":
                     PlayerLogs.addToLogBody("sign_out", "user_exit", player);
-                    playerController.savePlayerToFile(player);
+                    FileManagement.savePlayerToFile(player);
                     return;
                 case "help":
                     PlayerLogs.addToLogBody("navigate", "help", player);
@@ -123,7 +124,7 @@ public class Menu {
                     break;
                 case "exit game":
                     PlayerLogs.addToLogBody("sign_out", "user_exit_game:user_menu", player);
-                    playerController.savePlayerToFile(player);
+                    FileManagement.savePlayerToFile(player);
                     exitGame();
                     break;
                 default:
@@ -135,7 +136,7 @@ public class Menu {
 
     public static void cardsManagementMenu(Player player, PlayerController playerController) {
         while (true) {
-            playerController.savePlayerToFile(player);
+            FileManagement.savePlayerToFile(player);
             String[] description = {" - my heroes", " - current hero", " - change current hero",
                     " - show all cards", " - my hero cards", " - card can add hero", " - add hero card",
                     " - delete hero card", " - back", " - help", " - exit game"};
@@ -265,7 +266,7 @@ public class Menu {
                     break;
                 case "exit game":
                     PlayerLogs.addToLogBody("sign_out", "user_exit_game:card_managment", player);
-                    playerController.savePlayerToFile(player);
+                    FileManagement.savePlayerToFile(player);
                     exitGame();
                     break;
                 default:
@@ -278,7 +279,7 @@ public class Menu {
     public static void storeMenu(Player player, PlayerController playerController) {
         String cardName;
         while (true) {
-            playerController.savePlayerToFile(player);
+            FileManagement.savePlayerToFile(player);
             String[] description = {" - can buy", " - can sell", " - card sale", " - buy card"
                     , " - wallet", " - back", " - help", " - exit game"};
             InitCLI.frameCreator(player.getUserName() + "->Store Menu", description);
@@ -341,7 +342,7 @@ public class Menu {
                     break;
                 case "exit game":
                     PlayerLogs.addToLogBody("sign_out", "user_exit_game:store", player);
-                    playerController.savePlayerToFile(player);
+                    FileManagement.savePlayerToFile(player);
                     exitGame();
                     break;
                 default:
