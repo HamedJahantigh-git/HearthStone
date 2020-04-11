@@ -18,7 +18,6 @@ public class InitCLI {
         System.out.println();
     }
 
-
     public static void frameCreator(String title, String[] str) {
         int length = screenLength;
         System.out.println(org.apache.commons.lang3.StringUtils.rightPad("/", length - 1, "*") + "\\");
@@ -51,4 +50,5 @@ public class InitCLI {
         s = new File(FilesPath.weaponDataPath);
         s.mkdir();
     }
+
 }

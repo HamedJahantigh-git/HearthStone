@@ -1,12 +1,10 @@
 import CLI.CLI;
-import logs.PlayerLogs;
+import userInterfaces.AccountFrame;
 
 
 public class Main {
     public static void main(String[] args) {
-        String[] s = new String[0];
+        AccountFrame accountFrame = new AccountFrame();
 
-        CLI game = new CLI();
-        game.startGame();
     }
 }

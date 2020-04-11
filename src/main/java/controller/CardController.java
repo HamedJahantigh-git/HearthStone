@@ -67,7 +67,7 @@ public class CardController {
             for (String s : minionsName) {
                 try (Reader reader = new FileReader(FilesPath.minionDataPath + "/" + s)) {
                     minionsCards.add(gson.fromJson(reader, Minion.class));
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
             return minionsCards;
@@ -79,7 +79,7 @@ public class CardController {
             for (String s : spellsName) {
                 try (Reader reader = new FileReader(FilesPath.spellDataPath + "/" + s)) {
                     spellsCards.add(gson.fromJson(reader, Spell.class));
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
             return spellsCards;

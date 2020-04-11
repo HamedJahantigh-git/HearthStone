@@ -6,7 +6,6 @@ import controller.PlayerController;
 import controller.StoreController;
 import initializer.InitCLI;
 import logs.PlayerLogs;
-import model.Player;
 import model.card.Card;
 
 import java.util.ArrayList;
@@ -40,9 +39,9 @@ public class Menu {
     public static void accountMenu() {
         String username;
         String password;
-        Player player;
+        boolean whileCondition = true;
         PlayerController playerController;
-        while (true) {
+        while (whileCondition) {
             String[] description = {" - sign in", " - sign up",
                     " - help", " - exit game"};
             InitCLI.frameCreator("Account Menu", description);
@@ -53,27 +52,28 @@ public class Menu {
                     username = scanner.nextLine();
                     System.out.println("- Enter Password: ");
                     password = scanner.nextLine();
-                    playerController = new PlayerController(username, password);
-                    player = playerController.signInPlayer();
-                    PlayerLogs.addToLogBody("sign_in", "go_to_user_menu", player);
-                    userMenu(player, playerController);
+                    playerController = new PlayerController();
+                    playerController.signInPlayer(username, password);
+                    PlayerLogs.addToLogBody("sign_in", "go_to_user_menu", playerController.getPlayer());
+                    userMenu(playerController);
                     break;
                 case "sign up":
                     System.out.println("- Enter new Username: ");
                     username = scanner.nextLine();
                     System.out.println("- Enter new Password: ");
                     password = scanner.nextLine();
-                    playerController = new PlayerController(username, password);
-                    player = playerController.signUpPlayer();
-                    PlayerLogs.creatLogFile(player);
-                    PlayerLogs.addToLogBody("sign_up", "creat_new_account", player);
+                    playerController = new PlayerController();
+                    playerController.signUpPlayer(username, password);
+                    PlayerLogs.creatLogFile(playerController.getPlayer());
+                    PlayerLogs.addToLogBody("sign_up", "creat_new_account", playerController.getPlayer());
                     System.out.println(" - Your account created successfully.");
-                    userMenu(player, playerController);
+                    userMenu(playerController);
                     break;
                 case "help":
                     helpMenu();
                     break;
                 case "exit game":
+                    whileCondition = false;
                     exitGame();
                     break;
                 default:
@@ -82,102 +82,111 @@ public class Menu {
         }
     }
 
-    public static void userMenu(Player player, PlayerController playerController) {
+    public static void userMenu(PlayerController playerController) {
         while (true) {
-            FileManagement.savePlayerToFile(player);
+            FileManagement.savePlayerToFile(playerController.getPlayer());
             String[] description = {" - cards management", " - store",
                     " - delete account", " - sign out", " - help", " - exit game"};
-            InitCLI.frameCreator(" Account Menu->" + player.getUserName(), description);
+            InitCLI.frameCreator(" Account Menu->" + playerController.getPlayer().getUserName(), description);
             command = scanner.nextLine();
             switch (command) {
                 case "cards management":
-                    PlayerLogs.addToLogBody("navigate", "cards_managment", player);
-                    cardsManagementMenu(player, playerController);
+                    PlayerLogs.addToLogBody("navigate", "cards_managment", playerController.getPlayer());
+                    cardsManagementMenu(playerController);
                     break;
                 case "store":
-                    PlayerLogs.addToLogBody("navigate", "store", player);
-                    storeMenu(player, playerController);
+                    PlayerLogs.addToLogBody("navigate", "store", playerController.getPlayer());
+                    storeMenu(playerController);
                     break;
                 case "delete account":
                     String checkPassword;
                     System.out.println(" - Enter your password:");
                     checkPassword = scanner.nextLine();
-                    if (!player.getPassword().equals(checkPassword)) {
-                        PlayerLogs.addToLogBody("delete_account", "enter_wrong_password", player);
+                    if (!playerController.getPlayer().getPassword().equals(checkPassword)) {
+                        PlayerLogs.addToLogBody("delete_account", "enter_wrong_password",
+                                playerController.getPlayer());
                         System.out.println(" - Oops!! your password is wrong.");
                         System.out.println("   Please try again.");
                     } else {
-                        FileManagement.savePlayerToFile(player);
-                        PlayerLogs.addToLogBody("delete_account", "account_deleted_successful", player);
-                        playerController.deleteAccount(player);
+                        FileManagement.savePlayerToFile(playerController.getPlayer());
+                        PlayerLogs.addToLogBody("delete_account", "account_deleted_successful",
+                                playerController.getPlayer());
+                        playerController.deleteAccount(playerController.getPlayer());
                         System.out.println(" - Account deleted successful");
                         return;
                     }
                     break;
                 case "sign out":
-                    PlayerLogs.addToLogBody("sign_out", "user_exit", player);
-                    FileManagement.savePlayerToFile(player);
+                    PlayerLogs.addToLogBody("sign_out", "user_exit", playerController.getPlayer());
+                    FileManagement.savePlayerToFile(playerController.getPlayer());
                     return;
                 case "help":
-                    PlayerLogs.addToLogBody("navigate", "help", player);
+                    PlayerLogs.addToLogBody("navigate", "help", playerController.getPlayer());
                     helpMenu();
                     break;
                 case "exit game":
-                    PlayerLogs.addToLogBody("sign_out", "user_exit_game:user_menu", player);
-                    FileManagement.savePlayerToFile(player);
+                    PlayerLogs.addToLogBody("sign_out", "user_exit_game:user_menu",
+                            playerController.getPlayer());
+                    FileManagement.savePlayerToFile(playerController.getPlayer());
                     exitGame();
                     break;
                 default:
-                    PlayerLogs.addToLogBody("wrong_command", "user_menu:" + command, player);
+                    PlayerLogs.addToLogBody("wrong_command", "user_menu:" + command,
+                            playerController.getPlayer());
                     System.out.println("- Oops!! your command is wrong.");
             }
         }
     }
 
-    public static void cardsManagementMenu(Player player, PlayerController playerController) {
+    public static void cardsManagementMenu(PlayerController playerController) {
         while (true) {
-            FileManagement.savePlayerToFile(player);
+            FileManagement.savePlayerToFile(playerController.getPlayer());
             String[] description = {" - my heroes", " - current hero", " - change current hero",
                     " - show all cards", " - my hero cards", " - card can add hero", " - add hero card",
                     " - delete hero card", " - back", " - help", " - exit game"};
-            InitCLI.frameCreator(player.getUserName() + "->Cards Management", description);
+            InitCLI.frameCreator(playerController.getPlayer().getUserName() + "->Cards Management", description);
             String cardName;
             command = scanner.nextLine();
             switch (command) {
                 case "my heroes":
                     System.out.print(" - Your heroes are: ");
-                    for (int i = 0; i < player.getPlayerHeroes().size(); i++) {
-                        System.out.print("'" + player.getPlayerHeroes().get(i).getHeroName() + "' ");
+                    for (int i = 0; i < playerController.getPlayer().getPlayerHeroes().size(); i++) {
+                        System.out.print("'" + playerController.getPlayer().getPlayerHeroes().get(i).getHeroName() + "' ");
                     }
-                    PlayerLogs.addToLogBody("list", "heroes:all", player);
+                    PlayerLogs.addToLogBody("list", "heroes:all", playerController.getPlayer());
                     System.out.println();
                     break;
                 case "current hero":
-                    System.out.println(" - Your current hero is: '" + player.getCurrentHero().getHeroName() + "'");
+                    System.out.println(" - Your current hero is: '" +
+                            playerController.getPlayer().getCurrentHero().getHeroName() + "'");
                     PlayerLogs.addToLogBody("list",
-                            "current_hero:" + player.getCurrentHero().getHeroName(), player);
+                            "current_hero:" + playerController.getPlayer().getCurrentHero().getHeroName(),
+                            playerController.getPlayer());
                     break;
                 case "change current hero":
-                    System.out.println(" - Your current hero is: '" + player.getCurrentHero().getHeroName() + "'");
+                    System.out.println(" - Your current hero is: '" +
+                            playerController.getPlayer().getCurrentHero().getHeroName() + "'");
                     System.out.print(" - Your heroes can select: ");
-                    for (int i = 0; i < player.getPlayerHeroes().size(); i++) {
-                        System.out.print("'" + player.getPlayerHeroes().get(i).getHeroName() + "' ");
+                    for (int i = 0; i < playerController.getPlayer().getPlayerHeroes().size(); i++) {
+                        System.out.print("'" + playerController.getPlayer().getPlayerHeroes().get(i).getHeroName() + "' ");
                     }
                     System.out.println();
                     boolean check = true;
                     while (check) {
                         String newHero = scanner.nextLine();
-                        for (int i = 0; i < player.getPlayerHeroes().size(); i++) {
-                            if (player.getPlayerHeroes().get(i).getHeroName().equals(newHero)) {
-                                player.setCurrentHero(player.getPlayerHeroes().get(i));
+                        for (int i = 0; i < playerController.getPlayer().getPlayerHeroes().size(); i++) {
+                            if (playerController.getPlayer().getPlayerHeroes().get(i).getHeroName().equals(newHero)) {
+                                playerController.getPlayer().setCurrentHero(playerController.getPlayer().getPlayerHeroes().get(i));
                                 System.out.println(" - your current player change successful.");
                                 PlayerLogs.addToLogBody("change", "current_hero_to:"
-                                        + player.getCurrentHero().getHeroName(), player);
+                                                + playerController.getPlayer().getCurrentHero().getHeroName(),
+                                        playerController.getPlayer());
                                 check = false;
                             }
                         }
                         if (check) {
-                            PlayerLogs.addToLogBody("wrong_command", "change_current_hero:" + newHero, player);
+                            PlayerLogs.addToLogBody("wrong_command", "change_current_hero:" +
+                                    newHero, playerController.getPlayer());
                             System.out.println("- Oops!! your command is wrong.");
                             System.out.println("   Please try again.");
                         }
@@ -186,14 +195,15 @@ public class Menu {
                 case "show all cards":
                     ArrayList<Card> allCards;
                     System.out.println(" - All cards of you are: ");
-                    allCards = playerController.playerAllCards(player);
+                    allCards = playerController.playerAllCards(playerController.getPlayer());
 
                     for (Card allCard : allCards) System.out.println("'" + allCard.getName() + "' ");
 
-                    PlayerLogs.addToLogBody("list", "player_cards:all", player);
+                    PlayerLogs.addToLogBody("list", "player_cards:all", playerController.getPlayer());
                     break;
                 case "my hero cards":
-                    String[] heroCardsName = CardController.cardsName(player.getCurrentHero().getHeroCards());
+                    String[] heroCardsName = CardController.cardsName(
+                            playerController.getPlayer().getCurrentHero().getHeroCards());
                     int counter = 1;
                     for (int i = 0; i < heroCardsName.length - 1; i++) {
                         if (heroCardsName[i].compareTo(heroCardsName[i + 1]) == 0) {
@@ -208,38 +218,45 @@ public class Menu {
                     } else {
                         System.out.println(" - any cards found.");
                     }
-                    PlayerLogs.addToLogBody("list", "player_hero_cards:all", player);
+                    PlayerLogs.addToLogBody("list", "player_hero_cards:all",
+                            playerController.getPlayer());
                     break;
                 case "card can add hero":
                     System.out.println(" - Cards that can be add to current hero: ");
-                    for (int i = 0; i < player.getFreePlayerCards().size(); i++) {
-                        if ((player.getFreePlayerCards().get(i).getCardClass().equals(player.getCurrentHero().getHeroName())
-                                || player.getFreePlayerCards().get(i).getCardClass().equals("Neutral"))
-                                && (player.getCurrentHero().getHeroCards().size() < 16)) {
-                            String[] heroCardsNames = CardController.cardsName(player.getCurrentHero().getHeroCards());
+                    for (int i = 0; i < playerController.getPlayer().getFreePlayerCards().size(); i++) {
+                        if ((playerController.getPlayer().getFreePlayerCards().get(i).getCardClass().equals(
+                                playerController.getPlayer().getCurrentHero().getHeroName())
+                                || playerController.getPlayer().getFreePlayerCards().get(i).getCardClass().equals("Neutral"))
+                                && (playerController.getPlayer().getCurrentHero().getHeroCards().size() < 16)) {
+                            String[] heroCardsNames = CardController.cardsName(
+                                    playerController.getPlayer().getCurrentHero().getHeroCards());
                             int counter2 = 0;
                             for (String cardsName : heroCardsNames) {
-                                if (cardsName.compareTo(player.getFreePlayerCards().get(i).getName()) == 0) {
+                                if (cardsName.compareTo(
+                                        playerController.getPlayer().getFreePlayerCards().get(i).getName()) == 0) {
                                     counter2++;
                                 }
                             }
                             if (counter2 < 2) {
-                                System.out.println("\t '" + player.getFreePlayerCards().get(i).getName() + "' ");
+                                System.out.println("\t '" +
+                                        playerController.getPlayer().getFreePlayerCards().get(i).getName() + "' ");
                             }
                         }
                     }
-                    PlayerLogs.addToLogBody("list", "card_can_add_hero:all", player);
+                    PlayerLogs.addToLogBody("list", "card_can_add_hero:all",
+                            playerController.getPlayer());
                     break;
                 case "add hero card":
                     System.out.println(" - Enter yor card name: ");
                     cardName = scanner.nextLine();
                     try {
-                        CardController.addHeroCard(cardName, player);
+                        CardController.addHeroCard(cardName, playerController.getPlayer());
                         System.out.println(" - Your card add to current hero cards successful.");
-                        PlayerLogs.addToLogBody("add", "hero_card:" + cardName, player);
+                        PlayerLogs.addToLogBody("add", "hero_card:" + cardName,
+                                playerController.getPlayer());
                     } catch (Exception e) {
                         PlayerLogs.addToLogBody("wrong_command", "add_hero_card:" + cardName + ":"
-                                + player.getCurrentHero().getHeroName(), player);
+                                + playerController.getPlayer().getCurrentHero().getHeroName(), playerController.getPlayer());
                         System.out.println(" - this name not valid. (maybe more 2 same card add to hero cards");
                         System.out.println("   or card class not valid.)");
                     }
@@ -248,72 +265,78 @@ public class Menu {
                     System.out.println(" - Enter yor card name: ");
                     cardName = scanner.nextLine();
                     try {
-                        CardController.deleteHeroCard(cardName, player);
+                        CardController.deleteHeroCard(cardName, playerController.getPlayer());
                         System.out.println(" - Your hero card deleted successful.");
-                        PlayerLogs.addToLogBody("delete", "hero_card:" + cardName, player);
+                        PlayerLogs.addToLogBody("delete", "hero_card:" + cardName,
+                                playerController.getPlayer());
                     } catch (Exception e) {
-                        PlayerLogs.addToLogBody("wrong_command", "delete_hero_card:" + cardName, player);
+                        PlayerLogs.addToLogBody("wrong_command", "delete_hero_card:" + cardName,
+                                playerController.getPlayer());
                         System.out.println(" - this name not valid.");
                     }
                     break;
 
                 case "back":
-                    PlayerLogs.addToLogBody("navigate", "user_menu", player);
+                    PlayerLogs.addToLogBody("navigate", "user_menu", playerController.getPlayer());
                     return;
                 case "help":
-                    PlayerLogs.addToLogBody("navigate", "help", player);
+                    PlayerLogs.addToLogBody("navigate", "help", playerController.getPlayer());
                     helpMenu();
                     break;
                 case "exit game":
-                    PlayerLogs.addToLogBody("sign_out", "user_exit_game:card_managment", player);
-                    FileManagement.savePlayerToFile(player);
+                    PlayerLogs.addToLogBody("sign_out", "user_exit_game:card_managment",
+                            playerController.getPlayer());
+                    FileManagement.savePlayerToFile(playerController.getPlayer());
                     exitGame();
                     break;
                 default:
                     System.out.println("- Oops!! your command is wrong.");
-                    PlayerLogs.addToLogBody("wrong_command", "cards_management:" + command, player);
+                    PlayerLogs.addToLogBody("wrong_command", "cards_management:" + command,
+                            playerController.getPlayer());
             }
         }
     }
 
-    public static void storeMenu(Player player, PlayerController playerController) {
+    public static void storeMenu(PlayerController playerController) {
         String cardName;
         while (true) {
-            FileManagement.savePlayerToFile(player);
+            FileManagement.savePlayerToFile(playerController.getPlayer());
             String[] description = {" - can buy", " - can sell", " - card sale", " - buy card"
                     , " - wallet", " - back", " - help", " - exit game"};
-            InitCLI.frameCreator(player.getUserName() + "->Store Menu", description);
+            InitCLI.frameCreator(playerController.getPlayer().getUserName() + "->Store Menu", description);
             command = scanner.nextLine();
             switch (command) {
                 case "can buy":
                     String[] s;
                     System.out.println(" - Spells that can be bought: ");
-                    s = StoreController.canBuy.canBuySpell(player);
+                    s = StoreController.canBuy.canBuySpell(playerController.getPlayer());
                     for (String value : s) System.out.println("\t '" + value + "' ");
                     System.out.println(" - Minions that can be bought: ");
-                    s = StoreController.canBuy.canBuyMinion(player);
+                    s = StoreController.canBuy.canBuyMinion(playerController.getPlayer());
                     for (String value : s) System.out.println("\t '" + value + "' ");
-                    PlayerLogs.addToLogBody("list", "can_buy_card:all", player);
+                    PlayerLogs.addToLogBody("list", "can_buy_card:all", playerController.getPlayer());
                     break;
                 case "can sell":
                     System.out.println(" - Your cards can be sold: ");
                     String str;
                     str = "";
-                    for (int i = 0; i < player.getFreePlayerCards().size(); i++) {
-                        str = str.concat("'" + player.getFreePlayerCards().get(i).getName() + "'");
-                        System.out.println("\t '" + player.getFreePlayerCards().get(i).getName() + "' ");
+                    for (int i = 0; i < playerController.getPlayer().getFreePlayerCards().size(); i++) {
+                        str = str.concat("'" + playerController.getPlayer().getFreePlayerCards().get(i).getName() + "'");
+                        System.out.println("\t '" + playerController.getPlayer().getFreePlayerCards().get(i).getName() + "' ");
                     }
-                    PlayerLogs.addToLogBody("list", "can_sell_card:[" + str + "]", player);
+                    PlayerLogs.addToLogBody("list", "can_sell_card:[" + str + "]",
+                            playerController.getPlayer());
                     break;
                 case "card sale":
                     System.out.println(" - Enter yor card name: ");
                     cardName = scanner.nextLine();
                     try {
-                        StoreController.cardSell(cardName, player);
+                        StoreController.cardSell(cardName, playerController.getPlayer());
                         System.out.println(" - Sales completed successfully. ");
-                        PlayerLogs.addToLogBody("sell", "card:" + cardName, player);
+                        PlayerLogs.addToLogBody("sell", "card:" + cardName, playerController.getPlayer());
                     } catch (Exception e) {
-                        PlayerLogs.addToLogBody("wrong_command", "sell_card:" + command, player);
+                        PlayerLogs.addToLogBody("wrong_command", "sell_card:" + command,
+                                playerController.getPlayer());
                         System.out.println(" - Your card can't be sold or name is wrong.");
                     }
                     break;
@@ -321,33 +344,37 @@ public class Menu {
                     System.out.println(" - Enter yor card name: ");
                     cardName = scanner.nextLine();
                     try {
-                        StoreController.buyCard(cardName, player);
+                        StoreController.buyCard(cardName, playerController.getPlayer());
                         System.out.println(" - Purchase successful. ");
-                        PlayerLogs.addToLogBody("buy", "card:" + cardName, player);
+                        PlayerLogs.addToLogBody("buy", "card:" + cardName, playerController.getPlayer());
                     } catch (Exception e) {
-                        PlayerLogs.addToLogBody("wrong_command", "buy_card:" + command, player);
+                        PlayerLogs.addToLogBody("wrong_command", "buy_card:" +
+                                command, playerController.getPlayer());
                         System.out.println(" - card can't be bought (your card name is wrong or your money is't enough.)");
                     }
                     break;
                 case "wallet":
-                    System.out.println(" - Your asset: " + player.getMoney() + " $");
-                    PlayerLogs.addToLogBody("list", "money:" + player.getMoney(), player);
+                    System.out.println(" - Your asset: " + playerController.getPlayer().getMoney() + " $");
+                    PlayerLogs.addToLogBody("list", "money:" +
+                            playerController.getPlayer().getMoney(), playerController.getPlayer());
                     break;
                 case "back":
-                    PlayerLogs.addToLogBody("navigate", "user_menu", player);
+                    PlayerLogs.addToLogBody("navigate", "user_menu", playerController.getPlayer());
                     return;
                 case "help":
-                    PlayerLogs.addToLogBody("navigate", "help", player);
+                    PlayerLogs.addToLogBody("navigate", "help", playerController.getPlayer());
                     helpMenu();
                     break;
                 case "exit game":
-                    PlayerLogs.addToLogBody("sign_out", "user_exit_game:store", player);
-                    FileManagement.savePlayerToFile(player);
+                    PlayerLogs.addToLogBody("sign_out", "user_exit_game:store",
+                            playerController.getPlayer());
+                    FileManagement.savePlayerToFile(playerController.getPlayer());
                     exitGame();
                     break;
                 default:
                     System.out.println("- Oops!! your command is wrong.");
-                    PlayerLogs.addToLogBody("wrong_command", "store:" + command, player);
+                    PlayerLogs.addToLogBody("wrong_command", "store:" +
+                            command, playerController.getPlayer());
             }
         }
     }

@@ -1,6 +1,7 @@
 package model;
 
 import defaults.ModelDefault;
+import logs.PlayerLogs;
 import model.card.Card;
 import model.hero.Hero;
 
@@ -15,8 +16,8 @@ public class Player {
     private Hero currentHero;
     private Date registerTime;
     private boolean deletePlayer;
-    ArrayList<Hero> playerHeroes = new ArrayList<Hero>();
-    ArrayList<Card> freePlayerCards = new ArrayList<>();
+    private ArrayList<Hero> playerHeroes = new ArrayList<Hero>();
+    private ArrayList<Card> freePlayerCards = new ArrayList<>();
 
 
     {

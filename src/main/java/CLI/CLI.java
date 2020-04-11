@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class CLI {
 
-    public static void startGame() {
+    public static void startCLI() {
         InitCLI.createNeedsFolder();
         InitCards.initSpell();
         InitCards.initMinion();
@@ -29,5 +29,6 @@ public class CLI {
         result += name.size();
         return result;
     }
+
 
 }

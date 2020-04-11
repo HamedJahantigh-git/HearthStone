@@ -18,20 +18,18 @@ import java.util.Date;
 
 
 public class PlayerController {
-    private String username;
-    private String password;
+    private Player player;
     Gson gson = new GsonBuilder().create();
 
-    public PlayerController(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Player getPlayer() {
+        return player;
     }
 
-    public Player signInPlayer() {
-        Player player = null;
+    public void signInPlayer(String username, String password) {
         try {
             if (!FileManagement.allFileNameInPath(
                     FilesPath.playerDataPath).contains(username + ".txt")) {
+                System.out.println("aaa");
                 throw new Exception("not valid");
             }
             player = creatPlayerFromFile(
@@ -46,36 +44,30 @@ public class PlayerController {
             System.out.println("  Please try again.");
             Menu.accountMenu();
         }
-        return player;
     }
 
-    public Player signUpPlayer() {
+    public void signUpPlayer(String username, String password) {
         Date registerTime = new Date();
-
-        Player player = new Player(this.username, this.password, registerTime,
-                CLI.numberAllPlayerSignIn());
         try {
-            if (PlayerController.checkExistUsername(player.getUserName()))
+            if (checkExistUsername(username))
                 throw new Exception("not valid.");
+            player = new Player(username, password, registerTime,
+                    CLI.numberAllPlayerSignIn());
             try {
                 Writer writer = new FileWriter(
-                        FilesPath.playerDataPath + "/" + this.username + ".txt");
+                        FilesPath.playerDataPath + "/" + username + ".txt");
                 gson.toJson(player, writer);
                 writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         } catch (Exception e) {
             System.out.println("- This username is repeated!!!");
             System.out.println("  Please try again.");
             System.out.println();
             Menu.accountMenu();
         }
-        return player;
     }
-
-
 
     public void deleteAccount(Player player) {
         player.setDeletePlayer(true);
@@ -97,12 +89,12 @@ public class PlayerController {
         Gson gson = new Gson();
         try (Reader reader = new FileReader(path + "/" + name + ".txt")) {
             player = gson.fromJson(reader, Player.class);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return player;
     }
 
-    private static boolean checkExistUsername(String username) {
+    private boolean checkExistUsername(String username) {
         boolean answer = false;
         ArrayList<String> result;
         result = FileManagement.allFileNameInPath(FilesPath.playerDataPath);
