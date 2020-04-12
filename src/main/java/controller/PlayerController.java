@@ -1,18 +1,13 @@
 package controller;
 
-
-import CLI.CLI;
-import CLI.Menu;
+import CLI.CLIMenu;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import defaults.FilesPath;
-import logs.PlayerLogs;
 import model.Player;
 import model.card.Card;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -37,12 +32,12 @@ public class PlayerController {
             if (!player.getPassword().equals(password)) {
                 System.out.println(" - Your password is wrong.");
                 System.out.println("  Please try again.");
-                Menu.accountMenu();
+                CLIMenu.getInstance().accountMenu();
             }
         } catch (Exception e) {
             System.out.println("- Your username is wrong!!");
             System.out.println("  Please try again.");
-            Menu.accountMenu();
+            CLIMenu.getInstance().accountMenu();
         }
     }
 
@@ -52,7 +47,7 @@ public class PlayerController {
             if (checkExistUsername(username))
                 throw new Exception("not valid.");
             player = new Player(username, password, registerTime,
-                    CLI.numberAllPlayerSignIn());
+                    numberAllPlayerSignIn());
             try {
                 Writer writer = new FileWriter(
                         FilesPath.playerDataPath + "/" + username + ".txt");
@@ -65,8 +60,9 @@ public class PlayerController {
             System.out.println("- This username is repeated!!!");
             System.out.println("  Please try again.");
             System.out.println();
-            Menu.accountMenu();
+            CLIMenu.getInstance().accountMenu();
         }
+
     }
 
     public void deleteAccount(Player player) {
@@ -113,6 +109,16 @@ public class PlayerController {
         for (int i = 0; i < player.getPlayerHeroes().size(); i++) {
             result.addAll(player.getPlayerHeroes().get(i).getHeroCards());
         }
+        return result;
+    }
+
+    public static int numberAllPlayerSignIn() {
+        int result;
+        ArrayList<String> name;
+        name = FileManagement.allFileNameInPath(FilesPath.playerDataPath);
+        result = name.size();
+        name = FileManagement.allFileNameInPath(FilesPath.deletePlayerDataPath);
+        result += name.size();
         return result;
     }
 

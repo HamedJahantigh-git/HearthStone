@@ -1,3 +1,5 @@
+package CLI;
+
 import controller.CardController;
 import controller.FileManagement;
 import controller.PlayerController;
