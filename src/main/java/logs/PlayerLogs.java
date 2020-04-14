@@ -43,10 +43,12 @@ public class PlayerLogs {
                     new FileWriter(FilesPath.playerLogsPath + "/" + player.getUserName() + "-"
                             + String.valueOf(player.getId()) + ".log", true));
             writer.newLine();
-            writer.write(event + " " + dateFormat.format(date) + " " + eventDescription);
+            writer.write("\"" + event + "\" " + dateFormat.format(date) + " ---> " + eventDescription);
             writer.close();
         } catch (Exception e) {
 
         }
     }
+
+
 }

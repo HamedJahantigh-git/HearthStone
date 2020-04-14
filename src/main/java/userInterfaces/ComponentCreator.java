@@ -10,36 +10,61 @@ import java.io.File;
 import java.io.IOException;
 
 public class ComponentCreator {
+    private static final ComponentCreator instance = new ComponentCreator();
 
-    public static JTextField setTitle(String text, JLabel background, String font, int fontSize, Color color, int[] bounds) {
-        JTextField jTextField = new JTextField(text);
-        jTextField.setFont(new Font(font, Font.ITALIC, fontSize));
-        jTextField.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
+    private ComponentCreator() {
+    }
+
+    public static ComponentCreator getInstance() {
+        return instance;
+    }
+
+    public JLabel setText(String text, JPanel panel, String fontName, int fontSize, Color color, Bounds bounds) {
+        JLabel jLabel = new JLabel(text, SwingConstants.CENTER);
+        jLabel.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        jLabel.setFont(new Font(fontName, Font.ITALIC, fontSize));
+        jLabel.setForeground(color);
+        panel.add(jLabel);
+        return jLabel;
+    }
+
+    public JTextField setImportBox(JPanel panel, int fontSize, Color color, Bounds bounds) {
+        JTextField jTextField = new JTextField();
+        jTextField.setFont(new Font("Times New Roman", Font.ITALIC, fontSize));
+        jTextField.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
         jTextField.setForeground(color);
-        jTextField.setOpaque(false);
-        jTextField.setEditable(false);
-        jTextField.setBorder(null);
-        background.setLayout(null);
-        background.add(jTextField, 2, 0);
+        panel.add(jTextField);
         return jTextField;
     }
 
-    public static JButton setButton(String text, JLabel background, String buttonBackgroundName,
-                                    int[] bounds, Color color) {
-
-        JButton button = new JButton(text,new ImageIcon(setImage(
-                bounds[2],bounds[3],FilesPath.graphicsPath.backgroundsPath + "/" + buttonBackgroundName)));
-        button.setFont(new Font("Frostbite Boss Fight", Font.ITALIC, 60));
+    public JButton setButton(String text, JPanel panel, String buttonBackgroundName,
+                             Bounds bounds, Color color, int fontSize) {
+        JButton button;
+        if (buttonBackgroundName != null)
+            button = new JButton(text, new ImageIcon(setImage(
+                    bounds.getWidth(), bounds.getHeight(),
+                    FilesPath.graphicsPath.backgroundsPath + "/" + buttonBackgroundName)));
+        else button = new JButton(text);
+        button.setContentAreaFilled(false);
+        button.setFont(new Font("Belwe Bd BT Bold", Font.ITALIC, fontSize));
         button.setForeground(color);
         button.setHorizontalTextPosition(JButton.CENTER);
         button.setVerticalTextPosition(JButton.CENTER);
-        button.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
-        background.setLayout(null);
-        background.add(button);
+        button.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        panel.add(button);
         return button;
     }
 
-    public static Image setImage(int width, int height, String path){
+    public JPasswordField setPasswordField(JPanel panel, Bounds bounds, int fontSize, Color color) {
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        passwordField.setForeground(color);
+        passwordField.setFont(new Font("Times New Roman", Font.ITALIC, fontSize));
+        panel.add(passwordField);
+        return passwordField;
+    }
+
+    private Image setImage(int width, int height, String path) {
         Image image = null;
         try {
             image = ImageIO.read(new File(path))
@@ -49,5 +74,6 @@ public class ComponentCreator {
         }
         return image;
     }
+
 
 }

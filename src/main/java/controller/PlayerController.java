@@ -1,9 +1,9 @@
 package controller;
 
-import CLI.CLIMenu;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import defaults.FilesPath;
+import enums.ExceptionsEnum;
 import model.Player;
 import model.card.Card;
 
@@ -20,49 +20,36 @@ public class PlayerController {
         return player;
     }
 
-    public void signInPlayer(String username, String password) {
-        try {
-            if (!FileManagement.allFileNameInPath(
-                    FilesPath.playerDataPath).contains(username + ".txt")) {
-                System.out.println("aaa");
-                throw new Exception("not valid");
-            }
-            player = creatPlayerFromFile(
-                    FilesPath.playerDataPath, username);
-            if (!player.getPassword().equals(password)) {
-                System.out.println(" - Your password is wrong.");
-                System.out.println("  Please try again.");
-                CLIMenu.getInstance().accountMenu();
-            }
-        } catch (Exception e) {
-            System.out.println("- Your username is wrong!!");
-            System.out.println("  Please try again.");
-            CLIMenu.getInstance().accountMenu();
+    public void signInPlayer(String username, String password) throws Exception {
+        if (!FileManagement.allFileNameInPath(
+                FilesPath.playerDataPath).contains(username + ".txt")) {
+            throw new Exception(ExceptionsEnum.valueOf("userNoExist").getMessage());
         }
+        player = creatPlayerFromFile(
+                FilesPath.playerDataPath, username);
+        if (!player.getPassword().equals(password)) {
+            throw new Exception(ExceptionsEnum.valueOf("wrongPassword").getMessage());
+        }
+
+
     }
 
-    public void signUpPlayer(String username, String password) {
+    public void signUpPlayer(String username, String password) throws Exception {
         Date registerTime = new Date();
+        if (username.equals("")||password.equals(""))
+            throw new Exception(ExceptionsEnum.valueOf("emptyImport").getMessage());
+        if (checkExistUsername(username))
+            throw new Exception(ExceptionsEnum.valueOf("userRepeated").getMessage());
+        player = new Player(username, password, registerTime,
+                numberAllPlayerSignIn());
         try {
-            if (checkExistUsername(username))
-                throw new Exception("not valid.");
-            player = new Player(username, password, registerTime,
-                    numberAllPlayerSignIn());
-            try {
-                Writer writer = new FileWriter(
-                        FilesPath.playerDataPath + "/" + username + ".txt");
-                gson.toJson(player, writer);
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            System.out.println("- This username is repeated!!!");
-            System.out.println("  Please try again.");
-            System.out.println();
-            CLIMenu.getInstance().accountMenu();
+            Writer writer = new FileWriter(
+                    FilesPath.playerDataPath + "/" + username + ".txt");
+            gson.toJson(player, writer);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 
     public void deleteAccount(Player player) {

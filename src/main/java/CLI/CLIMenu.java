@@ -4,6 +4,7 @@ import controller.CardController;
 import controller.FileManagement;
 import controller.PlayerController;
 import controller.StoreController;
+import enums.ExceptionsEnum;
 import initializer.InitCLI;
 import logs.PlayerLogs;
 import model.card.Card;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 
 public class CLIMenu {
 
-    private static CLIMenu instance = new CLIMenu();
+    private static final CLIMenu instance = new CLIMenu();
     private Scanner scanner = new Scanner(System.in);
     private String command;
 
@@ -61,23 +62,39 @@ public class CLIMenu {
                     username = scanner.nextLine();
                     System.out.println("- Enter Password: ");
                     password = scanner.nextLine();
-                    playerController = new PlayerController();
-                    playerController.signInPlayer(username, password);
-                    PlayerLogs.addToLogBody("sign_in", "go_to_user_menu", playerController.getPlayer());
-                    userMenu(playerController);
-                    break;
+                    try {
+                        playerController = new PlayerController();
+                        playerController.signInPlayer(username, password);
+                        PlayerLogs.addToLogBody("sign_in", "go_to_user_menu", playerController.getPlayer());
+                        userMenu(playerController);
+                        break;
+                    } catch (Exception e) {
+                        if (e.getMessage().equals(ExceptionsEnum.valueOf("userNoExist").getMessage()))
+                            System.out.println(" - User Name not Exist");
+                        if (e.getMessage().equals(ExceptionsEnum.valueOf("wrongPassword").getMessage()))
+                            System.out.println(" - Your password is wrong.");
+                        System.out.println("  Please try again.");
+                        break;
+                    }
                 case "sign up":
                     System.out.println("- Enter new Username: ");
                     username = scanner.nextLine();
                     System.out.println("- Enter new Password: ");
                     password = scanner.nextLine();
-                    playerController = new PlayerController();
-                    playerController.signUpPlayer(username, password);
-                    PlayerLogs.creatLogFile(playerController.getPlayer());
-                    PlayerLogs.addToLogBody("sign_up", "creat_new_account", playerController.getPlayer());
-                    System.out.println(" - Your account created successfully.");
-                    userMenu(playerController);
-                    break;
+                    try {
+                        playerController = new PlayerController();
+                        playerController.signUpPlayer(username, password);
+                        PlayerLogs.creatLogFile(playerController.getPlayer());
+                        PlayerLogs.addToLogBody("sign_up", "creat_new_account", playerController.getPlayer());
+                        System.out.println(" - Your account created successfully.");
+                        userMenu(playerController);
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("- This username is repeated!!!");
+                        System.out.println("  Please try again.");
+                        System.out.println();
+                        break;
+                    }
                 case "help":
                     helpMenu();
                     break;
@@ -387,4 +404,5 @@ public class CLIMenu {
             }
         }
     }
+
 }
