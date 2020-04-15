@@ -20,12 +20,14 @@ public class MyJPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         Image image = null;
-        try {
-            image = ImageIO.read(new File(this.imagePath));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(this.imagePath!=null) {
+            try {
+                image = ImageIO.read(new File(this.imagePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         }
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         setOpaque(false);
         super.paintComponent(g);
         setOpaque(true);

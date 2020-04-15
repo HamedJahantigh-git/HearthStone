@@ -6,6 +6,9 @@ import defaults.FilesPath;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -46,11 +49,29 @@ public class ComponentCreator {
                     FilesPath.graphicsPath.backgroundsPath + "/" + buttonBackgroundName)));
         else button = new JButton(text);
         button.setContentAreaFilled(false);
+        button.setBorder(BorderFactory.createEmptyBorder());
         button.setFont(new Font("Belwe Bd BT Bold", Font.ITALIC, fontSize));
         button.setForeground(color);
         button.setHorizontalTextPosition(JButton.CENTER);
         button.setVerticalTextPosition(JButton.CENTER);
         button.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        button.addMouseListener(new MouseAdapter() {
+            Color oldColor = button.getForeground();
+            //MoveCard moveCard;
+            public void mouseEntered(MouseEvent me) {
+                //moveCard = new MoveCard(bounds,20,20);
+                //button.setBounds(moveCard.getNextBound().getX(), moveCard.getNextBound().getY(),
+                    //    moveCard.getNextBound().getWidth(), moveCard.getNextBound().getHeight());
+                oldColor = button.getForeground();
+                button.setForeground(Color.red);
+                //panel.paint(panel.getGraphics());
+            }
+            public void mouseExited(MouseEvent me) {
+                button.setForeground(oldColor);
+                //button.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+                //moveCard.getTimer().stop();
+            }
+        });
         panel.add(button);
         return button;
     }
@@ -64,7 +85,7 @@ public class ComponentCreator {
         return passwordField;
     }
 
-    private Image setImage(int width, int height, String path) {
+    public Image setImage(int width, int height, String path) {
         Image image = null;
         try {
             image = ImageIO.read(new File(path))

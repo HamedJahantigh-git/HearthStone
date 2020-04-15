@@ -11,6 +11,8 @@ import logs.PlayerLogs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MyActionListener {
 
@@ -45,7 +47,8 @@ public class MyActionListener {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[1],
                         LogsEnum.valueOf("sign").getEvent_description()[1], playerController.getPlayer());
                 accountFrame.dispose();
-                UserMenu.getInstance().start(playerController);
+                UserMenu.getInstance().setPlayerController(playerController);
+                UserMenu.getInstance().startMainMenu();
             } catch (Exception e) {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("userNoExist").getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
@@ -74,7 +77,8 @@ public class MyActionListener {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[0],
                         LogsEnum.valueOf("sign").getEvent_description()[0], playerController.getPlayer());
                 accountFrame.dispose();
-                UserMenu.getInstance().start(playerController);
+                UserMenu.getInstance().setPlayerController(playerController);
+                UserMenu.getInstance().startMainMenu();
             } catch (Exception e) {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("emptyImport").getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
@@ -102,6 +106,26 @@ public class MyActionListener {
             messagePanel.setVisible(false);
             messagePanel.removeAll();
         });
+    }
+
+    public void playGame() {
+
+    }
+
+    public void goShop() {
+
+    }
+
+    public void goStatus() {
+
+    }
+
+    public void goCollection() {
+
+    }
+
+    public void goSetting() {
+
     }
 
 }

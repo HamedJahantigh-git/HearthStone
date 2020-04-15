@@ -22,5 +22,6 @@ public class MyFrame extends JFrame {
         setSize(bounds.getWidth(), bounds.getHeight());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
     }
 }
