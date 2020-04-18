@@ -1,6 +1,4 @@
-package userInterfaces;
-
-import defaults.GraphicsDefault;
+package userInterfaces.myComponent;
 
 import javax.swing.*;
 

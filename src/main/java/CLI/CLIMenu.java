@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CLIMenu {
-
+/*
     private static final CLIMenu instance = new CLIMenu();
     private Scanner scanner = new Scanner(System.in);
     private String command;
@@ -404,5 +404,5 @@ public class CLIMenu {
             }
         }
     }
-
+*/
 }

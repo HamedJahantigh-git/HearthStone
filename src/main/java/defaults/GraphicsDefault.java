@@ -1,6 +1,6 @@
 package defaults;
 
-import userInterfaces.Bounds;
+import userInterfaces.myComponent.Bounds;
 
 import java.awt.*;
 

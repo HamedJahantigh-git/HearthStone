@@ -2,6 +2,12 @@ package userInterfaces;
 
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
+import userInterfaces.graphicsActions.AccountMenuAction;
+import userInterfaces.graphicsActions.MyAction;
+import userInterfaces.myComponent.Bounds;
+import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MyFrame;
+import userInterfaces.myComponent.MyJPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +22,11 @@ public class AccountMenu {
     private JTextField tfUsername;
     private JPasswordField pfPassword;
     private JLabel usernameLabel, passwordLabel;
+    private AccountMenuAction accountMenuAction;
 
 
     private AccountMenu() {
+        accountMenuAction = new AccountMenuAction();
         accountFrame = new MyFrame("Account Menu", GraphicsDefault.AccountMenu.mainBounds);
         pane = accountFrame.getLayeredPane();
         pane.setLayout(null);
@@ -70,21 +78,21 @@ public class AccountMenu {
                         GraphicsDefault.AccountMenu.componentHeight * 9 / 2 + 20,
                         GraphicsDefault.AccountMenu.componentWidth,
                         GraphicsDefault.AccountMenu.componentHeight), Color.black, 30);
-        MyActionListener.getInstance().exitGame(exitGameButton, null);
+        accountMenuAction.exitGame(exitGameButton, null);
         signInButton = ComponentCreator.getInstance().setButton(
                 "Sign In", mainPanel, buttonsImagePath,
                 new Bounds(5 + GraphicsDefault.AccountMenu.mainBounds.getWidth() / 2,
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 2 + 10,
                         GraphicsDefault.AccountMenu.componentWidth / 2,
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 10), Color.black, 18);
-        MyActionListener.getInstance().signIn(accountFrame, messagePanel, mainPanel, signInButton, tfUsername, pfPassword);
+        accountMenuAction.signIn(accountFrame, messagePanel, mainPanel, signInButton, tfUsername, pfPassword);
         signUpButton = ComponentCreator.getInstance().setButton(
                 "Sign Up", mainPanel, buttonsImagePath,
                 new Bounds(GraphicsDefault.AccountMenu.mainBounds.getWidth() / 4 - 5,
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 2 + 10,
                         GraphicsDefault.AccountMenu.componentWidth / 2,
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 10), Color.black, 18);
-        MyActionListener.getInstance().signUp(accountFrame, messagePanel, mainPanel, signUpButton, tfUsername, pfPassword);
+        accountMenuAction.signUp(accountFrame, messagePanel, mainPanel, signUpButton, tfUsername, pfPassword);
 
     }
 }

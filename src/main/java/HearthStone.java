@@ -9,15 +9,15 @@ public class HearthStone {
     public static void main(String[] args) {
         initializer();
         //startCLIGame();
-        //startGraphicalGame();
-        PlayerController hamed = new PlayerController();
+        startGraphicalGame();
+        /*PlayerController hamed = new PlayerController();
         try {
             hamed.signInPlayer("hamed","hamed");
         } catch (Exception e) {
             e.printStackTrace();
         }
         UserMenu.getInstance().setPlayerController(hamed);
-        UserMenu.getInstance().startMainMenu();
+        UserMenu.getInstance().startMainMenu();*/
     }
 
     private static void initializer() {
@@ -27,7 +27,7 @@ public class HearthStone {
     }
 
     private static void startCLIGame() {
-        CLIMenu.getInstance().accountMenu();
+        //CLIMenu.getInstance().accountMenu();
     }
 
     private static void startGraphicalGame() {

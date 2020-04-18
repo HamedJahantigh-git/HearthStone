@@ -1,4 +1,4 @@
-package userInterfaces;
+package userInterfaces.myComponent;
 
 public class Bounds {
     private int x, y, width, height;

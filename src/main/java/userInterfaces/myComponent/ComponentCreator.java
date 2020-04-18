@@ -1,12 +1,12 @@
-package userInterfaces;
+package userInterfaces.myComponent;
 
 import defaults.FilesPath;
+import userInterfaces.Sounds;
 
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -48,6 +48,7 @@ public class ComponentCreator {
                     bounds.getWidth(), bounds.getHeight(),
                     FilesPath.graphicsPath.backgroundsPath + "/" + buttonBackgroundName)));
         else button = new JButton(text);
+        Sounds click = new Sounds("crossButton.wav");
         button.setContentAreaFilled(false);
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setFont(new Font("Belwe Bd BT Bold", Font.ITALIC, fontSize));
@@ -57,19 +58,16 @@ public class ComponentCreator {
         button.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
         button.addMouseListener(new MouseAdapter() {
             Color oldColor = button.getForeground();
-            //MoveCard moveCard;
+
             public void mouseEntered(MouseEvent me) {
-                //moveCard = new MoveCard(bounds,20,20);
-                //button.setBounds(moveCard.getNextBound().getX(), moveCard.getNextBound().getY(),
-                    //    moveCard.getNextBound().getWidth(), moveCard.getNextBound().getHeight());
+                click.playOne();
                 oldColor = button.getForeground();
                 button.setForeground(Color.red);
-                //panel.paint(panel.getGraphics());
+
             }
+
             public void mouseExited(MouseEvent me) {
                 button.setForeground(oldColor);
-                //button.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-                //moveCard.getTimer().stop();
             }
         });
         panel.add(button);

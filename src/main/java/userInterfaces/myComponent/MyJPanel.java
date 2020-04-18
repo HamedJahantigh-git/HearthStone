@@ -1,4 +1,4 @@
-package userInterfaces;
+package userInterfaces.myComponent;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,16 +11,17 @@ public class MyJPanel extends JPanel {
 
     public MyJPanel(String imagePath, Bounds bounds, JLayeredPane pane, boolean visible, int layer) {
         this.imagePath = imagePath;
+        setVisible(visible);
         setLayout(null);
         setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
         pane.add(this, Integer.valueOf(layer));
-        setVisible(visible);
+
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         Image image = null;
-        if(this.imagePath!=null) {
+        if (this.imagePath != null) {
             try {
                 image = ImageIO.read(new File(this.imagePath));
             } catch (IOException e) {

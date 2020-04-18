@@ -1,4 +1,4 @@
-package userInterfaces;
+package userInterfaces.myComponent;
 
 import enums.MessageEnum;
 
