@@ -6,6 +6,15 @@ public class Mage extends Hero {
     {
         super.heroName = "Mage";
         super.Health = ModelDefault.heroDefaults.baseOfHeroHealth;
-        super.heroCards = ModelDefault.CardDefaults.defaultAllGropingCards.defaultMageCards();
+    }
+
+    @Override
+    public void specialPower() {
+
+    }
+
+    @Override
+    public void heroPower() {
+
     }
 }

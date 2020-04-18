@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import defaults.FilesPath;
 import enums.ExceptionsEnum;
 import model.Player;
-import model.card.Card;
 
 import java.io.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -30,13 +30,11 @@ public class PlayerController {
         if (!player.getPassword().equals(password)) {
             throw new Exception(ExceptionsEnum.valueOf("wrongPassword").getMessage());
         }
-
-
     }
 
     public void signUpPlayer(String username, String password) throws Exception {
         Date registerTime = new Date();
-        if (username.equals("")||password.equals(""))
+        if (username.equals("") || password.equals(""))
             throw new Exception(ExceptionsEnum.valueOf("emptyImport").getMessage());
         if (checkExistUsername(username))
             throw new Exception(ExceptionsEnum.valueOf("userRepeated").getMessage());
@@ -53,6 +51,7 @@ public class PlayerController {
     }
 
     public void deleteAccount(Player player) {
+        //todo
         player.setDeletePlayer(true);
         try {
             Writer writer = new FileWriter(
@@ -70,7 +69,9 @@ public class PlayerController {
     public Player creatPlayerFromFile(String path, String name) {
         Player player = null;
         Gson gson = new Gson();
-        try (Reader reader = new FileReader(path + "/" + name + ".txt")) {
+        System.out.println("*" + path + "/" + name + ".txt" + "*");
+        try {
+            Reader reader = new FileReader(path + "/" + name + ".txt");
             player = gson.fromJson(reader, Player.class);
         } catch (Exception ignored) {
         }
@@ -90,14 +91,14 @@ public class PlayerController {
         return answer;
     }
 
-    public ArrayList<Card> playerAllCards(Player player) {
+   /* public ArrayList<Card> playerAllCards(Player player) {
         ArrayList<Card> result = new ArrayList<>();
         result.addAll(player.getFreePlayerCards());
         for (int i = 0; i < player.getPlayerHeroes().size(); i++) {
             result.addAll(player.getPlayerHeroes().get(i).getHeroCards());
         }
         return result;
-    }
+    }*/
 
     public static int numberAllPlayerSignIn() {
         int result;

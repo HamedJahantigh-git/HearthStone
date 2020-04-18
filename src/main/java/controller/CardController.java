@@ -106,7 +106,7 @@ public class CardController {
         return result;
     }
 
-    public static void deleteHeroCard(String card, Player player) throws Exception {
+   /* public static void deleteHeroCard(String card, Player player) throws Exception {
         boolean check = true;
         for (int i = 0; i < player.getCurrentHero().getHeroCards().size(); i++) {
             if (player.getCurrentHero().getHeroCards().get(i).getName().equals(card)) {
@@ -146,6 +146,6 @@ public class CardController {
         if (check) {
             throw new Exception(" not valid");
         }
-    }
+    }*/
 
 }

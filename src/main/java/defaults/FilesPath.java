@@ -12,11 +12,14 @@ public class FilesPath {
     public static final String minionDataPath = cardDataPath + "/Minion";
     public static final String spellDataPath = cardDataPath + "/Spell";
     public static final String weaponDataPath = cardDataPath + "/Weapon";
+    public static final String defaultPlayerCardsName = gameInfo + "/PlayerDefaultCards.txt";
+
 
     public static class graphicsPath {
         public static final String gameFilesPath = "Game Files";
         public static final String fontsPath = gameFilesPath + "/Fonts";
         public static final String backgroundsPath = gameFilesPath + "/Backgrounds";
+        public static final String soundsPath = gameFilesPath + "/Sounds";
     }
 
 }

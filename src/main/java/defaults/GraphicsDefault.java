@@ -1,6 +1,6 @@
 package defaults;
 
-import userInterfaces.Bounds;
+import userInterfaces.myComponent.Bounds;
 
 import java.awt.*;
 
@@ -24,5 +24,11 @@ public class GraphicsDefault {
         public static Bounds mainBounds = new Bounds(0, 0, screenSize.width, screenSize.height);
         public static Bounds boxMainBounds = new Bounds(screenSize.width/10, screenSize.height/4,
                 screenSize.width/4, screenSize.height/2);
+    }
+
+    public static class collection{
+        public static Bounds mainBounds = new Bounds(0, 0, screenSize.width, screenSize.height);
+
+
     }
 }

@@ -1,3 +1,4 @@
+
 package CLI;
 
 import controller.CardController;
@@ -12,7 +13,7 @@ import model.card.Card;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CLIMenu {
+/*public class CLIMenu {
 
     private static final CLIMenu instance = new CLIMenu();
     private Scanner scanner = new Scanner(System.in);
@@ -406,3 +407,4 @@ public class CLIMenu {
     }
 
 }
+*/

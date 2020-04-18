@@ -6,6 +6,15 @@ public class Rogue extends Hero {
     {
         super.heroName = "Rogue";
         super.Health = ModelDefault.heroDefaults.baseOfHeroHealth;
-        super.heroCards = ModelDefault.CardDefaults.defaultAllGropingCards.defaultRogueCards();
+    }
+
+    @Override
+    public void specialPower() {
+
+    }
+
+    @Override
+    public void heroPower() {
+
     }
 }

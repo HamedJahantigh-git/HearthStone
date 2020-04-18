@@ -31,7 +31,7 @@ public class StoreController {
         }
     }
 
-    public static void cardSell(String card, Player player) throws Exception {
+   /* public static void cardSell(String card, Player player) throws Exception {
         boolean check = true;
         for (int i = 0; i < player.getFreePlayerCards().size(); i++) {
             if (player.getFreePlayerCards().get(i).getName().equals(card)) {
@@ -75,6 +75,6 @@ public class StoreController {
         }
         if (check)
             throw new Exception(" card not valid");
-    }
+    }*/
 
 }
