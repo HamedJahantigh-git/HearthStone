@@ -1,7 +1,10 @@
+
 package model;
 
+
+import controller.FileManagement;
+import defaults.FilesPath;
 import defaults.ModelDefault;
-import logs.PlayerLogs;
 import model.card.Card;
 import model.hero.Hero;
 
@@ -13,20 +16,22 @@ public class Player {
     private String password;
     private int id;
     private int money;
-    private Hero currentHero;
     private Date registerTime;
     private boolean deletePlayer;
-    private ArrayList<Hero> playerHeroes = new ArrayList<Hero>();
-    private ArrayList<Card> freePlayerCards = new ArrayList<>();
+    private ArrayList<Hero> playerHeroes;
+    private ArrayList<Card> playerCards;
+    private ArrayList<Deck> playerDecks;
 
 
     {
+        playerCards = new ArrayList<>();
+        playerDecks = new ArrayList<>();
         deletePlayer = false;
         money = ModelDefault.PlayerDefaults.defaultMoney;
-        currentHero = ModelDefault.PlayerDefaults.defaultHero;
         playerHeroes = ModelDefault.PlayerDefaults.defaultPlayerHeroes;
-        freePlayerCards = ModelDefault.CardDefaults.defaultAllGropingCards.defaultFreePlayerCards();
+        playerCards = ModelDefault.CardDefaults.defaultPlayerCards();
     }
+
 
     public Player(String userName, String password, Date registerTime, int id) {
         this.userName = userName;
@@ -34,6 +39,11 @@ public class Player {
         this.registerTime = registerTime;
         this.id = id;
     }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
 
     public String getUserName() {
         return userName;
@@ -47,54 +57,32 @@ public class Player {
         return money;
     }
 
-    public Date getRegisterTime() {
-        return registerTime;
-    }
-
     public void setDeletePlayer(boolean deletePlayer) {
         this.deletePlayer = deletePlayer;
-    }
-
-    public boolean isDeletePlayer() {
-        return deletePlayer;
     }
 
     public int getId() {
         return id;
     }
 
-    public Hero getCurrentHero() {
-        return currentHero;
-    }
 
-    public ArrayList<Hero> getPlayerHeroesNew(){
-        return playerHeroes;
-    }
+  /* public ArrayList<Hero> getPlayerHeroes() {
+       for (int i = 0; i < getPlayerHeroesNew().size(); i++)
+           if (currentHero.getHeroName().equals(getPlayerHeroesNew().get(i).getHeroName()))
+               playerHeroes.set(i, currentHero);
+       return playerHeroes;
+   }*/
 
-    public ArrayList<Hero> getPlayerHeroes() {
-        for (int i = 0; i < getPlayerHeroesNew().size(); i++)
-            if (currentHero.getHeroName().equals(getPlayerHeroesNew().get(i).getHeroName()))
-                playerHeroes.set(i, currentHero);
-        return playerHeroes;
-    }
-
-    public ArrayList<Card> getFreePlayerCards() {
+   /* public ArrayList<Card> getFreePlayerCards() {
         return freePlayerCards;
-    }
+    }*/
 
-    public void setCurrentHero(Hero currentHero) {
-        this.currentHero = currentHero;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
-    }
-
+/*
     public void addToFreePlayerCards(Card card) {
         this.freePlayerCards.add(card);
     }
 
     public void deleteFromFreePlayerCards(Card card) {
         this.freePlayerCards.remove(card);
-    }
+    }*/
 }

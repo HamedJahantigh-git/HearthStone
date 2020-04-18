@@ -53,6 +53,7 @@ public class PlayerController {
     }
 
     public void deleteAccount(Player player) {
+        //todo
         player.setDeletePlayer(true);
         try {
             Writer writer = new FileWriter(
@@ -90,14 +91,14 @@ public class PlayerController {
         return answer;
     }
 
-    public ArrayList<Card> playerAllCards(Player player) {
+    /*public ArrayList<Card> playerAllCards(Player player) {
         ArrayList<Card> result = new ArrayList<>();
         result.addAll(player.getFreePlayerCards());
         for (int i = 0; i < player.getPlayerHeroes().size(); i++) {
             result.addAll(player.getPlayerHeroes().get(i).getHeroCards());
         }
         return result;
-    }
+    }*/
 
     public static int numberAllPlayerSignIn() {
         int result;

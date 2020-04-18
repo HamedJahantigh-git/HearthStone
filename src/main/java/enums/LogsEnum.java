@@ -2,7 +2,11 @@ package enums;
 
 public enum LogsEnum {
     sign(new String[]{"sign_up", "sign_in", "sign_out"},
-            new String[]{"creat_new_account", "go_to_userMenu", "user_exit", "exit_game"});
+            new String[]{"creat_new_account", "go_to_userMenu", "user_exit", "click_exit_game"}),
+    collection(new String[]{"click_collection"},
+            new String[]{"navigate_collection"}),
+    back(new String[]{"click_back"},
+            new String[]{"navigate_user_menu"});
 
     private String[] event;
     private String[] event_description;
