@@ -20,15 +20,20 @@ public class GraphicsDefault {
         public static int componentWidth = mainBounds.getWidth() / 2;
     }
 
-    public static class UserMenu{
+    public static class UserMenu {
         public static Bounds mainBounds = new Bounds(0, 0, screenSize.width, screenSize.height);
-        public static Bounds boxMainBounds = new Bounds(screenSize.width/10, screenSize.height/4,
-                screenSize.width/4, screenSize.height/2);
+        public static Bounds boxMainBounds = new Bounds(screenSize.width / 10, screenSize.height / 4,
+                screenSize.width / 4, screenSize.height / 2);
     }
 
-    public static class collection{
-        public static Bounds mainBounds = new Bounds(0, 0, screenSize.width, screenSize.height);
-
+    public static class Collection {
+        public static Bounds rightPanel = new Bounds(screenSize.width * 71 / 100, screenSize.height / 20,
+                screenSize.width * 27 / 100, screenSize.height * 9 / 10);
+        public static Bounds cardPanel = new Bounds(10, screenSize.height *3/ 24,
+                screenSize.width * 71 / 100 - 10, screenSize.height * 65 / 100);
+        public static Bounds heroesUpper = new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
+                + 4 * GraphicsDefault.Collection.cardPanel.getWidth() / 10,GraphicsDefault.screenSize.height * 1 / 30,
+                GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 30,GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 30);
 
     }
 }

@@ -6,6 +6,7 @@ import model.Player;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
+import model.card.Weapon;
 import model.hero.*;
 import sun.jvm.hotspot.opto.MachIfNode;
 
@@ -36,21 +37,38 @@ public class ModelDefault {
     static public class CardDefaults {
         static ArrayList<Minion> minions = CardController.ReadCardFromFile.readMinion();
         static ArrayList<Spell> spells = CardController.ReadCardFromFile.readSpell();
-
-        //todo
+        static ArrayList<Weapon> weapons = CardController.ReadCardFromFile.readWeapon();
 
         public static ArrayList<Card> defaultPlayerCards() {
             ArrayList<String> cardsName = FileManagement.readLineByLineFile(FilesPath.defaultPlayerCardsName);
             ArrayList<Card> result = new ArrayList<>();
-            for (int j = 0; j < cardsName.size(); j++) {
+            if (cardsName.get(0).equals("All")) {
                 for (int i = 0; i < minions.size(); i++) {
-                    if ((minions.get(i).getName().equals(cardsName.get(j)))) {
-                        result.add(minions.get(i));
-                    }
+                    result.add(minions.get(i));
+
                 }
                 for (int i = 0; i < spells.size(); i++) {
-                    if ((spells.get(i).getName().equals(cardsName.get(j)))) {
-                        result.add(spells.get(i));
+                    result.add(spells.get(i));
+                }
+                for (int i = 0; i < weapons.size(); i++) {
+                    result.add(weapons.get(i));
+                }
+            } else {
+                for (int j = 0; j < cardsName.size(); j++) {
+                    for (int i = 0; i < minions.size(); i++) {
+                        if ((minions.get(i).getName().equals(cardsName.get(j)))) {
+                            result.add(minions.get(i));
+                        }
+                    }
+                    for (int i = 0; i < spells.size(); i++) {
+                        if ((spells.get(i).getName().equals(cardsName.get(j)))) {
+                            result.add(spells.get(i));
+                        }
+                    }
+                    for (int i = 0; i < weapons.size(); i++) {
+                        if ((weapons.get(i).getName().equals(cardsName.get(j)))) {
+                            result.add(weapons.get(i));
+                        }
                     }
                 }
             }

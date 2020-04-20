@@ -14,9 +14,11 @@ public class Sounds {
     private AudioFormat format;
     private DataLine.Info info;
     private Clip audioClip;
+    private boolean check;
 
     public Sounds(String soundName) {
         this.soundName = soundName;
+        check = false;
         audioFile = new File(FilesPath.graphicsPath.soundsPath + "/" + soundName);
         try {
             audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -34,7 +36,13 @@ public class Sounds {
     }
 
     public void playOne() {
-        audioClip.loop(1);
+        if (check) {
+            audioClip.loop(1);
+        } else {
+            audioClip.start();
+            check = true;
+        }
+
     }
 
     public void stopAudio() {

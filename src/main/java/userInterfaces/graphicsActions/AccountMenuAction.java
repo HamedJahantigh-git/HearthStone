@@ -6,7 +6,7 @@ import enums.ExceptionsEnum;
 import enums.LogsEnum;
 import enums.MessageEnum;
 import logs.PlayerLogs;
-import userInterfaces.UserMenu;
+import userInterfaces.userMenu.UserMenu;
 import userInterfaces.myComponent.ComponentCreator;
 import userInterfaces.myComponent.MessageCreator;
 
@@ -14,6 +14,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AccountMenuAction extends MyAction {
+
+    public AccountMenuAction(PlayerController playerController) {
+        super(playerController);
+    }
 
     public void signIn(JFrame accountFrame, JPanel messagePanel, JPanel mainPanel, JButton button, JTextField username, JPasswordField password) {
         button.addActionListener(actionEvent -> {
@@ -31,14 +35,14 @@ public class AccountMenuAction extends MyAction {
             } catch (Exception e) {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("userNoExist").getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
-                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 35);
+                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 35,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
                     MessageCreator.getInstance().panelMessage(MessageEnum.valueOf("userNoExist"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
                 }
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("wrongPassword").getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
-                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30);
+                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
                     MessageCreator.getInstance().panelMessage(MessageEnum.valueOf("wrongPassword"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
@@ -61,14 +65,14 @@ public class AccountMenuAction extends MyAction {
             } catch (Exception e) {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("emptyImport").getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
-                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30);
+                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
                     MessageCreator.getInstance().panelMessage(MessageEnum.valueOf("emptyImport"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
                 }
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("userRepeated").getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
-                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30);
+                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
                     MessageCreator.getInstance().panelMessage(MessageEnum.valueOf("repeatedUsername"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});

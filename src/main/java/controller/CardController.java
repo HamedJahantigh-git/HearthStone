@@ -7,6 +7,7 @@ import model.Player;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
+import model.card.Weapon;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,12 +21,11 @@ public class CardController {
 
         static Gson gson = new GsonBuilder().create();
 
-        public static void creatMinion(String name,
-                                       String cardClass, int mana, int buyCost,
-                                       int incomeSell, ArrayList<String> description, String rarity, int health, int attack) {
-            Minion minion = new Minion(name, cardClass,
-                    "Minion", mana, buyCost, incomeSell, description, rarity, health, attack);
-
+        public static void creatMinion(String name, String cardClass, int mana,
+                                       int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
+                                       String rarity, int health, int attack) {
+            Minion minion = new Minion(name, cardClass, "Minion", mana, buyCost, incomeSell, mechanics, description,
+                    rarity, health, attack);
             try {
                 Writer writer = new FileWriter(
                         FilesPath.minionDataPath + "/" + name + ".txt");
@@ -37,10 +37,10 @@ public class CardController {
         }
 
         public static void creatSpell(String name, String cardClass, int mana,
-                                      int buyCost, int incomeSell, ArrayList<String> description,
-                                      String rarity) {
-            Spell spell = new Spell(name, cardClass,
-                    "Spell", mana, buyCost, incomeSell, description, rarity);
+                                      int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
+                                      String rarity, String quest, String reward) {
+            Spell spell = new Spell(name, cardClass, "Spell", mana,
+                    buyCost, incomeSell, mechanics, description, rarity, quest, reward);
             try {
 
                 Writer writer = new FileWriter(
@@ -52,8 +52,20 @@ public class CardController {
             }
         }
 
-        public static void creatWeapon() {
-            //todo
+        public static void creatWeapon(String name, String cardClass, int mana,
+                                       int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
+                                       String rarity, int durability, int attack) {
+            Weapon weapon = new Weapon(name, cardClass, "Weapon", mana,
+                    buyCost, incomeSell, mechanics, description, rarity, durability, attack);
+            try {
+                Writer writer = new FileWriter(
+                        FilesPath.weaponDataPath + "/" + name + ".txt");
+                gson.toJson(weapon, writer);
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
 
     }
@@ -83,6 +95,17 @@ public class CardController {
                 }
             }
             return spellsCards;
+        }
+        static public ArrayList<Weapon> readWeapon() {
+            ArrayList<Weapon> weaponsCards = new ArrayList<>();
+            ArrayList<String> weaponsName = FileManagement.allFileNameInPath(FilesPath.weaponDataPath);
+            for (String s : weaponsName) {
+                try (Reader reader = new FileReader(FilesPath.weaponDataPath + "/" + s)) {
+                    weaponsCards.add(gson.fromJson(reader, Weapon.class));
+                } catch (Exception ignored) {
+                }
+            }
+            return weaponsCards;
         }
     }
 

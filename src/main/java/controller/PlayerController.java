@@ -31,7 +31,6 @@ public class PlayerController {
             throw new Exception(ExceptionsEnum.valueOf("wrongPassword").getMessage());
         }
 
-
     }
 
     public void signUpPlayer(String username, String password) throws Exception {

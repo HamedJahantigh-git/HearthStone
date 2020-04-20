@@ -28,10 +28,10 @@ public class MyJPanel extends JPanel {
                 e.printStackTrace();
             }
             g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+            setOpaque(false);
+            super.paintComponent(g);
+            setOpaque(true);
         }
-        setOpaque(false);
-        super.paintComponent(g);
-        setOpaque(true);
     }
 
 }

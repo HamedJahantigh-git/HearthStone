@@ -3,15 +3,14 @@ package userInterfaces.graphicsActions;
 import controller.PlayerController;
 import enums.LogsEnum;
 import logs.PlayerLogs;
-import userInterfaces.UserMenu;
+import userInterfaces.userMenu.UserMenu;
 
 import javax.swing.*;
 
 public class UserMenuAction extends MyAction {
-    private PlayerController playerController;
 
     public UserMenuAction(PlayerController playerController) {
-        this.playerController = playerController;
+        super(playerController);
     }
 
 

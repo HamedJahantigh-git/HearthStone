@@ -11,7 +11,13 @@ import java.awt.*;
 
 public class MyAction {
 
-    public void exitGame(JButton button, PlayerController playerController) {
+    protected PlayerController playerController;
+
+    public MyAction(PlayerController playerController) {
+        this.playerController = playerController;
+    }
+
+    public void exitGame(JButton button) {
         button.addActionListener(actionEvent -> {
             if (playerController != null) {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[2],

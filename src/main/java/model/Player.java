@@ -65,24 +65,7 @@ public class Player {
         return id;
     }
 
-
-  /* public ArrayList<Hero> getPlayerHeroes() {
-       for (int i = 0; i < getPlayerHeroesNew().size(); i++)
-           if (currentHero.getHeroName().equals(getPlayerHeroesNew().get(i).getHeroName()))
-               playerHeroes.set(i, currentHero);
-       return playerHeroes;
-   }*/
-
-   /* public ArrayList<Card> getFreePlayerCards() {
-        return freePlayerCards;
-    }*/
-
-/*
-    public void addToFreePlayerCards(Card card) {
-        this.freePlayerCards.add(card);
+    public ArrayList<Card> getPlayerCards() {
+        return playerCards;
     }
-
-    public void deleteFromFreePlayerCards(Card card) {
-        this.freePlayerCards.remove(card);
-    }*/
 }

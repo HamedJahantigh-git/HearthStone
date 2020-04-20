@@ -2,7 +2,7 @@ package defaults;
 
 public class FilesPath {
 
-    public static final String gameDataPath = "Game Data";
+    public static final String gameDataPath = "src/main/resources/Game Data";
     public static final String logsPath = gameDataPath + "/Logs";
     public static final String playerLogsPath = logsPath + "/Player Logs";
     public static final String gameInfo = gameDataPath + "/Game Information";
@@ -16,10 +16,12 @@ public class FilesPath {
 
 
     public static class graphicsPath {
-        public static final String gameFilesPath = "Game Files";
+        public static final String gameFilesPath = "src/main/resources/Game Files";
         public static final String fontsPath = gameFilesPath + "/Fonts";
         public static final String backgroundsPath = gameFilesPath + "/Backgrounds";
         public static final String soundsPath = gameFilesPath + "/Sounds";
+        public static final String imagesPath = gameFilesPath + "/Images";
+        public static final String collectionPath = imagesPath+"/Collection";
     }
 
 }

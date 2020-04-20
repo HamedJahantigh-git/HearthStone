@@ -41,7 +41,8 @@ public class ComponentCreator {
     }
 
     public JButton setButton(String text, JPanel panel, String buttonBackgroundName,
-                             Bounds bounds, Color color, int fontSize) {
+                             Bounds bounds, Color color, int fontSize, int state) {
+        //todo
         JButton button;
         if (buttonBackgroundName != null)
             button = new JButton(text, new ImageIcon(setImage(
@@ -63,11 +64,17 @@ public class ComponentCreator {
                 click.playOne();
                 oldColor = button.getForeground();
                 button.setForeground(Color.red);
+                if (state == 1)
+                    button.setLocation(bounds.getX() - 20, bounds.getY());
+                //button.setSize(bounds.getWidth()+100, bounds.getHeight()+10);
 
             }
 
             public void mouseExited(MouseEvent me) {
                 button.setForeground(oldColor);
+                if (state == 1)
+                    button.setLocation(bounds.getX(), bounds.getY());
+                //button.setSize(bounds.getWidth(), bounds.getHeight());
             }
         });
         panel.add(button);

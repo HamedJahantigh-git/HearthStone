@@ -11,11 +11,11 @@ public class Card {
     private String type;
     private int buyCost;
     private int incomeSell;
-
-    private ArrayList<String> description;
+    private ArrayList<String> mechanics;
+    private String description;
 
     public Card(String name, String cardClass, String type, int mana,
-                int buyCost, int incomeSell, ArrayList<String> description,
+                int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
                 String rarity) {
         this.mana = mana;
         this.name = name;
@@ -23,6 +23,7 @@ public class Card {
         this.type = type;
         this.buyCost = buyCost;
         this.incomeSell = incomeSell;
+        this.mechanics = mechanics;
         this.description = description;
         this.rarity = rarity;
     }
@@ -48,7 +49,11 @@ public class Card {
         return type;
     }
 
-    public ArrayList<String> getDescription() {
+    public ArrayList<String> getMechanics() {
+        return mechanics;
+    }
+
+    public String getDescription() {
         return description;
     }
 

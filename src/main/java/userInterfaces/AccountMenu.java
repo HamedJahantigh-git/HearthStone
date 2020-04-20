@@ -26,7 +26,7 @@ public class AccountMenu {
 
 
     private AccountMenu() {
-        accountMenuAction = new AccountMenuAction();
+        accountMenuAction = new AccountMenuAction(null);
         accountFrame = new MyFrame("Account Menu", GraphicsDefault.AccountMenu.mainBounds);
         pane = accountFrame.getLayeredPane();
         pane.setLayout(null);
@@ -34,6 +34,8 @@ public class AccountMenu {
                 GraphicsDefault.AccountMenu.mainBounds, pane, false, 1);
         messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
                 GraphicsDefault.AccountMenu.messageBounds, pane, false, 2);
+        boxes();
+        buttons();
     }
 
     public static AccountMenu getInstance() {
@@ -41,10 +43,8 @@ public class AccountMenu {
     }
 
     public void start() {
-        boxes();
-        buttons();
         mainPanel.setVisible(true);
-        mainPanel.paint(mainPanel.getGraphics());
+        mainPanel.repaint();
     }
 
     private void boxes() {
@@ -77,21 +77,21 @@ public class AccountMenu {
                 new Bounds((GraphicsDefault.AccountMenu.mainBounds.getWidth() - GraphicsDefault.AccountMenu.componentWidth) / 2 - 5,
                         GraphicsDefault.AccountMenu.componentHeight * 9 / 2 + 20,
                         GraphicsDefault.AccountMenu.componentWidth,
-                        GraphicsDefault.AccountMenu.componentHeight), Color.black, 30);
-        accountMenuAction.exitGame(exitGameButton, null);
+                        GraphicsDefault.AccountMenu.componentHeight), Color.black, 30, 0);
+        accountMenuAction.exitGame(exitGameButton);
         signInButton = ComponentCreator.getInstance().setButton(
                 "Sign In", mainPanel, buttonsImagePath,
                 new Bounds(5 + GraphicsDefault.AccountMenu.mainBounds.getWidth() / 2,
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 2 + 10,
                         GraphicsDefault.AccountMenu.componentWidth / 2,
-                        GraphicsDefault.AccountMenu.componentHeight * 7 / 10), Color.black, 18);
+                        GraphicsDefault.AccountMenu.componentHeight * 7 / 10), Color.black, 18, 0);
         accountMenuAction.signIn(accountFrame, messagePanel, mainPanel, signInButton, tfUsername, pfPassword);
         signUpButton = ComponentCreator.getInstance().setButton(
                 "Sign Up", mainPanel, buttonsImagePath,
                 new Bounds(GraphicsDefault.AccountMenu.mainBounds.getWidth() / 4 - 5,
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 2 + 10,
                         GraphicsDefault.AccountMenu.componentWidth / 2,
-                        GraphicsDefault.AccountMenu.componentHeight * 7 / 10), Color.black, 18);
+                        GraphicsDefault.AccountMenu.componentHeight * 7 / 10), Color.black, 18, 0);
         accountMenuAction.signUp(accountFrame, messagePanel, mainPanel, signUpButton, tfUsername, pfPassword);
 
     }
