@@ -37,14 +37,14 @@ public class AccountMenuAction extends MyAction {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
                             GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 35,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
-                    MessageCreator.getInstance().panelMessage(MessageEnum.valueOf("userNoExist"), messagePanel,
+                    MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("userNoExist"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
                 }
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("wrongPassword").getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
                             GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
-                    MessageCreator.getInstance().panelMessage(MessageEnum.valueOf("wrongPassword"), messagePanel,
+                    MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("wrongPassword"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
                 }
             }
@@ -67,14 +67,14 @@ public class AccountMenuAction extends MyAction {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
                             GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
-                    MessageCreator.getInstance().panelMessage(MessageEnum.valueOf("emptyImport"), messagePanel,
+                    MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("emptyImport"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
                 }
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("userRepeated").getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
                             GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
-                    MessageCreator.getInstance().panelMessage(MessageEnum.valueOf("repeatedUsername"), messagePanel,
+                    MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("repeatedUsername"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
                 }
             }

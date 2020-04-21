@@ -38,4 +38,7 @@ public class MyAction {
         });
     }
 
+    public PlayerController getPlayerController() {
+        return playerController;
+    }
 }

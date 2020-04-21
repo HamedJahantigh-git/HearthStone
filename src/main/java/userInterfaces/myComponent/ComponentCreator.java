@@ -66,13 +66,19 @@ public class ComponentCreator {
                 button.setForeground(Color.red);
                 if (state == 1)
                     button.setLocation(bounds.getX() - 20, bounds.getY());
+                if (state == 2) {
+                    button.setLocation(bounds.getX() - 10, bounds.getY());
+                }
+                if (state == 3) {
+                    button.setLocation(bounds.getX() + 10, bounds.getY());
+                }
                 //button.setSize(bounds.getWidth()+100, bounds.getHeight()+10);
 
             }
 
             public void mouseExited(MouseEvent me) {
                 button.setForeground(oldColor);
-                if (state == 1)
+                if (state == 1 || state == 2 || state == 3)
                     button.setLocation(bounds.getX(), bounds.getY());
                 //button.setSize(bounds.getWidth(), bounds.getHeight());
             }

@@ -5,7 +5,7 @@ import defaults.GraphicsDefault;
 import userInterfaces.graphicsActions.CollectionMenuAction;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
-import userInterfaces.myComponent.MyCard;
+import userInterfaces.myComponent.MyCardButton;
 import userInterfaces.myComponent.MyJPanel;
 
 import javax.swing.*;
@@ -14,15 +14,14 @@ import java.util.ArrayList;
 
 public class CollectionMenu {
     private MyJPanel mainPanel;
-    private MyJPanel heroPanel;
     private MyJPanel deckPanel;
     private MyJPanel cardPanel;
     private CollectionMenuAction action;
     private UserMenu userMenu;
 
     private JButton exitGame, back;
-    private MyCard neutral, mage, warlock, priest, hunter, rogue;
-    private ArrayList<MyCard> heroes;
+    private MyCardButton neutral, mage, warlock, priest, hunter, rogue;
+    private ArrayList<MyCardButton> heroes;
 
     public CollectionMenu(UserMenu userMenu) {
         this.userMenu = userMenu;
@@ -36,9 +35,6 @@ public class CollectionMenu {
     }
 
     public void initMainPanel() {
-        for (Component component : mainPanel.getComponents()) {
-            mainPanel.remove(component);
-        }
         initDown();
         initUpper();
     }
@@ -60,39 +56,39 @@ public class CollectionMenu {
 
     private void initUpper() {
 
-        neutral = new MyCard(mainPanel, FilesPath.graphicsPath.collectionPath + "/neutralCollection1.png",
+        neutral = new MyCardButton(mainPanel, FilesPath.graphicsPath.collectionPath + "/neutralCollection1.png",
                 new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
                         + 0 * GraphicsDefault.Collection.cardPanel.getWidth() / 10
                         , GraphicsDefault.Collection.heroesUpper.getY()
                         , GraphicsDefault.Collection.heroesUpper.getWidth(),
                         GraphicsDefault.Collection.heroesUpper.getWidth()));
-        mage = new MyCard(mainPanel, FilesPath.graphicsPath.collectionPath + "/MageCollection1.png",
+        mage = new MyCardButton(mainPanel, FilesPath.graphicsPath.collectionPath + "/MageCollection1.png",
                 new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
                         + 1 * GraphicsDefault.Collection.cardPanel.getWidth() / 10
                         , GraphicsDefault.Collection.heroesUpper.getY()
                         , GraphicsDefault.Collection.heroesUpper.getWidth(),
                         GraphicsDefault.Collection.heroesUpper.getWidth()));
 
-        hunter = new MyCard(mainPanel, FilesPath.graphicsPath.collectionPath + "/HunterCollection1.png",
+        hunter = new MyCardButton(mainPanel, FilesPath.graphicsPath.collectionPath + "/HunterCollection1.png",
                 new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
                         + 2 * GraphicsDefault.Collection.cardPanel.getWidth() / 10
                         , GraphicsDefault.Collection.heroesUpper.getY()
                         , GraphicsDefault.Collection.heroesUpper.getWidth(),
                         GraphicsDefault.Collection.heroesUpper.getWidth()));
-        priest = new MyCard(mainPanel, FilesPath.graphicsPath.collectionPath + "/PriestCollection1.png",
+        priest = new MyCardButton(mainPanel, FilesPath.graphicsPath.collectionPath + "/PriestCollection1.png",
                 new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
                         + 3 * GraphicsDefault.Collection.cardPanel.getWidth() / 10
                         , GraphicsDefault.Collection.heroesUpper.getY()
                         , GraphicsDefault.Collection.heroesUpper.getWidth(),
                         GraphicsDefault.Collection.heroesUpper.getWidth()));
-        rogue = new MyCard(mainPanel, FilesPath.graphicsPath.collectionPath + "/RogueCollection1.png",
+        rogue = new MyCardButton(mainPanel, FilesPath.graphicsPath.collectionPath + "/RogueCollection1.png",
                 new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
                         + 4 * GraphicsDefault.Collection.cardPanel.getWidth() / 10
                         , GraphicsDefault.Collection.heroesUpper.getY()
                         , GraphicsDefault.Collection.heroesUpper.getWidth(),
                         GraphicsDefault.Collection.heroesUpper.getWidth()));
 
-        warlock = new MyCard(mainPanel, FilesPath.graphicsPath.collectionPath + "/WarlockCollection1.png",
+        warlock = new MyCardButton(mainPanel, FilesPath.graphicsPath.collectionPath + "/WarlockCollection1.png",
                 new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
                         + 5 * GraphicsDefault.Collection.cardPanel.getWidth() / 10
                         , GraphicsDefault.Collection.heroesUpper.getY()
@@ -119,20 +115,19 @@ public class CollectionMenu {
     }
 
     private void initRight() {
-        deckPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/deckCollection.png",
+        deckPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/deckCollection2.png",
                 GraphicsDefault.Collection.rightPanel, userMenu.getPane(), false, 12);
-        /*JLabel title = ComponentCreator.getInstance().setText("My Decks", deckPanel,
-                "FORTE", 27, Color.black,
-                new Bounds(0, GraphicsDefault.Collection.rightPanel.getHeight() / 80,
-                        GraphicsDefault.Collection.rightPanel.getWidth(),
-                        GraphicsDefault.Collection.rightPanel.getHeight() / 20));
-        JTextPane test = new JTextPane();
-        test.setBounds(0, 0, 100, 100);
-        //test.setOpaque(false);
-        JLabel ali = new JLabel("alli");
-        test.add(ali);
-        deckPanel.add(test);
-        test.add(title);*/
+        JButton newDeck = ComponentCreator.getInstance().setButton("New Deck", deckPanel, "buttons1.png",
+                GraphicsDefault.Collection.deckSection(0,0,1), Color.white, 30, 0);
+        JButton test = ComponentCreator.getInstance().setButton("New Deck", deckPanel, "buttons1.png",
+                GraphicsDefault.Collection.deckSection(1,0,1), Color.white, 30, 0);
+        JButton test3 = ComponentCreator.getInstance().setButton("New Deck", deckPanel, "buttons1.png",
+                GraphicsDefault.Collection.deckSection(2,0,1), Color.white, 30, 0);
+        JButton test2 = ComponentCreator.getInstance().setButton("New Deck", deckPanel, "buttons1.png",
+                GraphicsDefault.Collection.deckSection(3,0,1), Color.white, 30, 0);
+        JButton test1 = ComponentCreator.getInstance().setButton("New Deck", deckPanel, "buttons1.png",
+                GraphicsDefault.Collection.deckSection(4,0,1), Color.white, 30, 0);
+
 
     }
 

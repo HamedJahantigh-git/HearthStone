@@ -29,9 +29,11 @@ public class UserMenuAction extends MyAction {
 
     }
 
-    public void goShop(JButton button) {
+    public void goShop(JButton button, UserMenu userMenu) {
         button.addActionListener(actionEvent -> {
-
+            PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[0],
+                    LogsEnum.valueOf("shop").getEvent_description()[0], playerController.getPlayer());
+            userMenu.startShopMenu();
         });
     }
 

@@ -59,81 +59,92 @@ public class InitCards {
         CardController.CreatNewCardInFile.creatMinion("Swamp King Dred", "Hunter", 7, 7, 6, mechanics,
                 "After your opponent plays a minion, attack it.", "Legendary", 9, 9);
         //***************************************************************************
-
-        /*description.clear();
-        description.add("At the end of your turn, deal 1 damage to all other minions");
-        CardController.CreatNewCardInFile.creatMinion("Dreadscale", "Warlock", 3,
-                3, 2, description, "", 2, 4);
+        mechanics.clear();
+        mechanics.add("Deal damage");
+        mechanics.add("Area of effect");
+        mechanics.add("Triggered effect");
+        CardController.CreatNewCardInFile.creatMinion("Dreadscale", "Warlock", 3, 3, 2, mechanics,
+                "At the end of your turn, deal 1 damage to all other minions.", "Legendary", 2, 4);
         //***************************************************************************
-        description.clear();
-        description.add("Taunt");
-        description.add("Battlecry");
-        description.add("Battlecry: Deal 2 damage to your hero.");
-        CardController.CreatNewCardInFile.creatMinion("Vulgar Homnuculus", "Warlock", 2,
-                2, 1, description, "Common", 4, 2);
+        mechanics.clear();
+        mechanics.add("Battlecry");
+        mechanics.add("Deal damage");
+        mechanics.add("Taunt");
+        CardController.CreatNewCardInFile.creatMinion("Vulgar Homunculus", "Warlock", 2, 2, 1, mechanics,
+                "Taunt\n" + "Battlecry: Deal 2 damage to your hero.", "Common", 4, 2);
         //***************************************************************************
-        description.clear();
-        description.add("Your weapons cost (2) less");
-        CardController.CreatNewCardInFile.creatMinion("Blackwater Pirate", "Neutral", 4,
-                4, 3, description, "Rare", 5, 2);
+        mechanics.clear();
+        mechanics.add("Increment attribute");
+        mechanics.add("Modify cost");
+        mechanics.add("Ongoing effect");
+        mechanics.add("Weapon-related");
+        CardController.CreatNewCardInFile.creatMinion("Blackwater Pirate", "Neutral", 4, 4, 3, mechanics,
+                "Your weapons cost (2) less.", "Rare", 5, 2);
         //***************************************************************************
-        description.clear();
-        description.add("Inspire");
-        description.add("Inspire: Return this minion to your hand.");
-        CardController.CreatNewCardInFile.creatMinion("Coliseum Manager", "Neutral", 3,
-                3, 2, description, "Rare", 5, 2);
+        mechanics.clear();
+        mechanics.add("Inspire");
+        mechanics.add("Return to hand");
+        mechanics.add("Hero Power-related");
+        CardController.CreatNewCardInFile.creatMinion("Coliseum Manager", "Neutral", 3, 3, 2, mechanics,
+                "Inspire: Return this minion to your hand.", "Rare", 5, 2);
         //***************************************************************************
-        description.clear();
-        description.add("Battlecry");
-        description.add("Battlecry: Give +1 Attack for each card in your opponent's hand.");
-        CardController.CreatNewCardInFile.creatMinion("Fire Hawk", "Neutral", 3,
-                3, 2, description, "Common", 3, 1);
+        mechanics.clear();
+        mechanics.add("Battlecry");
+        mechanics.add("Increment attribute");
+        mechanics.add("Hand-related");
+        CardController.CreatNewCardInFile.creatMinion("Fire Hawk", "Neutral", 3, 3, 2, mechanics,
+                "Battlecry: Gain +1 Attack for each card in your opponent's hand.", "Common", 3, 1);
         //***************************************************************************
-        description.clear();
-        description.add("At the start of your turn, gain +1 Health");
-        CardController.CreatNewCardInFile.creatMinion("Hot Air Balloon", "Neutral", 1,
-                1, 0, description, "Common", 2, 1);
+        mechanics.clear();
+        mechanics.add("Increment attribute");
+        mechanics.add("Triggered effect");
+        CardController.CreatNewCardInFile.creatMinion("Hot Air Balloon", "Neutral", 1, 1, 0, mechanics,
+                "At the start of your turn, gain +1 Health.", "Common", 2, 1);
         //***************************************************************************
-        description.clear();
-        description.add("Battlecry");
-        description.add("Battlecry: Deal 3 damage to the enemy hero.");
-        CardController.CreatNewCardInFile.creatMinion("Nightblade", "Neutral", 5,
-                5, 4, description, "Free", 4, 4);
+        mechanics.clear();
+        mechanics.add("Battlecry");
+        mechanics.add("Deal damage");
+        mechanics.add("Raymond Swanland");
+        CardController.CreatNewCardInFile.creatMinion("Nightblade", "Neutral", 5, 5, 4, mechanics,
+                "Battlecry: Deal 3 damage to the enemy hero.", "Common", 4, 4);
         //***************************************************************************
-        description.clear();
-        description.add("");
-        CardController.CreatNewCardInFile.creatMinion("Puddlestomper", "Neutral", 2,
-                2, 1, description, "Common", 2, 3);
+        mechanics.clear();
+        CardController.CreatNewCardInFile.creatMinion("Puddlestomper", "Neutral", 2, 2, 1, mechanics,
+                null, "Common", 2, 3);
         //***************************************************************************
-        description.clear();
-        description.add("Taunt");
-        CardController.CreatNewCardInFile.creatMinion("Senjin Shieldmasta", "Neutral", 4,
-                4, 3, description, "Free", 5, 3);
+        mechanics.clear();
+        mechanics.add("Taunt");
+        CardController.CreatNewCardInFile.creatMinion("Senjin Shieldmasta", "Neutral", 4, 4, 3, mechanics,
+                "Taunt", "Common", 5, 3);
         //***************************************************************************
-        description.clear();
-        description.add("Reborn");
-        description.add("Has +2 Attack while damaged.");
-        CardController.CreatNewCardInFile.creatMinion("Temple Berserker", "Neutral", 2,
-                2, 1, description, "Common", 2, 1);
+        mechanics.clear();
+        mechanics.add("Enrage");
+        mechanics.add("Increment attribute");
+        mechanics.add("Reborn");
+        mechanics.add("Damaged-related");
+        CardController.CreatNewCardInFile.creatMinion("Temple Berserker", "Neutral", 2, 2, 1, mechanics,
+                "Reborn\n" + "Has +2 Attack while damaged.", "Common", 2, 1);
         //***************************************************************************
-        description.clear();
-        description.add("Taunt");
-        description.add("Deathrattle: Deal 3 damage to al minions");
-        CardController.CreatNewCardInFile.creatMinion("Tunnel Blaster", "Neutral", 7,
-                7, 6, description, "Common", 7, 3);
+        mechanics.clear();
+        mechanics.add("Deal damage");
+        mechanics.add("Deathrattle");
+        mechanics.add("Taunt");
+        mechanics.add("Area of effect");
+        CardController.CreatNewCardInFile.creatMinion("Tunnel Blaster", "Neutral", 7, 7, 6, mechanics,
+                "Taunt\n" + "Deathrattle: Deal 3 damage to all minions.", "Common", 7, 3);
         //***************************************************************************
-        description.clear();
-        description.add("Your minions cost (3) more.");
-        CardController.CreatNewCardInFile.creatMinion("Venture Co. Mercenary", "Neutral", 5,
-                5, 4, description, "Common", 6, 7);
+        mechanics.clear();
+        mechanics.add("Increment attribute");
+        mechanics.add("Modify cost");
+        mechanics.add("Ongoing effect");
+        CardController.CreatNewCardInFile.creatMinion("Venture Co. Mercenary", "Neutral", 5, 5, 4, mechanics,
+                "Your minions cost (3) more.", "Common", 6, 7);
         //***************************************************************************
-        description.clear();
-        description.add("Charge");
-        CardController.CreatNewCardInFile.creatMinion("Wolfrider", "Neutral", 3,
-                3, 2, description, "Free", 1, 3);
+        mechanics.clear();
+        mechanics.add("Charge");
+        CardController.CreatNewCardInFile.creatMinion("Wolfrider", "Neutral", 3, 3, 2, mechanics,
+                "Charge", "Common", 1, 3);
         //***************************************************************************
-
-         */
     }
 
     public static void initSpell() {
@@ -144,7 +155,7 @@ public class InitCards {
         mechanics.add("Mana-related");
         mechanics.add("Random");
         CardController.CreatNewCardInFile.creatSpell("Strength in Numbers", "Neutral", 1,
-        1, 0, mechanics, "Sidequest: Spend 10 Mana on minions.\n"+"Reward: Summon a minion from your deck.",
+                1, 0, mechanics, "Sidequest: Spend 10 Mana on minions.\n" + "Reward: Summon a minion from your deck.",
                 "Common", "Spend 10 Mana on minions.", "Summon a minion from your deck.");
         //***************************************************************************
         mechanics.clear();
@@ -203,60 +214,91 @@ public class InitCards {
                 2, 1, mechanics, "Destroy a minion with an Attack of 5 or more.",
                 "common", null, null);
         //***************************************************************************
-
-        /*description.clear();
-        description.add("Discover");
-        description.add("Discover a weapon from any class. Add it to your Adventure Deck with +2/+2");
-        CardController.CreatNewCardInFile.creatSpell("Friendly Smith", "Rogue", 4,
-                4, 3, description, "");
+        mechanics.clear();
+        mechanics.add("Discover");
+        mechanics.add("Generate");
+        mechanics.add("Random");
+        mechanics.add("Weapon-related");
+        CardController.CreatNewCardInFile.creatSpell("Friendly Smith", "Rogue", 1,
+                1, 0, mechanics, "Discover a weapon from any class. Add it to your Adventure Deck with +2/+2.",
+                "common", null, null);
         //***************************************************************************
-        description.clear();
-        description.add("Return an enemy minion to your opponent's hand.");
+        mechanics.clear();
+        mechanics.add("Return to hand");
+        mechanics.add("Targeted");
         CardController.CreatNewCardInFile.creatSpell("Sap", "Rogue", 2,
-                2, 1, description, "Free");
+                2, 1, mechanics, "Return an enemy minion to your opponent's hand.",
+                "common", null, null);
         //***************************************************************************
-        description.clear();
-        description.add("Transform a minion into a 1/1 sheep");
+        mechanics.clear();
+        mechanics.add("Transform");
+        mechanics.add("Beast-generating");
+        mechanics.add("Targeted");
         CardController.CreatNewCardInFile.creatSpell("Polymorph", "Mage", 4,
-                4, 3, description, "");
+                4, 3, mechanics, "Transform a minion into a 1/1 Sheep.",
+                "common", null, null);
         //***************************************************************************
-        description.clear();
-        description.add("Secret");
-        description.add("Secret: After your opponent plays a minion, add two copies of it to your hand.");
+        mechanics.clear();
+        mechanics.add("Copy");
+        mechanics.add("Generate");
+        mechanics.add("Secret");
+        mechanics.add("Summoning-related");
+        mechanics.add("Triggered effect");
         CardController.CreatNewCardInFile.creatSpell("Frozen Clone", "Mage", 3,
-                3, 2, description, "common");
+                3, 2, mechanics, "Secret: After your opponent plays a minion, put 2 copies of it into your hand.",
+                "common", null, null);
         //***************************************************************************
-        description.clear();
-        description.add("Twinspell");
-        description.add("Give your minion +1/+1");
+        mechanics.clear();
+        mechanics.add("Generate");
+        mechanics.add("Increment attribute");
+        mechanics.add("Twinspell");
+        mechanics.add("Area of effect");
+        mechanics.add("Spell-generating");
         CardController.CreatNewCardInFile.creatSpell("Blessing of the Ancients", "Neutral", 3,
-                3, 2, description, "Common");
+                3, 2, mechanics, "Twinspell\n" + "Give your minions +1/+1.",
+                "common", null, null);
         //***************************************************************************
-        description.clear();
-        description.add("The next spell you cast this turn costs Health instead of Mana");
+        mechanics.clear();
+        mechanics.add("Deal damage");
+        mechanics.add("Modify cost");
+        mechanics.add("Cost-related");
+        mechanics.add("Health-related");
+        mechanics.add("Spell-related");
         CardController.CreatNewCardInFile.creatSpell("Bloodbloom", "Neutral", 2,
-                2, 1, description, "Epic");
+                2, 1, mechanics, "The next spell you cast this turn costs Health instead of Mana.",
+                "Epic", null, null);
         //***************************************************************************
-        description.clear();
-        description.add("Twinspell");
-        description.add("Give a Beast +2/+2");
+        mechanics.clear();
+        mechanics.add("Generate");
+        mechanics.add("Increment attribute");
+        mechanics.add("Twinspell");
+        mechanics.add("Beast-related");
+        mechanics.add("Spell-generating");
+        mechanics.add("Targeted");
         CardController.CreatNewCardInFile.creatSpell("Fresh Scent", "Neutral", 2,
-                2, 1, description, "Common");
+                2, 1, mechanics, "Twinspell\n" + "Give a Beast +2/+2.",
+                "Common", null, null);
         //***************************************************************************
-        description.clear();
-        description.add("Draw a minion and a spell from your deck. Swap their Costs.");
+        mechanics.clear();
+        mechanics.add("Modify cost");
+        mechanics.add("Put into hand");
+        mechanics.add("Spell-related");
         CardController.CreatNewCardInFile.creatSpell("Prismatic Lens", "Neutral", 4,
-                4, 3, description, "Epic");
+                4, 3, mechanics, "Draw a minion and a spell from your deck. Swap their Costs.",
+                "Epic", null, null);
         //***************************************************************************
-        description.clear();
-        description.add("Spell Damage");
-        description.add("Summon two random 2-Cost minions (improved by Spell Damage).");
+        mechanics.clear();
+        mechanics.add("Summon");
+        mechanics.add("Cost-related");
+        mechanics.add("Random");
+        mechanics.add("Spell Damage-related");
         CardController.CreatNewCardInFile.creatSpell("Unexpected Results", "Neutral", 3,
-                3, 2, description, "Epic");
+                3, 2, mechanics, "Summon two random 2-Cost minions (improved by Spell Damage).",
+                "Epic", null, null);
         //***************************************************************************
-*/
 
     }
+
     public static void initWeapon() {
         mechanics.clear();
         CardController.CreatNewCardInFile.creatWeapon("Heavy Axe", "Neutral", 1,

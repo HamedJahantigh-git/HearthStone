@@ -21,17 +21,24 @@ public class Player {
     private ArrayList<Hero> playerHeroes;
     private ArrayList<Card> playerCards;
     private ArrayList<Deck> playerDecks;
+    private Deck currentDeck;
+    private Deck freeDeck;
 
 
     {
         playerCards = new ArrayList<>();
         playerDecks = new ArrayList<>();
         deletePlayer = false;
+        currentDeck = null;
         money = ModelDefault.PlayerDefaults.defaultMoney;
         playerHeroes = ModelDefault.PlayerDefaults.defaultPlayerHeroes;
         playerCards = ModelDefault.CardDefaults.defaultPlayerCards();
+        freeDeck = new Deck(playerCards);
     }
 
+    public Deck getFreeDeck() {
+        return freeDeck;
+    }
 
     public Player(String userName, String password, Date registerTime, int id) {
         this.userName = userName;
@@ -40,8 +47,8 @@ public class Player {
         this.id = id;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public void changeMoney(int differ) {
+        this.money += differ;
     }
 
 

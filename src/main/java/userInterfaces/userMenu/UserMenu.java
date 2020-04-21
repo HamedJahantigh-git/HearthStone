@@ -1,15 +1,9 @@
 package userInterfaces.userMenu;
 
 import controller.PlayerController;
-import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import userInterfaces.Sounds;
-import userInterfaces.graphicsActions.CollectionMenuAction;
-import userInterfaces.graphicsActions.UserMenuAction;
-import userInterfaces.myComponent.Bounds;
-import userInterfaces.myComponent.ComponentCreator;
 import userInterfaces.myComponent.MyFrame;
-import userInterfaces.myComponent.MyJPanel;
 
 
 import javax.swing.*;
@@ -24,6 +18,7 @@ public class UserMenu {
     private Sounds mainSounds;
     private MainMenu mainMenu;
     private CollectionMenu collectionMenu;
+    private ShopMenu shopMenu;
 
     public UserMenu(PlayerController playerController) {
         this.playerController = playerController;
@@ -32,6 +27,7 @@ public class UserMenu {
         pane = userFrame.getLayeredPane();
         mainSounds = new Sounds("MainMenu.wav");
         mainMenu = new MainMenu(this);
+        shopMenu = new ShopMenu(this);
         collectionMenu = new CollectionMenu(this);
     }
 
@@ -51,6 +47,10 @@ public class UserMenu {
         showPanel("Collection");
     }
 
+    public void startShopMenu() {
+        showPanel("Shop");
+    }
+
     public void startMainMenu() {
         showPanel("Main Menu");
     }
@@ -58,10 +58,7 @@ public class UserMenu {
     void showPanel(String s) {
         switch (s) {
             case "Main Menu":
-                for (Component component : pane.getComponents()) {
-                    component.setVisible(false);
-                    component.setEnabled(false);
-                }
+                offAllLayer();
                 for (int i = 0; i < 10; i++) {
                     for (Component component : pane.getComponentsInLayer(i)) {
                         component.setVisible(true);
@@ -70,13 +67,16 @@ public class UserMenu {
                 }
                 break;
             case "Shop":
-
+                offAllLayer();
+                for (int i = 20; i < 30; i++) {
+                    for (Component component : pane.getComponentsInLayer(i)) {
+                        component.setVisible(true);
+                        component.setEnabled(true);
+                    }
+                }
                 break;
             case "Collection":
-                for (Component component : pane.getComponents()) {
-                    component.setVisible(false);
-                    component.setEnabled(false);
-                }
+                offAllLayer();
                 for (int i = 10; i < 20; i++) {
                     for (Component component : pane.getComponentsInLayer(i)) {
                         component.setVisible(true);
@@ -84,6 +84,13 @@ public class UserMenu {
                     }
                 }
                 break;
+        }
+    }
+
+    private void offAllLayer (){
+        for (Component component : pane.getComponents()) {
+            component.setVisible(false);
+            component.setEnabled(false);
         }
     }
 

@@ -22,6 +22,8 @@ public class FilesPath {
         public static final String soundsPath = gameFilesPath + "/Sounds";
         public static final String imagesPath = gameFilesPath + "/Images";
         public static final String collectionPath = imagesPath+"/Collection";
+        public static final String cardsPath = imagesPath + "/Cards";
+
     }
 
 }

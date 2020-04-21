@@ -35,24 +35,15 @@ public class ModelDefault {
     }
 
     static public class CardDefaults {
-        static ArrayList<Minion> minions = CardController.ReadCardFromFile.readMinion();
-        static ArrayList<Spell> spells = CardController.ReadCardFromFile.readSpell();
-        static ArrayList<Weapon> weapons = CardController.ReadCardFromFile.readWeapon();
+        public static ArrayList<Minion> minions = CardController.ReadCardFromFile.readMinion();
+        public static ArrayList<Spell> spells = CardController.ReadCardFromFile.readSpell();
+        public static ArrayList<Weapon> weapons = CardController.ReadCardFromFile.readWeapon();
 
         public static ArrayList<Card> defaultPlayerCards() {
             ArrayList<String> cardsName = FileManagement.readLineByLineFile(FilesPath.defaultPlayerCardsName);
             ArrayList<Card> result = new ArrayList<>();
             if (cardsName.get(0).equals("All")) {
-                for (int i = 0; i < minions.size(); i++) {
-                    result.add(minions.get(i));
-
-                }
-                for (int i = 0; i < spells.size(); i++) {
-                    result.add(spells.get(i));
-                }
-                for (int i = 0; i < weapons.size(); i++) {
-                    result.add(weapons.get(i));
-                }
+                result = CardController.getInstance().getAllCards();
             } else {
                 for (int j = 0; j < cardsName.size(); j++) {
                     for (int i = 0; i < minions.size(); i++) {
@@ -74,6 +65,7 @@ public class ModelDefault {
             }
             return result;
         }
+
 
     }
 

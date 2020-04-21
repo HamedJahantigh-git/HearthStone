@@ -3,6 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import defaults.FilesPath;
+import defaults.ModelDefault;
 import model.Player;
 import model.card.Card;
 import model.card.Minion;
@@ -16,6 +17,15 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 public class CardController {
+    private static CardController instance = new CardController();
+
+    private CardController() {
+
+    }
+
+    public static CardController getInstance() {
+        return instance;
+    }
 
     public static class CreatNewCardInFile {
 
@@ -96,6 +106,7 @@ public class CardController {
             }
             return spellsCards;
         }
+
         static public ArrayList<Weapon> readWeapon() {
             ArrayList<Weapon> weaponsCards = new ArrayList<>();
             ArrayList<String> weaponsName = FileManagement.allFileNameInPath(FilesPath.weaponDataPath);
@@ -125,6 +136,20 @@ public class CardController {
         } else {
             result = new String[1];
             result[0] = null;
+        }
+        return result;
+    }
+
+    public ArrayList<Card> getAllCards() {
+        ArrayList<Card> result = new ArrayList<>();
+        for (int i = 0; i < ModelDefault.CardDefaults.minions.size(); i++) {
+            result.add(ModelDefault.CardDefaults.minions.get(i));
+        }
+        for (int i = 0; i < ModelDefault.CardDefaults.spells.size(); i++) {
+            result.add( ModelDefault.CardDefaults.spells.get(i));
+        }
+        for (int i = 0; i <  ModelDefault.CardDefaults.weapons.size(); i++) {
+            result.add( ModelDefault.CardDefaults.weapons.get(i));
         }
         return result;
     }

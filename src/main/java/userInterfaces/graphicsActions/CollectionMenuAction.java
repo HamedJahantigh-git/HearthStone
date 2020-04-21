@@ -4,8 +4,7 @@ import controller.PlayerController;
 import defaults.GraphicsDefault;
 import enums.LogsEnum;
 import logs.PlayerLogs;
-import userInterfaces.myComponent.MyCard;
-import userInterfaces.userMenu.CollectionMenu;
+import userInterfaces.myComponent.MyCardButton;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,13 +16,15 @@ public class CollectionMenuAction extends UserMenuAction {
         super(playerController);
     }
 
-    public void showCards(JButton button, String type, ArrayList<MyCard> heroes) {
+    public void showCards(MyCardButton button, String type, ArrayList<MyCardButton> heroes) {
         button.addActionListener(actionEvent -> {
             for (int i = 0; i < heroes.size(); i++) {
                 if (heroes.get(i).getY() != GraphicsDefault.Collection.heroesUpper.getY())
                     heroes.get(i).setLocation(heroes.get(i).getX(), GraphicsDefault.Collection.heroesUpper.getY());
             }
             button.setLocation(button.getX(), GraphicsDefault.Collection.heroesUpper.getY() + 30);
+            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[1],
+                    type + LogsEnum.valueOf("collection").getEvent_description()[1], playerController.getPlayer());
             switch (type) {
                 case "Neutral":
 

@@ -31,7 +31,7 @@ public class HearthStone {
             e.printStackTrace();
         }
         UserMenu userMenu = new UserMenu(hamed);
-        userMenu.startCollection();
+        userMenu.startShopMenu();
     }
 
     private static void startGraphicalGame() {

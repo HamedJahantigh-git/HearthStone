@@ -3,20 +3,25 @@ package userInterfaces.myComponent;
 import userInterfaces.Sounds;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MyCard extends JButton {
+public class MyCardButton extends JButton  {
     private Bounds bounds;
     private Sounds click;
+    private boolean enable;
 
     {
         click = new Sounds("crossButton.wav");
     }
 
-    public MyCard(JPanel panel, String buttonImagePath, Bounds bounds) {
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    public MyCardButton(JPanel panel, String buttonImagePath, Bounds bounds) {
         this.bounds = bounds;
+        enable = true;
         setIcon(new ImageIcon(ComponentCreator.getInstance().setImage(
                 bounds.getWidth(), bounds.getHeight(),
                 buttonImagePath)));
@@ -29,17 +34,18 @@ public class MyCard extends JButton {
     public void moveListener() {
         addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent me) {
-                click.playOne();
-                //setSize(bounds.getWidth() * 3 / 2, bounds.getHeight() * 3 / 2);
-                setBorder(BorderFactory.createRaisedSoftBevelBorder());
-                // setLocation(bounds.getX(), bounds.getY());
+                    click.playOne();
+                    //setSize(bounds.getWidth() * 3 / 2, bounds.getHeight() * 3 / 2);
+                    setBorder(BorderFactory.createRaisedSoftBevelBorder());
+                    // setLocation(bounds.getX(), bounds.getY());
 
             }
 
             public void mouseExited(MouseEvent me) {
-               // setSize(bounds.getWidth(), bounds.getHeight());
-                setBorder(null);
-                //setLocation(bounds.getX(), bounds.getY());
+                    // setSize(bounds.getWidth(), bounds.getHeight());
+                    setBorder(null);
+                    //setLocation(bounds.getX(), bounds.getY());
+
             }
         });
         /*button.addMouseMotionListener(new MouseAdapter() {
@@ -55,4 +61,6 @@ public class MyCard extends JButton {
     public void choseListener() {
 
     }
+
+
 }

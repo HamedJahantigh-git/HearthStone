@@ -3,6 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import defaults.FilesPath;
+import defaults.GraphicsDefault;
 import enums.ExceptionsEnum;
 import model.Player;
 import model.card.Card;
@@ -89,15 +90,6 @@ public class PlayerController {
         }
         return answer;
     }
-
-    /*public ArrayList<Card> playerAllCards(Player player) {
-        ArrayList<Card> result = new ArrayList<>();
-        result.addAll(player.getFreePlayerCards());
-        for (int i = 0; i < player.getPlayerHeroes().size(); i++) {
-            result.addAll(player.getPlayerHeroes().get(i).getHeroCards());
-        }
-        return result;
-    }*/
 
     public static int numberAllPlayerSignIn() {
         int result;

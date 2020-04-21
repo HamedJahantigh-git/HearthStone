@@ -52,7 +52,7 @@ public class MainMenu {
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 5 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 30, 1);
-        action.goShop(shopButton);
+        action.goShop(shopButton, userMenu);
         JButton collectionButton = ComponentCreator.getInstance().setButton("Collection", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 7 / 12,
