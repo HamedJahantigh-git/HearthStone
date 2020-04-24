@@ -22,8 +22,6 @@ public class ShopMenu {
     private MyJPanel cardPanel;
     private ShopMenuAction action;
     private int sellIndex, buyIndex;
-    private JButton nextPage, backPage;
-    private JLabel money;
 
 
     public ShopMenu(UserMenu userMenu) {
@@ -72,12 +70,12 @@ public class ShopMenu {
 
     public void showCards(ArrayList<Card> cards, boolean sell) {
         cardPanel.removeAll();
-        nextPage = ComponentCreator.getInstance().setButton("", cardPanel, "Right Arrow.png",
+        JButton nextPage = ComponentCreator.getInstance().setButton("", cardPanel, "Right Arrow.png",
                 GraphicsDefault.ShopMenu.cardsSection(0, 1), Color.white, 30, 3);
-        backPage = ComponentCreator.getInstance().setButton("", cardPanel, "Left Arrow.png",
+        JButton backPage = ComponentCreator.getInstance().setButton("", cardPanel, "Left Arrow.png",
                 GraphicsDefault.ShopMenu.cardsSection(0, 2), Color.white, 30, 2);
-        money =ComponentCreator.getInstance().setText("Your Money: "+action.getPlayerController().getPlayer().getMoney(),
-                cardPanel, "FORTE", 30, Color.black,  GraphicsDefault.ShopMenu.cardsSection(0, 3));
+        JLabel money = ComponentCreator.getInstance().setText("Your Money: " + action.getPlayerController().getPlayer().getMoney(),
+                cardPanel, "FORTE", 30, Color.black, GraphicsDefault.ShopMenu.cardsSection(0, 3));
         if (sell) {
             nextPage.addActionListener(actionEvent -> {
                 if (cards.size() > sellIndex + 8)

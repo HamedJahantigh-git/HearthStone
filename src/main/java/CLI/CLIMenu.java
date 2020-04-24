@@ -1,17 +1,5 @@
 package CLI;
 
-import controller.CardController;
-import controller.FileManagement;
-import controller.PlayerController;
-import controller.StoreController;
-import enums.ExceptionsEnum;
-import initializer.InitCLI;
-import logs.PlayerLogs;
-import model.card.Card;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class CLIMenu {
 /*
     private static final CLIMenu instance = new CLIMenu();

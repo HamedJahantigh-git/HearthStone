@@ -14,7 +14,9 @@ public class MyJPanel extends JPanel {
         setVisible(visible);
         setLayout(null);
         setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-        pane.add(this, Integer.valueOf(layer));
+        if(pane!=null) {
+            pane.add(this, Integer.valueOf(layer));
+        }
 
     }
 

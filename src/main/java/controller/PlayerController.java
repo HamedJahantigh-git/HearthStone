@@ -15,19 +15,28 @@ import java.util.Date;
 
 public class PlayerController {
     private Player player;
+    private CollectionController collectionController;
     Gson gson = new GsonBuilder().create();
+
+    public PlayerController() {
+    }
 
     public Player getPlayer() {
         return player;
     }
 
+    public CollectionController getCollectionController() {
+        return collectionController;
+    }
+
     public void signInPlayer(String username, String password) throws Exception {
-        if (!FileManagement.allFileNameInPath(
+        if (!FileManagement.getInstance().allFileNameInPath(
                 FilesPath.playerDataPath).contains(username + ".txt")) {
             throw new Exception(ExceptionsEnum.valueOf("userNoExist").getMessage());
         }
         player = creatPlayerFromFile(
                 FilesPath.playerDataPath, username);
+        collectionController = new CollectionController(player);
         if (!player.getPassword().equals(password)) {
             throw new Exception(ExceptionsEnum.valueOf("wrongPassword").getMessage());
         }
@@ -42,6 +51,7 @@ public class PlayerController {
             throw new Exception(ExceptionsEnum.valueOf("userRepeated").getMessage());
         player = new Player(username, password, registerTime,
                 numberAllPlayerSignIn());
+        collectionController = new CollectionController(player);
         try {
             Writer writer = new FileWriter(
                     FilesPath.playerDataPath + "/" + username + ".txt");
@@ -81,7 +91,7 @@ public class PlayerController {
     private boolean checkExistUsername(String username) {
         boolean answer = false;
         ArrayList<String> result;
-        result = FileManagement.allFileNameInPath(FilesPath.playerDataPath);
+        result = FileManagement.getInstance().allFileNameInPath(FilesPath.playerDataPath);
         String compare;
         for (int i = 0; i < result.size(); i++) {
             compare = result.get(i);
@@ -94,9 +104,9 @@ public class PlayerController {
     public static int numberAllPlayerSignIn() {
         int result;
         ArrayList<String> name;
-        name = FileManagement.allFileNameInPath(FilesPath.playerDataPath);
+        name = FileManagement.getInstance().allFileNameInPath(FilesPath.playerDataPath);
         result = name.size();
-        name = FileManagement.allFileNameInPath(FilesPath.deletePlayerDataPath);
+        name = FileManagement.getInstance().allFileNameInPath(FilesPath.deletePlayerDataPath);
         result += name.size();
         return result;
     }

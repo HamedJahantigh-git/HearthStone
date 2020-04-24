@@ -5,6 +5,7 @@ import defaults.GraphicsDefault;
 import enums.LogsEnum;
 import logs.PlayerLogs;
 import userInterfaces.myComponent.MyCardButton;
+import userInterfaces.userMenu.CollectionMenu;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -16,30 +17,41 @@ public class CollectionMenuAction extends UserMenuAction {
         super(playerController);
     }
 
-    public void showCards(MyCardButton button, String type, ArrayList<MyCardButton> heroes) {
-        button.addActionListener(actionEvent -> {
-            for (int i = 0; i < heroes.size(); i++) {
-                if (heroes.get(i).getY() != GraphicsDefault.Collection.heroesUpper.getY())
-                    heroes.get(i).setLocation(heroes.get(i).getX(), GraphicsDefault.Collection.heroesUpper.getY());
-            }
-            button.setLocation(button.getX(), GraphicsDefault.Collection.heroesUpper.getY() + 30);
-            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[1],
-                    type + LogsEnum.valueOf("collection").getEvent_description()[1], playerController.getPlayer());
-            switch (type) {
-                case "Neutral":
+    public void showHeroCards(ArrayList<MyCardButton> heroes, CollectionMenu collectionMenu) {
+        for (MyCardButton button : heroes) {
+            button.addActionListener(actionEvent -> {
+                for (MyCardButton object : heroes) {
+                    if (object.getY() != GraphicsDefault.Collection.heroesButtonBounds(1).getY())
+                        object.setLocation(object.getX(), GraphicsDefault.Collection.heroesButtonBounds(1).getY());
+                }
+                button.setLocation(button.getX(), GraphicsDefault.Collection.heroesButtonBounds(1).getY() + 30);
+                collectionMenu.setCurrentHeroSelected(button.getButtonName());
+                PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[1],
+                        button.getButtonName() + LogsEnum.valueOf("collection").getEvent_description()[1], playerController.getPlayer());
+                collectionMenu.startShowCardPanelContent(button.getButtonName(),
+                        playerController.getCollectionController().getCollectionCardsShow(
+                                button.getButtonName(), 0, "", true, true));
+            });
+        }
 
-                    break;
-                case "Hunter":
-                    break;
-                case "Mage":
-                    break;
-                case "Priest":
-                    break;
-                case "Rogue":
-                    break;
-                case "Warlock":
-                    break;
-            }
-        });
     }
+
+    public void filterAction(JButton button, CollectionMenu collectionMenu, JTextField searchCardName,
+                             JComboBox<Integer> manaFilter, JComboBox<String> userHaveFilter) {
+        button.addActionListener(actionEvent -> {
+            boolean userCards = true;
+            boolean closedCards = true;
+            if (userHaveFilter.getSelectedItem().toString().equals("User Cards"))
+                closedCards = false;
+            if (userHaveFilter.getSelectedItem().toString().equals("Close Cards"))
+                userCards = false;
+            if (collectionMenu.getCurrentHeroSelected() != null)
+                collectionMenu.startShowCardPanelContent(collectionMenu.getCurrentHeroSelected(),
+                        playerController.getCollectionController().getCollectionCardsShow(
+                                collectionMenu.getCurrentHeroSelected(), (Integer) manaFilter.getSelectedItem(),
+                                searchCardName.getText(), userCards, closedCards));
+        });
+
+    }
+
 }

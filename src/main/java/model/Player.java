@@ -19,21 +19,18 @@ public class Player {
     private Date registerTime;
     private boolean deletePlayer;
     private ArrayList<Hero> playerHeroes;
-    private ArrayList<Card> playerCards;
     private ArrayList<Deck> playerDecks;
     private Deck currentDeck;
     private Deck freeDeck;
 
 
     {
-        playerCards = new ArrayList<>();
         playerDecks = new ArrayList<>();
         deletePlayer = false;
         currentDeck = null;
         money = ModelDefault.PlayerDefaults.defaultMoney;
         playerHeroes = ModelDefault.PlayerDefaults.defaultPlayerHeroes;
-        playerCards = ModelDefault.CardDefaults.defaultPlayerCards();
-        freeDeck = new Deck(playerCards);
+        freeDeck = new Deck(ModelDefault.CardDefaults.defaultPlayerCards());
     }
 
     public Deck getFreeDeck() {
@@ -72,7 +69,7 @@ public class Player {
         return id;
     }
 
-    public ArrayList<Card> getPlayerCards() {
-        return playerCards;
+    public ArrayList<Hero> getPlayerHeroes() {
+        return playerHeroes;
     }
 }

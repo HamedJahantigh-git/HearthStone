@@ -87,6 +87,34 @@ public class ComponentCreator {
         return button;
     }
 
+    public JComboBox<Integer> setIntComboBox(JPanel panel, int first, int last, int step, Bounds bounds) {
+        JComboBox<Integer> combo = new JComboBox<>(creatNumberForCombo(first, last));
+        combo.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        combo.setForeground(Color.BLUE);
+        combo.setMaximumRowCount(step);
+        combo.setLayout(null);
+        panel.add(combo);
+        return combo;
+    }
+
+    public JComboBox<String> setStrComboBox(JPanel panel, String[] choice, int step,Bounds bounds){
+        JComboBox<String> combo = new JComboBox<>(choice);
+        combo.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        combo.setForeground(Color.BLUE);
+        combo.setMaximumRowCount(step);
+        combo.setLayout(null);
+        panel.add(combo);
+        return combo;
+    }
+
+    private static Integer[] creatNumberForCombo(int first, int last) {
+        Integer[] result = new Integer[last - first + 1];
+        for (int i = 0; i < last - first + 1; i++) {
+            result[i] = first + i;
+        }
+        return result;
+    }
+
     public JPasswordField setPasswordField(JPanel panel, Bounds bounds, int fontSize, Color color) {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());

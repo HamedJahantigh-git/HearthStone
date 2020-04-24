@@ -13,6 +13,7 @@ public class Card {
     private int incomeSell;
     private ArrayList<String> mechanics;
     private String description;
+    private int number;
 
     public Card(String name, String cardClass, String type, int mana,
                 int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
@@ -26,8 +27,16 @@ public class Card {
         this.mechanics = mechanics;
         this.description = description;
         this.rarity = rarity;
+        this.number = 0;
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public int getNumber() {
+        return number;
+    }
 
     public int getMana() {
         return mana;
@@ -64,6 +73,5 @@ public class Card {
     public int getIncomeSell() {
         return incomeSell;
     }
-
 
 }

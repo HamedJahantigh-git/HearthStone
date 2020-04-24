@@ -1,14 +1,12 @@
 package defaults;
 
-import controller.CardController;
+import controller.CollectionController;
 import controller.FileManagement;
-import model.Player;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
 import model.card.Weapon;
 import model.hero.*;
-import sun.jvm.hotspot.opto.MachIfNode;
 
 import java.util.ArrayList;
 
@@ -35,15 +33,15 @@ public class ModelDefault {
     }
 
     static public class CardDefaults {
-        public static ArrayList<Minion> minions = CardController.ReadCardFromFile.readMinion();
-        public static ArrayList<Spell> spells = CardController.ReadCardFromFile.readSpell();
-        public static ArrayList<Weapon> weapons = CardController.ReadCardFromFile.readWeapon();
+        public static ArrayList<Minion> minions = FileManagement.getInstance().getReadCardFromFile().readMinion();
+        public static ArrayList<Spell> spells = FileManagement.getInstance().getReadCardFromFile().readSpell();
+        public static ArrayList<Weapon> weapons =  FileManagement.getInstance().getReadCardFromFile().readWeapon();
 
         public static ArrayList<Card> defaultPlayerCards() {
-            ArrayList<String> cardsName = FileManagement.readLineByLineFile(FilesPath.defaultPlayerCardsName);
+            ArrayList<String> cardsName = FileManagement.getInstance().readLineByLineFile(FilesPath.defaultPlayerCardsName);
             ArrayList<Card> result = new ArrayList<>();
             if (cardsName.get(0).equals("All")) {
-                result = CardController.getInstance().getAllCards();
+                result = FileManagement.getInstance().getAllCardsFromFile();
             } else {
                 for (int j = 0; j < cardsName.size(); j++) {
                     for (int i = 0; i < minions.size(); i++) {

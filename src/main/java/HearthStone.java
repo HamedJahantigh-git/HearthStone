@@ -1,8 +1,13 @@
+import controller.CollectionController;
+import controller.FileManagement;
 import controller.PlayerController;
 import initializer.InitCLI;
 import initializer.InitCards;
+import model.card.Card;
 import userInterfaces.AccountMenu;
 import userInterfaces.userMenu.UserMenu;
+
+import java.util.ArrayList;
 
 public class HearthStone {
     public static void main(String[] args) {
@@ -10,6 +15,7 @@ public class HearthStone {
         //startCLIGame();
         //startGraphicalGame();
         test();
+
     }
 
     private static void initializer() {
@@ -31,7 +37,7 @@ public class HearthStone {
             e.printStackTrace();
         }
         UserMenu userMenu = new UserMenu(hamed);
-        userMenu.startShopMenu();
+        userMenu.startCollection();
     }
 
     private static void startGraphicalGame() {

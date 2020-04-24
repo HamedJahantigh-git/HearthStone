@@ -31,9 +31,84 @@ public class GraphicsDefault {
                 screenSize.width * 27 / 100, screenSize.height * 9 / 10);
         public static Bounds cardPanel = new Bounds(10, screenSize.height * 3 / 24,
                 screenSize.width * 71 / 100 - 10, screenSize.height * 65 / 100);
-        public static Bounds heroesUpper = new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
-                + 4 * GraphicsDefault.Collection.cardPanel.getWidth() / 10, GraphicsDefault.screenSize.height * 1 / 30,
-                GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 30, GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 30);
+
+        public static Bounds heroesButtonBounds(int column) {
+            return new Bounds(GraphicsDefault.Collection.cardPanel.getX() + GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 11
+                    + (column - 1) * GraphicsDefault.Collection.cardPanel.getWidth() / 10, GraphicsDefault.screenSize.height * 1 / 30,
+                    GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 30, GraphicsDefault.Collection.cardPanel.getWidth() * 2 / 30);
+        }
+
+        public static Bounds searchSection(int state) {
+            Bounds result = null;
+            int height = UserMenu.mainBounds.getHeight() / 20;
+            int y = GraphicsDefault.UserMenu.mainBounds.getHeight() - GraphicsDefault.UserMenu.mainBounds.getHeight() * 22 / 100;
+
+            if (state == 1)
+                result = new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() / 8,
+                        y, GraphicsDefault.UserMenu.mainBounds.getWidth() / 10, height);
+            if (state == 2)
+                result = new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() / 10 + GraphicsDefault.UserMenu.mainBounds.getWidth() / 8,
+                        y, GraphicsDefault.UserMenu.mainBounds.getWidth() / 10, height);
+            if (state == 3)
+                result = new Bounds(2 * GraphicsDefault.UserMenu.mainBounds.getWidth() / 10 + GraphicsDefault.UserMenu.mainBounds.getWidth() / 8,
+                        y, GraphicsDefault.UserMenu.mainBounds.getWidth() / 15, height);
+            if (state == 4)
+                result = new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() * 26 / 100 + GraphicsDefault.UserMenu.mainBounds.getWidth() / 8,
+                        y, GraphicsDefault.UserMenu.mainBounds.getWidth() / 40, height);
+            if (state == 5)
+                result = new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() * 28 / 100 + GraphicsDefault.UserMenu.mainBounds.getWidth() / 8,
+                        y, GraphicsDefault.UserMenu.mainBounds.getWidth() / 10, height);
+            if (state == 6)
+                result = new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() * 37 / 100 + GraphicsDefault.UserMenu.mainBounds.getWidth() / 8,
+                        y, GraphicsDefault.UserMenu.mainBounds.getWidth() / 16, height);
+            if (state == 7)
+                result = new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() * 45 / 100 + GraphicsDefault.UserMenu.mainBounds.getWidth() / 8,
+                        y, GraphicsDefault.UserMenu.mainBounds.getWidth() / 14, height);
+            return result;
+        }
+
+        public static Bounds cardsSection(int i, int state) {
+            Bounds result = null;
+            int row;
+            if (Math.floorMod(i, 8) < 4) {
+                row = 0;
+            } else {
+                row = 1;
+            }
+            int column = Math.floorMod(i, 4);
+            //title
+            if (state == 0)
+                result = new Bounds(0, cardPanel.getHeight()/13,
+                        cardPanel.getWidth(), cardPanel.getHeight() / 14);
+            //right arrow
+            if (state == 1)
+                result = new Bounds(cardPanel.getWidth() * 10 / 20 + 5, cardPanel.getHeight() * 15 / 17,
+                        cardPanel.getWidth() / 20, cardPanel.getHeight() / 17);
+            //left arrow
+            if (state == 2)
+                result = new Bounds(cardPanel.getWidth() * 9 / 20 - 5, cardPanel.getHeight() * 15 / 17,
+                        cardPanel.getWidth() / 20, cardPanel.getHeight() / 17);
+            //card closed text
+            if (state == 3) {
+                result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 18 / 100 + 10,
+                        cardPanel.getHeight() / 8 + row * cardPanel.getHeight() * 38 / 100 + cardPanel.getHeight() * 30 / 100,
+                        cardPanel.getWidth() * 12 / 100, cardPanel.getHeight() * 5 / 100);
+            }
+            //card number text
+            if (state == 4) {
+                result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 18 / 100 + 10,
+                        cardPanel.getHeight() / 8 + row * cardPanel.getHeight() * 38 / 100 + cardPanel.getHeight() * 30 / 100,
+                        cardPanel.getWidth() * 12 / 100, cardPanel.getHeight() * 5 / 100);
+            }
+            //card location
+            if (state == 5) {
+                result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 18 / 100 + 10,
+                        cardPanel.getHeight() / 8 + row * cardPanel.getHeight() * 38 / 100,
+                        cardPanel.getWidth() * 12 / 100, cardPanel.getHeight() * 30 / 100);
+            }
+
+            return result;
+        }
 
         public static Bounds deckSection(int row, int column, int state) {
             Bounds result = null;
@@ -69,12 +144,12 @@ public class GraphicsDefault {
             int column = Math.floorMod(i, 4);
             //card location
             if (state == 0) {
-                result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 20 / 100+10,
+                result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 20 / 100 + 10,
                         cardPanel.getHeight() / 20 + row * cardPanel.getHeight() * 40 / 100,
                         cardPanel.getWidth() * 13 / 100, cardPanel.getHeight() * 33 / 100);
             }
             //right arrow
-            if (state == 1){
+            if (state == 1) {
                 result = new Bounds(cardPanel.getWidth() * 10 / 20 + 5, cardPanel.getHeight() * 15 / 17,
                         cardPanel.getWidth() / 20, cardPanel.getHeight() / 17);
             }
@@ -90,8 +165,8 @@ public class GraphicsDefault {
             }
             //card price text
             if (state == 4) {
-                result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 20 / 100+10,
-                        cardPanel.getHeight() / 20 + row * cardPanel.getHeight() * 40 / 100+cardPanel.getHeight() * 33 / 100,
+                result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 20 / 100 + 10,
+                        cardPanel.getHeight() / 20 + row * cardPanel.getHeight() * 40 / 100 + cardPanel.getHeight() * 33 / 100,
                         cardPanel.getWidth() * 13 / 100, cardPanel.getHeight() * 5 / 100);
             }
             return result;
@@ -108,17 +183,17 @@ public class GraphicsDefault {
             int width = messagePanel.getWidth() / 7;
             // one button
             if (state == 1) {
-                result = new Bounds((messagePanel.getWidth()-width)/2, messagePanel.getHeight()*9/10-height*3/2,
+                result = new Bounds((messagePanel.getWidth() - width) / 2, messagePanel.getHeight() * 9 / 10 - height * 3 / 2,
                         width, height);
             }
             //right button
             if (state == 2) {
-                result = new Bounds(messagePanel.getWidth()/2+20, messagePanel.getHeight()*9/10-height*3/2,
+                result = new Bounds(messagePanel.getWidth() / 2 + 20, messagePanel.getHeight() * 9 / 10 - height * 3 / 2,
                         width, height);
             }
             //left button
             if (state == 3) {
-                result = new Bounds(messagePanel.getWidth()/2-width-20, messagePanel.getHeight()*9/10-height*3/2,
+                result = new Bounds(messagePanel.getWidth() / 2 - width - 20, messagePanel.getHeight() * 9 / 10 - height * 3 / 2,
                         width, height);
             }
             return result;

@@ -1,6 +1,6 @@
 package userInterfaces.graphicsActions;
 
-import controller.CardController;
+import controller.CollectionController;
 import controller.FileManagement;
 import controller.PlayerController;
 import controller.StoreController;
@@ -12,7 +12,6 @@ import userInterfaces.myComponent.MyCardButton;
 import userInterfaces.userMenu.ShopMenu;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ShopMenuAction extends UserMenuAction {
 
@@ -32,7 +31,7 @@ public class ShopMenuAction extends UserMenuAction {
         button.addActionListener(actionEvent -> {
             PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[2],
                     LogsEnum.valueOf("shop").getEvent_description()[2], playerController.getPlayer());
-            shopMenu.showCards(CardController.getInstance().getAllCards(), false);
+            shopMenu.showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
         });
     }
 
@@ -48,7 +47,7 @@ public class ShopMenuAction extends UserMenuAction {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[5],
                         LogsEnum.valueOf("shop").getEvent_description()[5] + card.getName(), playerController.getPlayer());
                 StoreController.getInstance().sellCard(playerController.getPlayer(), card);
-                FileManagement.savePlayerToFile(playerController.getPlayer());
+                FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
                 shopMenu.onEnabledPanel();
                 shopMenu.showCards(playerController.getPlayer().getFreeDeck().getCards(), true);
             });
@@ -73,7 +72,7 @@ public class ShopMenuAction extends UserMenuAction {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                             LogsEnum.valueOf("error").getEvent_description()[0], playerController.getPlayer());
                     shopMenu.onEnabledPanel();
-                    shopMenu.showCards(CardController.getInstance().getAllCards(), false);
+                    shopMenu.showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
                 });
             } else {
                 JButton[] buttons = MessageCreator.getInstance().yesNoMessage(
@@ -83,9 +82,9 @@ public class ShopMenuAction extends UserMenuAction {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[5],
                             LogsEnum.valueOf("shop").getEvent_description()[5] + card.getName(), playerController.getPlayer());
                     StoreController.getInstance().buyCard(playerController.getPlayer(), card);
-                    FileManagement.savePlayerToFile(playerController.getPlayer());
+                    FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
                     shopMenu.onEnabledPanel();
-                    shopMenu.showCards(CardController.getInstance().getAllCards(), false);
+                    shopMenu.showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
                 });
                 buttons[1].addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[4],
