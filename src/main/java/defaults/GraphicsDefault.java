@@ -70,6 +70,8 @@ public class GraphicsDefault {
         public static Bounds cardsSection(int i, int state) {
             Bounds result = null;
             int row;
+            int aroundX = cardPanel.getWidth() * 2 / 10;
+            ;
             if (Math.floorMod(i, 8) < 4) {
                 row = 0;
             } else {
@@ -78,8 +80,8 @@ public class GraphicsDefault {
             int column = Math.floorMod(i, 4);
             //title
             if (state == 0)
-                result = new Bounds(0, cardPanel.getHeight()/13,
-                        cardPanel.getWidth(), cardPanel.getHeight() / 14);
+                result = new Bounds(aroundX, cardPanel.getHeight() / 13,
+                        cardPanel.getWidth() - 2 * aroundX, cardPanel.getHeight() / 14);
             //right arrow
             if (state == 1)
                 result = new Bounds(cardPanel.getWidth() * 10 / 20 + 5, cardPanel.getHeight() * 15 / 17,
@@ -88,13 +90,7 @@ public class GraphicsDefault {
             if (state == 2)
                 result = new Bounds(cardPanel.getWidth() * 9 / 20 - 5, cardPanel.getHeight() * 15 / 17,
                         cardPanel.getWidth() / 20, cardPanel.getHeight() / 17);
-            //card closed text
-            if (state == 3) {
-                result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 18 / 100 + 10,
-                        cardPanel.getHeight() / 8 + row * cardPanel.getHeight() * 38 / 100 + cardPanel.getHeight() * 30 / 100,
-                        cardPanel.getWidth() * 12 / 100, cardPanel.getHeight() * 5 / 100);
-            }
-            //card number text
+            //card text
             if (state == 4) {
                 result = new Bounds(cardPanel.getWidth() * 15 / 100 + column * cardPanel.getWidth() * 18 / 100 + 10,
                         cardPanel.getHeight() / 8 + row * cardPanel.getHeight() * 38 / 100 + cardPanel.getHeight() * 30 / 100,
@@ -110,16 +106,59 @@ public class GraphicsDefault {
             return result;
         }
 
-        public static Bounds deckSection(int row, int column, int state) {
+        public static Bounds deckSection(int index, int state) {
             Bounds result = null;
-            int partColumn = 2;
             int partRow = 14;
             int aroundX = rightPanel.getWidth() / 8;
             int aroundY = rightPanel.getHeight() / 10;
             int width = (rightPanel.getWidth() - 2 * aroundX);
             int heights = rightPanel.getHeight() / partRow;
+            int row = Math.floorMod((index / 2), 3);
+            int column = Math.floorMod(index, 2);
+            //set title
             if (state == 1) {
-                result = new Bounds(aroundX, aroundY + row * heights * 9 / 8, width, heights);
+                result = new Bounds(aroundX, 0, rightPanel.getWidth() - 2 * aroundX, heights);
+            }
+            //set big button
+            if (state == 2) {
+
+                result = new Bounds((rightPanel.getWidth() - ((rightPanel.getWidth() - 2 * aroundX) - 2 * rightPanel.getWidth() / 8 - 10)) / 2,
+                        rightPanel.getHeight() * 83 / 100 - index * heights,
+                        (rightPanel.getWidth() - 2 * aroundX) - 2 * rightPanel.getWidth() / 8 - 10, heights);
+            }
+            //set small button
+            if (state == 3) {
+                result = new Bounds(aroundX + index * ((rightPanel.getWidth() - 2 * aroundX) / 3),
+                        rightPanel.getHeight() * 71 / 100,
+                        (rightPanel.getWidth() - 2 * aroundX) / 3, heights * 2 / 3);
+            }
+            //right arrow
+            if (state == 4)
+                result = new Bounds(rightPanel.getWidth() - rightPanel.getWidth() / 4,
+                        rightPanel.getHeight() * 85 / 100 - (index + 1) * heights,
+                        rightPanel.getWidth() / 8, rightPanel.getHeight() / 25);
+            //left arrow
+            if (state == 5)
+                result = new Bounds(rightPanel.getWidth() / 8,
+                        rightPanel.getHeight() * 85 / 100 - (index + 1) * heights,
+                        rightPanel.getWidth() / 8, rightPanel.getHeight() / 25);
+            //deck hero location
+            if (state == 6) {
+                result = new Bounds(aroundX, aroundY + index * heights * 19 / 10, width, heights);
+            }
+            //deck name location
+            if (state == 7) {
+                result = new Bounds(aroundX, aroundY + index * heights * 19 / 10 + heights, width, heights * 2 / 3);
+            }
+            //current deck text
+            if (state == 8) {
+                result = new Bounds(aroundX, rightPanel.getHeight() * 83 / 100, width, heights);
+            }
+            //deck card location
+            if (state == 9) {
+                result = new Bounds(aroundX + column * width / 2,
+                        aroundY + heights + row * heights * 10 / 4,
+                        width / 2, heights * 10 / 4);
             }
             return result;
         }
@@ -177,7 +216,7 @@ public class GraphicsDefault {
         public static Bounds messagePanel = new Bounds(screenSize.width / 6, screenSize.height / 5,
                 screenSize.width * 2 / 4, screenSize.height / 2);
 
-        public static Bounds button(int state) {
+        public static Bounds component(int state) {
             Bounds result = null;
             int height = messagePanel.getHeight() / 9;
             int width = messagePanel.getWidth() / 7;
@@ -195,6 +234,27 @@ public class GraphicsDefault {
             if (state == 3) {
                 result = new Bounds(messagePanel.getWidth() / 2 - width - 20, messagePanel.getHeight() * 9 / 10 - height * 3 / 2,
                         width, height);
+            }
+            //comboBox Title
+            if (state == 4) {
+                result = new Bounds(messagePanel.getWidth() / 2 - messagePanel.getWidth() * 7 / 24 - 10, messagePanel.getHeight() * 50 / 100,
+                        messagePanel.getWidth() / 3, height * 3 / 4);
+            }
+            //comboBox box
+            if (state == 5) {
+                result = new Bounds(messagePanel.getWidth() / 2 + 10, messagePanel.getHeight() * 50 / 100,
+                        messagePanel.getWidth() / 4, height * 3 / 4);
+            }
+            //text input Title
+            if (state == 6) {
+                result = new Bounds(messagePanel.getWidth() / 2 - messagePanel.getWidth() * 7 / 24 - 10, messagePanel.getHeight() * 35 / 100,
+                        messagePanel.getWidth() / 3, height * 3 / 4);
+
+            }
+            //text input box
+            if (state == 7) {
+                result = new Bounds(messagePanel.getWidth() / 2 + 10, messagePanel.getHeight() * 35 / 100,
+                        messagePanel.getWidth() / 4, height * 3 / 4);
             }
             return result;
         }

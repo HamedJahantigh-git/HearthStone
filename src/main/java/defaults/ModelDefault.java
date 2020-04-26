@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ModelDefault {
 
     static public class PlayerDefaults {
-        public static final int defaultMoney = 20;
+        public static final int defaultMoney = 2000;
         public static final Hero defaultHero = new Mage();
         public static ArrayList<Hero> defaultPlayerHeroes = new ArrayList<>();
 

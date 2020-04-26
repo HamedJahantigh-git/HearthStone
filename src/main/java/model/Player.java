@@ -2,10 +2,7 @@
 package model;
 
 
-import controller.FileManagement;
-import defaults.FilesPath;
 import defaults.ModelDefault;
-import model.card.Card;
 import model.hero.Hero;
 
 import java.util.ArrayList;
@@ -20,17 +17,17 @@ public class Player {
     private boolean deletePlayer;
     private ArrayList<Hero> playerHeroes;
     private ArrayList<Deck> playerDecks;
-    private Deck currentDeck;
+    private Deck gameDeck;
     private Deck freeDeck;
 
 
     {
         playerDecks = new ArrayList<>();
         deletePlayer = false;
-        currentDeck = null;
         money = ModelDefault.PlayerDefaults.defaultMoney;
         playerHeroes = ModelDefault.PlayerDefaults.defaultPlayerHeroes;
         freeDeck = new Deck(ModelDefault.CardDefaults.defaultPlayerCards());
+        gameDeck = freeDeck;
     }
 
     public Deck getFreeDeck() {
@@ -65,11 +62,23 @@ public class Player {
         this.deletePlayer = deletePlayer;
     }
 
+    public void setGameDeck(Deck gameDeck) {
+        this.gameDeck = gameDeck;
+    }
+
     public int getId() {
         return id;
     }
 
     public ArrayList<Hero> getPlayerHeroes() {
         return playerHeroes;
+    }
+
+    public ArrayList<Deck> getPlayerDecks() {
+        return playerDecks;
+    }
+
+    public Deck getGameDeck() {
+        return gameDeck;
     }
 }

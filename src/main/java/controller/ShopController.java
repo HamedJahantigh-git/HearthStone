@@ -1,28 +1,23 @@
 package controller;
 
-import defaults.ModelDefault;
-import enums.ExceptionsEnum;
 import model.Player;
 import model.card.Card;
-import model.card.Minion;
-import model.card.Spell;
 
-import java.util.ArrayList;
+public class ShopController {
 
-public class StoreController {
+    private static ShopController instance = new ShopController();
 
-    private static StoreController instance = new StoreController();
-
-    private StoreController() {
+    private ShopController() {
     }
 
-    public static StoreController getInstance() {
+    public static ShopController getInstance() {
         return instance;
     }
 
     public void sellCard(Player player, Card card) {
         for (int i = 0; i < player.getFreeDeck().getCards().size(); i++) {
             if (player.getFreeDeck().getCards().get(i).getName().equals(card.getName())) {
+                player.getFreeDeck().getCards().get(i).setNumber(player.getFreeDeck().getCards().get(i).getNumber()-1);
                 player.getFreeDeck().getCards().remove(i);
                 player.changeMoney(+card.getIncomeSell());
                 break;

@@ -26,13 +26,21 @@ public class ShopMenu {
 
     public ShopMenu(UserMenu userMenu) {
         this.userMenu = userMenu;
-        mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Main Collection.jpg",
+        mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Main Shop.jpg",
                 GraphicsDefault.UserMenu.mainBounds, userMenu.getPane(), false, 20);
         action = new ShopMenuAction(userMenu.getPlayerController());
         initMainPanel();
         initCardPanel();
         sellIndex = 0;
         buyIndex = 0;
+    }
+
+    public MyJPanel getCardPanel() {
+        return cardPanel;
+    }
+
+    public ShopMenuAction getAction() {
+        return action;
     }
 
     private void initMainPanel() {
@@ -117,7 +125,7 @@ public class ShopMenu {
         cardPanel.paint(cardPanel.getGraphics());
     }
 
-    public void offEnabledPanel(){
+    public void offEnabledMenu(){
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(false);
         }
@@ -125,7 +133,8 @@ public class ShopMenu {
             component.setEnabled(false);
         }
     }
-    public void onEnabledPanel() {
+
+    public void onEnabledMenu() {
         userMenu.getPane().remove(userMenu.getPane().getComponentsInLayer(29)[0]);
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(true);

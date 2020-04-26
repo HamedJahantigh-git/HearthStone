@@ -1,9 +1,8 @@
 package userInterfaces.graphicsActions;
 
-import controller.CollectionController;
 import controller.FileManagement;
 import controller.PlayerController;
-import controller.StoreController;
+import controller.ShopController;
 import enums.LogsEnum;
 import logs.PlayerLogs;
 import model.card.Card;
@@ -39,22 +38,22 @@ public class ShopMenuAction extends UserMenuAction {
         cardButton.addActionListener(actionEvent -> {
             PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[3],
                     LogsEnum.valueOf("shop").getEvent_description()[3] + card.getName(), playerController.getPlayer());
-            shopMenu.offEnabledPanel();
+            shopMenu.offEnabledMenu();
             JButton[] buttons = MessageCreator.getInstance().yesNoMessage(
                     "<html><center>Your Income: " + card.getIncomeSell() + "</center><br><center>Do you like do it?</center><br><center></center><br><center></center></html>",
                     shopMenu.getUserMenu().getPane(), 29, 30);
             buttons[0].addActionListener(actionEvent2 -> {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[5],
                         LogsEnum.valueOf("shop").getEvent_description()[5] + card.getName(), playerController.getPlayer());
-                StoreController.getInstance().sellCard(playerController.getPlayer(), card);
+                ShopController.getInstance().sellCard(playerController.getPlayer(), card);
                 FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
-                shopMenu.onEnabledPanel();
+                shopMenu.onEnabledMenu();
                 shopMenu.showCards(playerController.getPlayer().getFreeDeck().getCards(), true);
             });
             buttons[1].addActionListener(actionEvent2 -> {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[4],
                         LogsEnum.valueOf("shop").getEvent_description()[4], playerController.getPlayer());
-                shopMenu.onEnabledPanel();
+                shopMenu.onEnabledMenu();
             });
         });
     }
@@ -63,7 +62,7 @@ public class ShopMenuAction extends UserMenuAction {
         cardButton.addActionListener(actionEvent -> {
             PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[3],
                     LogsEnum.valueOf("shop").getEvent_description()[3] + card.getName(), playerController.getPlayer());
-            shopMenu.offEnabledPanel();
+            shopMenu.offEnabledMenu();
             if (playerController.getPlayer().getMoney() < card.getBuyCost()) {
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
                         "<html><center>You haven't Enough Money for Buy." + "</center><br><center>Please Try other</center><br><center></center><br><center></center></html>",
@@ -71,7 +70,7 @@ public class ShopMenuAction extends UserMenuAction {
                 okbutton.addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                             LogsEnum.valueOf("error").getEvent_description()[0], playerController.getPlayer());
-                    shopMenu.onEnabledPanel();
+                    shopMenu.onEnabledMenu();
                     shopMenu.showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
                 });
             } else {
@@ -80,16 +79,16 @@ public class ShopMenuAction extends UserMenuAction {
                         shopMenu.getUserMenu().getPane(), 29, 30);
                 buttons[0].addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[5],
-                            LogsEnum.valueOf("shop").getEvent_description()[5] + card.getName(), playerController.getPlayer());
-                    StoreController.getInstance().buyCard(playerController.getPlayer(), card);
+                            LogsEnum.valueOf("shop").getEvent_description()[6] + card.getName(), playerController.getPlayer());
+                    ShopController.getInstance().buyCard(playerController.getPlayer(), card);
                     FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
-                    shopMenu.onEnabledPanel();
+                    shopMenu.onEnabledMenu();
                     shopMenu.showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
                 });
                 buttons[1].addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[4],
                             LogsEnum.valueOf("shop").getEvent_description()[4], playerController.getPlayer());
-                    shopMenu.onEnabledPanel();
+                    shopMenu.onEnabledMenu();
                 });
             }
         });

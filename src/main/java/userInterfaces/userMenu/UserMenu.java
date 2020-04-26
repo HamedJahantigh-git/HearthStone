@@ -2,12 +2,14 @@ package userInterfaces.userMenu;
 
 import controller.PlayerController;
 import defaults.GraphicsDefault;
+import model.card.Card;
 import userInterfaces.Sounds;
 import userInterfaces.myComponent.MyFrame;
 
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class UserMenu {
@@ -43,12 +45,21 @@ public class UserMenu {
         return mainSounds;
     }
 
+    public ShopMenu getShopMenu() {
+        return shopMenu;
+    }
+
+
+
     public void startCollection() {
         showPanel("Collection");
+        ArrayList<Card> cards = new ArrayList<>();
+        collectionMenu.startShowCardPanelContent("Pleas Select Hero To Show Cards", cards);
     }
 
     public void startShopMenu() {
         showPanel("Shop");
+        shopMenu.getCardPanel().removeAll();
     }
 
     public void startMainMenu() {

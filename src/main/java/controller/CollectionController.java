@@ -1,7 +1,10 @@
 package controller;
 
+import enums.ExceptionsEnum;
+import model.Deck;
 import model.Player;
 import model.card.Card;
+import model.hero.Hero;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,9 +95,96 @@ public class CollectionController {
                 counter = 1;
             }
         }
-        cards.add(player.getFreeDeck().getCards().get(player.getFreeDeck().getCards().size() - 1));
-        cards.get(cards.size() - 1).setNumber(counter);
+        if (player.getFreeDeck().getCards().size() != 0) {
+            cards.add(player.getFreeDeck().getCards().get(player.getFreeDeck().getCards().size() - 1));
+            cards.get(cards.size() - 1).setNumber(counter);
+        }
     }
 
+    public void createNewDeck(String deckName, String heroName) {
+        Deck deck;
+        for (Hero hero : player.getPlayerHeroes()) {
+            if (hero.getHeroName().equals(heroName)) {
+                deck = new Deck(deckName, hero);
+                player.getPlayerDecks().add(deck);
+                break;
+            }
+        }
+    }
+
+    public void moveCardFromFreeToDeck(Deck deck, Card card) throws Exception {
+        if (deck == null)
+            throw new Exception(ExceptionsEnum.valueOf("unSelectedDeck").getMessage());
+        if (deck.getCards().size() >= 15)
+            throw new Exception(ExceptionsEnum.valueOf("fullDeckCards").getMessage());
+        if (!(deck.getHero().getHeroName().equals(card.getCardClass()) || card.getCardClass().equals("Neutral")))
+            throw new Exception(ExceptionsEnum.valueOf("unMatchingCardAndDeck").getMessage());
+        if (countCardInDeck(deck, card) >= 2)
+            throw new Exception(ExceptionsEnum.valueOf("moreTowCardExist").getMessage());
+        for (int i = 0; i < player.getFreeDeck().getCards().size(); i++) {
+            if (card.getName().equals(player.getFreeDeck().getCards().get(i).getName())) {
+                deck.addCard(card);
+                player.getFreeDeck().getCards().get(i).setNumber(player.getFreeDeck().getCards().get(i).getNumber() - 1);
+                player.getFreeDeck().getCards().remove(player.getFreeDeck().getCards().get(i));
+                break;
+            }
+        }
+    }
+
+    public void moveCardFromDeckToFree(Deck deck, Card card) {
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            if (card.getName().equals(deck.getCards().get(i).getName())) {
+                player.getFreeDeck().getCards().add(card);
+                deck.getCards().remove(i);
+                break;
+            }
+        }
+    }
+
+    public void deleteDeck(Deck deck) {
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            moveCardFromDeckToFree(deck, deck.getCards().get(i));
+        }
+        player.setGameDeck(player.getFreeDeck());
+        for (int i = 0; i < player.getPlayerDecks().size(); i++) {
+            if (player.getPlayerDecks().get(i).getName().equals(deck.getName())) {
+                player.getPlayerDecks().remove(i);
+                break;
+            }
+        }
+    }
+
+    public void editDeckCharacteristics(Deck deck, String newName, String newHeroName) throws Exception {
+        if (checkDeckHeroCard(deck.getHero().getHeroName(), deck))
+            throw new Exception(ExceptionsEnum.valueOf("unEditableDeck").getMessage());
+        deck.setName(newName);
+        for (Hero hero : player.getPlayerHeroes()) {
+            if (hero.getHeroName().equals(newHeroName)) {
+                deck.setHero(hero);
+                break;
+            }
+        }
+    }
+
+    private boolean checkDeckHeroCard(String heroName, Deck deck) {
+        boolean result = false;
+        for (Card card : deck.getCards()) {
+            if (card.getCardClass().equals(heroName)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private int countCardInDeck(Deck deck, Card card) {
+        int count = 0;
+        for (int i = 0; i < deck.getCards().size(); i++) {
+            if (card.getName().equals(deck.getCards().get(i).getName())) {
+                count++;
+            }
+        }
+        return count;
+    }
 
 }

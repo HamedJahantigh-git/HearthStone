@@ -22,6 +22,7 @@ public class MyCardButton extends JButton {
     }
 
     public MyCardButton(JPanel panel, String buttonImagePath, Bounds bounds) {
+        super();
         this.bounds = bounds;
         this.buttonName = null;
         this.buttonImagePath = buttonImagePath;
@@ -37,6 +38,7 @@ public class MyCardButton extends JButton {
     }
 
     public MyCardButton(String name, JPanel panel, String buttonImagePath, Bounds bounds) {
+
         this(panel, buttonImagePath, bounds);
         this.buttonName = name;
     }
