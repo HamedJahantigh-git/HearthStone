@@ -78,7 +78,7 @@ public class CollectionMenu {
                         GraphicsDefault.UserMenu.mainBounds.getHeight() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 12 - 50,
                         GraphicsDefault.UserMenu.mainBounds.getWidth() / 12,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 14), Color.white, 30, 0);
-        action.backToUserMenu(back, userMenu);
+        action.backToUserMenu(back,userMenu);
         ComponentCreator.getInstance().setText("Search By Name: ", mainPanel,
                 "FORTE", 20, Color.black,
                 GraphicsDefault.Collection.searchSection(1));

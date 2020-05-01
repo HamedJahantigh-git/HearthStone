@@ -1,5 +1,7 @@
 package enums;
 
+import defaults.ModelDefault;
+
 public enum MessageEnum {
     emptyImport("Empty Import","<html><center>Please Fill Empty Fields.</center><br><center></center><br><center></center></html>"),
     successSignUp("Success Sign Up", "<html>Your Account has been Successfully Created.</html>"),
@@ -20,7 +22,13 @@ public enum MessageEnum {
     deleteDeck("Delete Selected Deck","<html><center>are You Sure for Deleting this Deck?</center>" +
             "<br><center></center><br><center></center></html>"),
     editDeckMistake("Edit Deck Mistake","<html><center>there is Card of Current Hero Deck in This Deck</center>" +
-            "<br><center>Can't Apply this Change for Deck.</center><br><center></center></html>");
+            "<br><center>Can't Apply this Change for Deck.</center><br><center></center></html>"),
+    emptyGameDeck("Empty Game Deck","<html><center>You don't Select any Deck for Game.</center>" +
+            "<br><center>Please Chose one.</center><br><center></center></html>"),
+    gameMenu("Menu in Game", "<html><center>Menu</center>" +
+            "<br><center></center><br><center></center><br><center></center><br><center></center><br><center></center></html>"),
+    lowDeckCards("Low Deck Cards for Game","<html><center>This Deck have Low Card for Game.</center>" +
+            "<br><center>You need at least "+ ModelDefault.deckDefaults.minNumberCards +" Cards for Game.</center><br><center></center></html>");
 
     private String title, text;
 

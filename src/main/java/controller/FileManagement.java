@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import defaults.FilesPath;
 import defaults.ModelDefault;
+import model.Game;
 import model.Player;
 import model.card.Card;
 import model.card.Minion;
@@ -46,15 +47,9 @@ public class FileManagement {
 
     public ArrayList<Card> getAllCardsFromFile() {
         ArrayList<Card> result = new ArrayList<>();
-        for (int i = 0; i < ModelDefault.CardDefaults.minions.size(); i++) {
-            result.add(ModelDefault.CardDefaults.minions.get(i));
-        }
-        for (int i = 0; i < ModelDefault.CardDefaults.spells.size(); i++) {
-            result.add( ModelDefault.CardDefaults.spells.get(i));
-        }
-        for (int i = 0; i <  ModelDefault.CardDefaults.weapons.size(); i++) {
-            result.add( ModelDefault.CardDefaults.weapons.get(i));
-        }
+            result.addAll(ModelDefault.CardDefaults.minions);
+            result.addAll(ModelDefault.CardDefaults.spells);
+            result.addAll(ModelDefault.CardDefaults.weapons);
         return result;
     }
 
@@ -73,6 +68,18 @@ public class FileManagement {
             Writer writer = new FileWriter(
                     FilesPath.playerDataPath + "/" + player.getUserName() + ".txt");
             gson.toJson(player, writer);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveGameModelToFile(Game game) {
+        gson = new GsonBuilder().create();
+        try {
+            Writer writer = new FileWriter(
+                    FilesPath.gameModel + "/battle#" + game.getID() + ".txt");
+            gson.toJson(game, writer);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

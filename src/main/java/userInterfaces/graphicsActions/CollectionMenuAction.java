@@ -17,7 +17,7 @@ import userInterfaces.userMenu.CollectionMenu;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class CollectionMenuAction extends UserMenuAction {
+public class CollectionMenuAction extends MainMenuAction {
 
     private CollectionMenu collectionMenu;
 
@@ -175,16 +175,25 @@ public class CollectionMenuAction extends UserMenuAction {
     public void selectDeckForGame(JButton button) {
         button.addActionListener(actionEvent -> {
             collectionMenu.offEnabledMenu();
-            JButton okbutton = MessageCreator.getInstance().errorMessage(
-                    MessageEnum.valueOf("changeGameDeck").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
-            okbutton.addActionListener(actionEvent2 -> {
-                playerController.getPlayer().setGameDeck(collectionMenu.getSelectedDeck());
+            try {
+                playerController.getCollectionController().setGameDeck(collectionMenu.getSelectedDeck());
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[8],
                         LogsEnum.valueOf("collection").getEvent_description()[6] + collectionMenu.getSelectedDeck().getName(),
                         playerController.getPlayer());
                 FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
-                collectionMenu.onEnabledMenu();
-            });
+                JButton okbutton = MessageCreator.getInstance().errorMessage(
+                        MessageEnum.valueOf("changeGameDeck").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
+                okbutton.addActionListener(actionEvent2 -> {
+                    collectionMenu.onEnabledMenu();
+                });
+            } catch (Exception e) {
+                JButton okbutton = MessageCreator.getInstance().errorMessage(
+                        MessageEnum.valueOf("lowDeckCards").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
+                okbutton.addActionListener(actionEvent2 -> {
+                    collectionMenu.onEnabledMenu();
+                });
+            }
+
         });
     }
 

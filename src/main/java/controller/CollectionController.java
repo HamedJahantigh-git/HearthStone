@@ -1,5 +1,6 @@
 package controller;
 
+import defaults.ModelDefault;
 import enums.ExceptionsEnum;
 import model.Deck;
 import model.Player;
@@ -112,10 +113,16 @@ public class CollectionController {
         }
     }
 
+    public void setGameDeck (Deck deck) throws Exception {
+        if(deck.getCards().size()<ModelDefault.deckDefaults.minNumberCards)
+            throw new Exception(ExceptionsEnum.valueOf("minDeckCard").getMessage());
+        player.setGameDeck(deck);
+    }
+
     public void moveCardFromFreeToDeck(Deck deck, Card card) throws Exception {
         if (deck == null)
             throw new Exception(ExceptionsEnum.valueOf("unSelectedDeck").getMessage());
-        if (deck.getCards().size() >= 15)
+        if (deck.getCards().size() >= ModelDefault.deckDefaults.maxNumberCards)
             throw new Exception(ExceptionsEnum.valueOf("fullDeckCards").getMessage());
         if (!(deck.getHero().getHeroName().equals(card.getCardClass()) || card.getCardClass().equals("Neutral")))
             throw new Exception(ExceptionsEnum.valueOf("unMatchingCardAndDeck").getMessage());
@@ -142,9 +149,8 @@ public class CollectionController {
     }
 
     public void deleteDeck(Deck deck) {
-        for (int i = 0; i < deck.getCards().size(); i++) {
-            moveCardFromDeckToFree(deck, deck.getCards().get(i));
-        }
+        player.getFreeDeck().getCards().addAll(deck.getCards());
+        deck.getCards().removeAll(deck.getCards());
         player.setGameDeck(player.getFreeDeck());
         for (int i = 0; i < player.getPlayerDecks().size(); i++) {
             if (player.getPlayerDecks().get(i).getName().equals(deck.getName())) {
@@ -155,7 +161,7 @@ public class CollectionController {
     }
 
     public void editDeckCharacteristics(Deck deck, String newName, String newHeroName) throws Exception {
-        if (checkDeckHeroCard(deck.getHero().getHeroName(), deck))
+        if (checkDeckHeroCard(deck.getHero().getHeroName(), deck)&&!newHeroName.equals(deck.getHero().getHeroName()))
             throw new Exception(ExceptionsEnum.valueOf("unEditableDeck").getMessage());
         deck.setName(newName);
         for (Hero hero : player.getPlayerHeroes()) {

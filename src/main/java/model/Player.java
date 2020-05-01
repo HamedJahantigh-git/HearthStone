@@ -3,6 +3,7 @@ package model;
 
 
 import defaults.ModelDefault;
+import model.card.Card;
 import model.hero.Hero;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Player {
     private ArrayList<Deck> playerDecks;
     private Deck gameDeck;
     private Deck freeDeck;
+    private PlayerGame playerGame;
 
 
     {
@@ -28,7 +30,9 @@ public class Player {
         playerHeroes = ModelDefault.PlayerDefaults.defaultPlayerHeroes;
         freeDeck = new Deck(ModelDefault.CardDefaults.defaultPlayerCards());
         gameDeck = freeDeck;
+        newPlayerGame();
     }
+
 
     public Deck getFreeDeck() {
         return freeDeck;
@@ -45,6 +49,9 @@ public class Player {
         this.money += differ;
     }
 
+    public void newPlayerGame(){
+        playerGame = new PlayerGame();
+    }
 
     public String getUserName() {
         return userName;
@@ -80,5 +87,68 @@ public class Player {
 
     public Deck getGameDeck() {
         return gameDeck;
+    }
+
+    public PlayerGame getPlayerGame() {
+        return playerGame;
+    }
+
+    public class PlayerGame {
+        private ArrayList<Card> groundDeck;
+        private ArrayList<Card> usedCard;
+        private ArrayList<Card> handCard;
+        private ArrayList<Card> aroundCard;
+        private int randMana, currentMana;
+        private Hero hero;
+
+        public PlayerGame() {
+            this.groundDeck = new ArrayList<>();
+            this.usedCard = new ArrayList<>();
+            this.handCard = new ArrayList<>();
+            this.aroundCard = new ArrayList<>();
+            this.randMana = 1;
+            this.currentMana = 1;
+        }
+
+        public void startPlayerGame(Deck deck) {
+            aroundCard.addAll(deck.getCards());
+            this.hero = deck.getHero();
+        }
+
+        public void creatAroundDeck(Deck deck) {
+
+        }
+
+        public ArrayList<Card> getGroundDeck() {
+            return groundDeck;
+        }
+
+        public ArrayList<Card> getUsedCard() {
+            return usedCard;
+        }
+
+        public ArrayList<Card> getHandCard() {
+            return handCard;
+        }
+
+        public ArrayList<Card> getAroundCard() {
+            return aroundCard;
+        }
+
+        public int getRandMana() {
+            return randMana;
+        }
+
+        public void setRandMana(int randMana) {
+            this.randMana = randMana;
+        }
+
+        public int getCurrentMana() {
+            return currentMana;
+        }
+
+        public Hero getHero() {
+            return hero;
+        }
     }
 }

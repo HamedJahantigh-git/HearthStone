@@ -7,10 +7,7 @@ import enums.LogsEnum;
 import logs.PlayerLogs;
 import model.card.Card;
 import userInterfaces.graphicsActions.ShopMenuAction;
-import userInterfaces.myComponent.Bounds;
-import userInterfaces.myComponent.ComponentCreator;
-import userInterfaces.myComponent.MyCardButton;
-import userInterfaces.myComponent.MyJPanel;
+import userInterfaces.myComponent.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +56,7 @@ public class ShopMenu {
                 GraphicsDefault.ShopMenu.rightButton1, Color.white, 27, 1);
         JButton sellButton = ComponentCreator.getInstance().setButton("Sell", mainPanel, "buttons3.png",
                 GraphicsDefault.ShopMenu.rightButton2, Color.white, 27, 1);
-        action.backToUserMenu(back, userMenu);
+        action.backToUserMenu(back,userMenu);
         action.exitGame(exitGame);
         action.buyButton(buyButton, this);
         action.sellButton(sellButton, this);

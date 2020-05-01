@@ -16,6 +16,7 @@ import java.util.Date;
 public class PlayerController {
     private Player player;
     private CollectionController collectionController;
+    private StatusController statusController;
     Gson gson = new GsonBuilder().create();
 
     public PlayerController() {

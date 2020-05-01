@@ -1,5 +1,6 @@
 package defaults;
 
+import com.sun.org.apache.xpath.internal.operations.String;
 import userInterfaces.myComponent.Bounds;
 
 import java.awt.*;
@@ -18,6 +19,40 @@ public class GraphicsDefault {
         public static int componentDistance = mainBounds.getHeight() / numberMenuPart;
         public static int componentHeight = componentDistance * 2 / 3;
         public static int componentWidth = mainBounds.getWidth() / 2;
+    }
+
+    public static class GameBoard {
+        public static Bounds mainBounds = new Bounds(0, 0, screenSize.width, screenSize.height);
+        public static Bounds aroundDeckIcon = new Bounds(mainBounds.getWidth() * 175 / 200, mainBounds.getHeight() * 50 / 100,
+                mainBounds.getWidth() * 8 / 200, mainBounds.getHeight() * 23 / 200);
+        public static Bounds manaBar = new Bounds(mainBounds.getWidth() * 181 / 200, mainBounds.getHeight() * 65 / 100,
+                mainBounds.getWidth() * 18 / 200, mainBounds.getHeight() * 23 / 200);
+        public static Bounds menuIcon = new Bounds(mainBounds.getWidth() - mainBounds.getHeight() / 8 - 40, 20,
+                mainBounds.getHeight() / 8, mainBounds.getHeight() / 8);
+        public static Bounds menuMessage = new Bounds(mainBounds.getWidth() * 35 / 100, mainBounds.getHeight() / 6, mainBounds.getWidth() * 3 / 10, mainBounds.getHeight() * 2 / 3);
+        public static Bounds turnButton = new Bounds(mainBounds.getWidth() * 159 / 200, mainBounds.getHeight() * 41 / 100,
+                mainBounds.getWidth() * 20 / 200, mainBounds.getHeight() * 17 / 200);
+        public static Bounds heroBounds = new Bounds(mainBounds.getWidth() * 92 / 200, mainBounds.getHeight() * 60 / 100,
+                mainBounds.getWidth() * 26 / 200, mainBounds.getHeight() * 42 / 200);
+        public static Bounds heroPowerBounds = new Bounds(mainBounds.getWidth() * 120 / 200, mainBounds.getHeight() * 66 / 100,
+                mainBounds.getWidth() * 20 / 200, mainBounds.getHeight() * 23 / 200);
+
+        public static Bounds handDeckCard(int index, int size) {
+            int width =mainBounds.getWidth()*8/100;
+            int height=mainBounds.getHeight()*15/100;
+            int xStart= (mainBounds.getWidth()-width*size)/2;
+            int xEnd = width*size+xStart;
+            int y= mainBounds.getHeight()*80/100;
+            int xPart = (xEnd-xStart)/size;
+            return new Bounds(xEnd-xPart*(index+1), y, width,height);
+        }
+
+        public static Bounds menuButtons(int index){
+           return new Bounds(GraphicsDefault.GameBoard.menuMessage.getWidth() / 5,
+                    GraphicsDefault.GameBoard.menuMessage.getHeight() * (2*index+1) / 12,
+                    GraphicsDefault.GameBoard.menuMessage.getWidth() * 6 / 10,
+                    GraphicsDefault.GameBoard.menuMessage.getHeight() / 7 - 10);
+        }
     }
 
     public static class UserMenu {

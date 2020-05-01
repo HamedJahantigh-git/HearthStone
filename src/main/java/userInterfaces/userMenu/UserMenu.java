@@ -2,6 +2,7 @@ package userInterfaces.userMenu;
 
 import controller.PlayerController;
 import defaults.GraphicsDefault;
+import model.Player;
 import model.card.Card;
 import userInterfaces.Sounds;
 import userInterfaces.myComponent.MyFrame;
@@ -21,6 +22,8 @@ public class UserMenu {
     private MainMenu mainMenu;
     private CollectionMenu collectionMenu;
     private ShopMenu shopMenu;
+    private StatusMenu statusMenu;
+    private GameBoard gameBoard;
 
     public UserMenu(PlayerController playerController) {
         this.playerController = playerController;
@@ -31,6 +34,7 @@ public class UserMenu {
         mainMenu = new MainMenu(this);
         shopMenu = new ShopMenu(this);
         collectionMenu = new CollectionMenu(this);
+        statusMenu = new StatusMenu(this);
     }
 
     public PlayerController getPlayerController() {
@@ -49,7 +53,9 @@ public class UserMenu {
         return shopMenu;
     }
 
-
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
 
     public void startCollection() {
         showPanel("Collection");
@@ -62,6 +68,20 @@ public class UserMenu {
         shopMenu.getCardPanel().removeAll();
     }
 
+    public void startGame() {
+        deleteLayer(40,60);
+        gameBoard = new GameBoard(this, new Player[] {playerController.getPlayer()},"Battle Ground 1");
+        showPanel("Play");
+    }
+
+    public void startSettingMenu() {
+
+    }
+
+    public void startStatus() {
+        showPanel("Status");
+    }
+
     public void startMainMenu() {
         showPanel("Main Menu");
     }
@@ -70,38 +90,52 @@ public class UserMenu {
         switch (s) {
             case "Main Menu":
                 offAllLayer();
-                for (int i = 0; i < 10; i++) {
-                    for (Component component : pane.getComponentsInLayer(i)) {
-                        component.setVisible(true);
-                        component.setEnabled(true);
-                    }
-                }
+                onLayer(0, 10);
+                break;
+            case "Play":
+                offAllLayer();
+                onLayer(40, 60);
                 break;
             case "Shop":
                 offAllLayer();
-                for (int i = 20; i < 30; i++) {
-                    for (Component component : pane.getComponentsInLayer(i)) {
-                        component.setVisible(true);
-                        component.setEnabled(true);
-                    }
-                }
+                onLayer(20, 30);
                 break;
             case "Collection":
                 offAllLayer();
-                for (int i = 10; i < 20; i++) {
-                    for (Component component : pane.getComponentsInLayer(i)) {
-                        component.setVisible(true);
-                        component.setEnabled(true);
-                    }
-                }
+                onLayer(10, 20);
+                break;
+            case "Setting":
+                offAllLayer();
+                onLayer(30, 35);
+                break;
+            case "Status":
+                offAllLayer();
+                onLayer(35, 40);
                 break;
         }
     }
 
-    private void offAllLayer (){
+    private void offAllLayer() {
         for (Component component : pane.getComponents()) {
             component.setVisible(false);
             component.setEnabled(false);
+        }
+    }
+
+    private void onLayer(int start, int end) {
+        for (int i = start; i < end; i++) {
+            for (Component component : pane.getComponentsInLayer(i)) {
+                component.setVisible(true);
+                component.setEnabled(true);
+            }
+        }
+    }
+
+    private void deleteLayer(int start, int end) {
+        for (int i = start; i < end; i++) {
+            for (Component component : pane.getComponentsInLayer(i)) {
+                pane.remove(component);
+            }
         }
     }
 

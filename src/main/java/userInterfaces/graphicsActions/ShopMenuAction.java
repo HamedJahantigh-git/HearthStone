@@ -6,13 +6,15 @@ import controller.ShopController;
 import enums.LogsEnum;
 import logs.PlayerLogs;
 import model.card.Card;
+import model.card.Minion;
 import userInterfaces.myComponent.MessageCreator;
 import userInterfaces.myComponent.MyCardButton;
 import userInterfaces.userMenu.ShopMenu;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
-public class ShopMenuAction extends UserMenuAction {
+public class ShopMenuAction extends MainMenuAction {
 
     public ShopMenuAction(PlayerController playerController) {
         super(playerController);
@@ -30,6 +32,7 @@ public class ShopMenuAction extends UserMenuAction {
         button.addActionListener(actionEvent -> {
             PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[2],
                     LogsEnum.valueOf("shop").getEvent_description()[2], playerController.getPlayer());
+            ArrayList<Card> a = FileManagement.getInstance().getAllCardsFromFile();
             shopMenu.showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
         });
     }

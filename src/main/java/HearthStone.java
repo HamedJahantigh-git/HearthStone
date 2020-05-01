@@ -1,13 +1,11 @@
-import controller.CollectionController;
+
 import controller.FileManagement;
 import controller.PlayerController;
 import initializer.InitCLI;
 import initializer.InitCards;
-import model.card.Card;
 import userInterfaces.AccountMenu;
 import userInterfaces.userMenu.UserMenu;
 
-import java.util.ArrayList;
 
 public class HearthStone {
     public static void main(String[] args) {
@@ -32,12 +30,12 @@ public class HearthStone {
     private static void test(){
         PlayerController hamed = new PlayerController();
         try {
-            hamed.signInPlayer("hamed","hamed");
+            hamed.signInPlayer("ali","ali");
         } catch (Exception e) {
             e.printStackTrace();
         }
         UserMenu userMenu = new UserMenu(hamed);
-        userMenu.startCollection();
+        userMenu.startMainMenu();
     }
 
     private static void startGraphicalGame() {

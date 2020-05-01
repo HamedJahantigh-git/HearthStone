@@ -9,12 +9,14 @@ public class Deck {
     private String name;
     private ArrayList<Card> cards;
     private Hero hero;
-    private int minCards, maxCards;
-
+    private int victoryNumber;
+    private int gameNumber;
     public Deck(String name, Hero hero) {
         this.name = name;
         this.hero = hero;
         cards = new ArrayList<>();
+        victoryNumber = 0;
+        gameNumber = 0;
     }
 
     public Deck (ArrayList<Card> cards){

@@ -2,7 +2,7 @@ package userInterfaces.userMenu;
 
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
-import userInterfaces.graphicsActions.UserMenuAction;
+import userInterfaces.graphicsActions.MainMenuAction;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
 import userInterfaces.myComponent.MyJPanel;
@@ -14,7 +14,7 @@ public class MainMenu {
 
     private MyJPanel mainPanel;
     private MyJPanel boxPanel;
-    private UserMenuAction action;
+    private MainMenuAction action;
     private UserMenu userMenu;
 
     public MainMenu(UserMenu userMenu) {
@@ -23,7 +23,7 @@ public class MainMenu {
                 GraphicsDefault.UserMenu.mainBounds, userMenu.getPane(), false, 1);
         boxPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/UserMenu2.png",
                 GraphicsDefault.UserMenu.boxMainBounds, userMenu.getPane(), false, 2);
-        action = new UserMenuAction(userMenu.getPlayerController());
+        action = new MainMenuAction(userMenu.getPlayerController());
         init();
     }
 
@@ -46,7 +46,7 @@ public class MainMenu {
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 3 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 30, 1);
-        action.playGame(playButton);
+        action.playGame(playButton, userMenu);
         JButton shopButton = ComponentCreator.getInstance().setButton("Shop", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 5 / 12,
@@ -64,6 +64,28 @@ public class MainMenu {
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 9 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 27, 1);
-        action.goStatus(collectionButton);
+        action.goStatus(statusButton,userMenu);
+    }
+
+    public void offEnabledMenu(){
+        for (Component component : mainPanel.getComponents()) {
+            component.setEnabled(false);
+        }
+        for (Component component : boxPanel.getComponents()) {
+            component.setEnabled(false);
+        }
+    }
+
+    public void onEnabledMenu() {
+        for (Component c: userMenu.getPane().getComponentsInLayer(9))
+            userMenu.getPane().remove(c);
+        for (Component component : mainPanel.getComponents()) {
+            component.setEnabled(true);
+        }
+        for (Component component : boxPanel.getComponents()) {
+            component.setEnabled(true);
+        }
+        mainPanel.paint(mainPanel.getGraphics());
+        boxPanel.paint(boxPanel.getGraphics());
     }
 }

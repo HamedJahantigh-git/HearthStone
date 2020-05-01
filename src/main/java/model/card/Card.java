@@ -14,6 +14,9 @@ public class Card {
     private ArrayList<String> mechanics;
     private String description;
     private int number;
+    private int numberUsage;
+
+    public Card(){}
 
     public Card(String name, String cardClass, String type, int mana,
                 int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
@@ -28,6 +31,7 @@ public class Card {
         this.description = description;
         this.rarity = rarity;
         this.number = 0;
+        this.numberUsage = 0;
     }
 
     public void setNumber(int number) {

@@ -72,6 +72,9 @@ public class ComponentCreator {
                 if (state == 3) {
                     button.setLocation(bounds.getX() + 10, bounds.getY());
                 }
+                if (state==4){
+                   button.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+                }
                 //button.setSize(bounds.getWidth()+100, bounds.getHeight()+10);
 
             }
@@ -81,6 +84,9 @@ public class ComponentCreator {
                 if (state == 1 || state == 2 || state == 3)
                     button.setLocation(bounds.getX(), bounds.getY());
                 //button.setSize(bounds.getWidth(), bounds.getHeight());
+                if(state == 4){
+                    button.setBorder(null);
+                }
             }
         });
         panel.add(button);
