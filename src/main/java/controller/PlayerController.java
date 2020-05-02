@@ -30,6 +30,10 @@ public class PlayerController {
         return collectionController;
     }
 
+    public StatusController getStatusController() {
+        return statusController;
+    }
+
     public void signInPlayer(String username, String password) throws Exception {
         if (!FileManagement.getInstance().allFileNameInPath(
                 FilesPath.playerDataPath).contains(username + ".txt")) {
@@ -38,6 +42,7 @@ public class PlayerController {
         player = creatPlayerFromFile(
                 FilesPath.playerDataPath, username);
         collectionController = new CollectionController(player);
+        statusController = new StatusController(player.getPlayerDecks());
         if (!player.getPassword().equals(password)) {
             throw new Exception(ExceptionsEnum.valueOf("wrongPassword").getMessage());
         }
@@ -53,6 +58,7 @@ public class PlayerController {
         player = new Player(username, password, registerTime,
                 numberAllPlayerSignIn());
         collectionController = new CollectionController(player);
+        statusController = new StatusController(player.getPlayerDecks());
         try {
             Writer writer = new FileWriter(
                     FilesPath.playerDataPath + "/" + username + ".txt");

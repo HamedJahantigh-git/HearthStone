@@ -11,6 +11,7 @@ import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
 import model.card.Weapon;
+import model.hero.Hero;
 
 import java.io.*;
 
@@ -80,6 +81,18 @@ public class FileManagement {
             Writer writer = new FileWriter(
                     FilesPath.gameModel + "/battle#" + game.getID() + ".txt");
             gson.toJson(game, writer);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveHeroModelToFile(Hero hero) {
+        gson = new GsonBuilder().create();
+        try {
+            Writer writer = new FileWriter(
+                    FilesPath.heroDataPath+"/" + hero.getHeroName()+".txt");
+            gson.toJson(hero, writer);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

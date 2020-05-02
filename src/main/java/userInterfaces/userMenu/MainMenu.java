@@ -2,6 +2,7 @@ package userInterfaces.userMenu;
 
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
+import enums.StatusLayer;
 import userInterfaces.graphicsActions.MainMenuAction;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
@@ -40,7 +41,7 @@ public class MainMenu {
                         20,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 8,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 8), Color.white, 35, 1);
-        action.goSetting();
+        action.goSetting(setting, userMenu);
         JButton playButton = ComponentCreator.getInstance().setButton("Play", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 3 / 12,
@@ -64,28 +65,36 @@ public class MainMenu {
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 9 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 27, 1);
-        action.goStatus(statusButton,userMenu);
+        action.goStatus(statusButton, userMenu);
     }
 
-    public void offEnabledMenu(){
+    public void offEnabledMenu() {
+        for (int i = 2; i < 10; i++) {
+            for (Component component : userMenu.getPane().getComponentsInLayer(i)) {
+                component.setEnabled(false);
+                component.setVisible(false);
+            }
+        }
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(false);
-        }
-        for (Component component : boxPanel.getComponents()) {
-            component.setEnabled(false);
+            component.setVisible(false);
         }
     }
 
     public void onEnabledMenu() {
-        for (Component c: userMenu.getPane().getComponentsInLayer(9))
+        for (Component c : userMenu.getPane().getComponentsInLayer(9)) {
             userMenu.getPane().remove(c);
+        }
+        for (int i = 2; i < 10; i++) {
+            for (Component component : userMenu.getPane().getComponentsInLayer(i)) {
+                component.setEnabled(true);
+                component.setVisible(true);
+            }
+        }
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(true);
-        }
-        for (Component component : boxPanel.getComponents()) {
-            component.setEnabled(true);
+            component.setVisible(true);
         }
         mainPanel.paint(mainPanel.getGraphics());
-        boxPanel.paint(boxPanel.getGraphics());
     }
 }

@@ -23,6 +23,7 @@ public class UserMenu {
     private CollectionMenu collectionMenu;
     private ShopMenu shopMenu;
     private StatusMenu statusMenu;
+    private SettingMenu settingMenu;
     private GameBoard gameBoard;
 
     public UserMenu(PlayerController playerController) {
@@ -35,6 +36,7 @@ public class UserMenu {
         shopMenu = new ShopMenu(this);
         collectionMenu = new CollectionMenu(this);
         statusMenu = new StatusMenu(this);
+        settingMenu = new SettingMenu(this);
     }
 
     public PlayerController getPlayerController() {
@@ -60,6 +62,7 @@ public class UserMenu {
     public void startCollection() {
         showPanel("Collection");
         ArrayList<Card> cards = new ArrayList<>();
+        collectionMenu.showDeckList();
         collectionMenu.startShowCardPanelContent("Pleas Select Hero To Show Cards", cards);
     }
 
@@ -69,16 +72,19 @@ public class UserMenu {
     }
 
     public void startGame() {
+        mainSounds.stopAudio();
         deleteLayer(40,60);
         gameBoard = new GameBoard(this, new Player[] {playerController.getPlayer()},"Battle Ground 1");
         showPanel("Play");
+        gameBoard.drawInfoPassiveMessage();
     }
 
     public void startSettingMenu() {
-
+        showPanel("Setting");
     }
 
     public void startStatus() {
+        statusMenu.showTopDecks();
         showPanel("Status");
     }
 

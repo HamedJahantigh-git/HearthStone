@@ -74,6 +74,11 @@ public class ModelDefault {
     static public class deckDefaults {
         public static final int maxNumberCards = 15;
         public static final int minNumberCards = 5;
+        public static final int topDeckNumber = 12;
+    }
+
+    static public class gameDefaults {
+        public static final int eventNumber = 8;
     }
 
 }

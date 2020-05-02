@@ -23,10 +23,13 @@ public class AccountMenu {
     private JPasswordField pfPassword;
     private JLabel usernameLabel, passwordLabel;
     private AccountMenuAction accountMenuAction;
+    private Sounds accountSound;
 
 
     private AccountMenu() {
         accountMenuAction = new AccountMenuAction(null);
+        accountSound = new Sounds("AccountMenu.wav");
+        accountSound.playLoop();
         accountFrame = new MyFrame("Account Menu", GraphicsDefault.AccountMenu.mainBounds);
         pane = accountFrame.getLayeredPane();
         pane.setLayout(null);
@@ -92,7 +95,7 @@ public class AccountMenu {
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 2 + 10,
                         GraphicsDefault.AccountMenu.componentWidth / 2,
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 10), Color.black, 18, 0);
-        accountMenuAction.signUp(accountFrame, messagePanel, mainPanel, signUpButton, tfUsername, pfPassword);
+        accountMenuAction.signUp(accountFrame, messagePanel, mainPanel, signUpButton, tfUsername, pfPassword,accountSound);
 
     }
 }

@@ -33,5 +33,6 @@ public class ShopController {
 
     //todo
     // creat exception in buy card
+    // change logic from single town
 
 }

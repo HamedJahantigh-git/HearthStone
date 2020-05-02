@@ -11,6 +11,7 @@ public class Deck {
     private Hero hero;
     private int victoryNumber;
     private int gameNumber;
+
     public Deck(String name, Hero hero) {
         this.name = name;
         this.hero = hero;
@@ -19,7 +20,7 @@ public class Deck {
         gameNumber = 0;
     }
 
-    public Deck (ArrayList<Card> cards){
+    public Deck(ArrayList<Card> cards) {
         //use for create free deck player
         this.name = "No Selected";
         this.cards = cards;
@@ -49,7 +50,34 @@ public class Deck {
         this.hero = hero;
     }
 
-    public void addCard (Card card){
+    public void addCard(Card card) {
         this.cards.add(card);
+    }
+
+    public int getVictoryNumber() {
+        return victoryNumber;
+    }
+
+    public int getGameNumber() {
+        return gameNumber;
+    }
+
+    public float getVictoryDensity() {
+        if (gameNumber == 0)
+            return 0;
+
+        return victoryNumber / gameNumber;
+    }
+
+    public float aveCardsMana() {
+        int result = 0;
+        for (Card card : cards) {
+            result += card.getMana();
+        }
+        if (cards.size() == 0) {
+            return 0;
+        } else {
+            return result / cards.size();
+        }
     }
 }

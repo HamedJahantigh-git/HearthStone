@@ -9,6 +9,7 @@ public class FilesPath {
     public static final String gameInfo = gameDataPath + "/Game Information";
     public static final String gameModel = gameDataPath + "/Battle Data";
     public static final String playerDataPath = gameDataPath + "/Player Data";
+    public static final String heroDataPath = gameDataPath + "/Hero Data";
     public static final String deletePlayerDataPath = playerDataPath + "/Deleted Account";
     public static final String cardDataPath = gameDataPath + "/Card Data";
     public static final String minionDataPath = cardDataPath + "/Minion";

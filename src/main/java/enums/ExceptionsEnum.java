@@ -9,8 +9,10 @@ public enum ExceptionsEnum {
     unSelectedDeck("unSelected Deck"),
     moreTowCardExist("there 2 Same Card in Selected Deck"),
     fullDeckCards("Fulled Deck Cards"),
+    fullGroundDeck("Fulled Ground Capacity"),
     minDeckCard("Small Deck for Game"),
-    unEditableDeck("Current Hero Card Exist in Deck");
+    unEditableDeck("Current Hero Card Exist in Deck"),
+    lowMoney("low Money for Play Card");
 
     private String message;
 

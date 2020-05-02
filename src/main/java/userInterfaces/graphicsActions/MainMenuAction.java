@@ -1,6 +1,7 @@
 package userInterfaces.graphicsActions;
 
 import controller.PlayerController;
+import defaults.GraphicsDefault;
 import enums.LogsEnum;
 import enums.MessageEnum;
 import logs.PlayerLogs;
@@ -28,9 +29,9 @@ public class MainMenuAction extends MyAction {
     public void playGame(JButton button, UserMenu userMenu) {
         button.addActionListener(actionEvent -> {
             if(playerController.getPlayer().getGameDeck().getName().equals(playerController.getPlayer().getFreeDeck().getName())){
-
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
-                        MessageEnum.valueOf("emptyGameDeck").getText(), userMenu.getPane(), 9, 30);
+                        MessageEnum.valueOf("emptyGameDeck").getText(), userMenu.getPane(),
+                        GraphicsDefault.message.mainMenuMessagePanel, 30,30);
                 userMenu.getMainMenu().offEnabledMenu();
                 okbutton.addActionListener(actionEvent2 -> {
                     for (Component c : userMenu.getPane().getComponentsInLayer(9))
@@ -73,7 +74,11 @@ public class MainMenuAction extends MyAction {
         });
     }
 
-    public void goSetting() {
-
+    public void goSetting(JButton button, UserMenu userMenu) {
+        button.addActionListener(actionEvent -> {
+            PlayerLogs.addToLogBody(LogsEnum.valueOf("setting").getEvent()[0],
+                    LogsEnum.valueOf("setting").getEvent_description()[0], playerController.getPlayer());
+            userMenu.startSettingMenu();
+        });
     }
 }

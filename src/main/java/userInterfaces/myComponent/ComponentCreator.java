@@ -23,7 +23,7 @@ public class ComponentCreator {
     }
 
     public JLabel setText(String text, JPanel panel, String fontName, int fontSize, Color color, Bounds bounds) {
-        JLabel jLabel = new JLabel(text, SwingConstants.CENTER);
+        JLabel jLabel = new JLabel(text,SwingConstants.CENTER);
         jLabel.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
         jLabel.setFont(new Font(fontName, Font.ITALIC, fontSize));
         jLabel.setForeground(color);

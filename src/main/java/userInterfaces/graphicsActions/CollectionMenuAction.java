@@ -75,7 +75,7 @@ public class CollectionMenuAction extends MainMenuAction {
             if (playerController.getPlayer().getMoney() < card.getBuyCost()) {
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
                         "<html><center>You haven't Enough Money for Buy." + "</center><br><center>Please Try other</center><br><center></center><br><center></center></html>",
-                        collectionMenu.getUserMenu().getShopMenu().getUserMenu().getPane(), 29, 30);
+                        collectionMenu.getUserMenu().getShopMenu().getUserMenu().getPane(),  GraphicsDefault.message.messagePanel,29, 30);
                 okbutton.addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                             LogsEnum.valueOf("error").getEvent_description()[0], playerController.getPlayer());
@@ -118,7 +118,7 @@ public class CollectionMenuAction extends MainMenuAction {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("unSelectedDeck").getMessage())) {
                     collectionMenu.offEnabledMenu();
                     JButton okbutton = MessageCreator.getInstance().errorMessage(MessageEnum.valueOf("unSelectedDeck").getText(),
-                            collectionMenu.getUserMenu().getPane(), 19, 30);
+                            collectionMenu.getUserMenu().getPane(),  GraphicsDefault.message.messagePanel,19, 30);
                     okbutton.addActionListener(actionEvent2 -> {
                         PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                                 LogsEnum.valueOf("error").getEvent_description()[1], playerController.getPlayer());
@@ -128,7 +128,8 @@ public class CollectionMenuAction extends MainMenuAction {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("unMatchingCardAndDeck").getMessage())) {
                     collectionMenu.offEnabledMenu();
                     JButton okbutton = MessageCreator.getInstance().errorMessage(
-                            MessageEnum.valueOf("unMatchingCardAndDeck").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
+                            MessageEnum.valueOf("unMatchingCardAndDeck").getText(), collectionMenu.getUserMenu().getPane(),
+                            GraphicsDefault.message.messagePanel,19, 30);
                     okbutton.addActionListener(actionEvent2 -> {
                         PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                                 LogsEnum.valueOf("error").getEvent_description()[1], playerController.getPlayer());
@@ -138,7 +139,8 @@ public class CollectionMenuAction extends MainMenuAction {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("moreTowCardExist").getMessage())) {
                     collectionMenu.offEnabledMenu();
                     JButton okbutton = MessageCreator.getInstance().errorMessage(
-                            MessageEnum.valueOf("moreTowCardExist").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
+                            MessageEnum.valueOf("moreTowCardExist").getText(), collectionMenu.getUserMenu().getPane(),
+                            GraphicsDefault.message.messagePanel,19, 30);
                     okbutton.addActionListener(actionEvent2 -> {
                         PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                                 LogsEnum.valueOf("error").getEvent_description()[2], playerController.getPlayer());
@@ -148,7 +150,8 @@ public class CollectionMenuAction extends MainMenuAction {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("fullDeckCards").getMessage())) {
                     collectionMenu.offEnabledMenu();
                     JButton okbutton = MessageCreator.getInstance().errorMessage(
-                            MessageEnum.valueOf("fullDeckCards").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
+                            MessageEnum.valueOf("fullDeckCards").getText(), collectionMenu.getUserMenu().getPane(),
+                            GraphicsDefault.message.messagePanel,19, 30);
                     okbutton.addActionListener(actionEvent2 -> {
                         PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                                 LogsEnum.valueOf("error").getEvent_description()[3], playerController.getPlayer());
@@ -182,13 +185,15 @@ public class CollectionMenuAction extends MainMenuAction {
                         playerController.getPlayer());
                 FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
-                        MessageEnum.valueOf("changeGameDeck").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
+                        MessageEnum.valueOf("changeGameDeck").getText(), collectionMenu.getUserMenu().getPane(),
+                        GraphicsDefault.message.messagePanel,19, 30);
                 okbutton.addActionListener(actionEvent2 -> {
                     collectionMenu.onEnabledMenu();
                 });
             } catch (Exception e) {
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
-                        MessageEnum.valueOf("lowDeckCards").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
+                        MessageEnum.valueOf("lowDeckCards").getText(), collectionMenu.getUserMenu().getPane(),
+                        GraphicsDefault.message.messagePanel,19, 30);
                 okbutton.addActionListener(actionEvent2 -> {
                     collectionMenu.onEnabledMenu();
                 });

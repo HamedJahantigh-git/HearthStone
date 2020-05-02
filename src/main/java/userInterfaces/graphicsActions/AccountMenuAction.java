@@ -6,6 +6,7 @@ import enums.ExceptionsEnum;
 import enums.LogsEnum;
 import enums.MessageEnum;
 import logs.PlayerLogs;
+import userInterfaces.Sounds;
 import userInterfaces.userMenu.UserMenu;
 import userInterfaces.myComponent.ComponentCreator;
 import userInterfaces.myComponent.MessageCreator;
@@ -51,7 +52,8 @@ public class AccountMenuAction extends MyAction {
         });
     }
 
-    public void signUp(JFrame accountFrame, JPanel messagePanel, JPanel mainPanel, JButton button, JTextField username, JPasswordField password) {
+    public void signUp(JFrame accountFrame, JPanel messagePanel, JPanel mainPanel, JButton button, JTextField username,
+                       JPasswordField password, Sounds sounds) {
         button.addActionListener(actionEvent -> {
             try {
                 PlayerController playerController = new PlayerController();
@@ -59,6 +61,7 @@ public class AccountMenuAction extends MyAction {
                 PlayerLogs.creatLogFile(playerController.getPlayer());
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[0],
                         LogsEnum.valueOf("sign").getEvent_description()[0], playerController.getPlayer());
+                sounds.stopAudio();
                 accountFrame.dispose();
                 UserMenu userMenu = new UserMenu(playerController);
                 userMenu.startMainMenu();

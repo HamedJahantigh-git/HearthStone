@@ -16,7 +16,8 @@ public class Card {
     private int number;
     private int numberUsage;
 
-    public Card(){}
+    public Card() {
+    }
 
     public Card(String name, String cardClass, String type, int mana,
                 int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
@@ -78,4 +79,19 @@ public class Card {
         return incomeSell;
     }
 
+    public int getNumberUsage() {
+        return numberUsage;
+    }
+
+    public int getRarityLevel() {
+        if (rarity.equals("Common"))
+            return 1;
+        if (rarity.equals("Rare"))
+            return 2;
+        if (rarity.equals("Epic"))
+            return 3;
+        if (rarity.equals("Legendary"))
+            return 4;
+        return 0;
+    }
 }

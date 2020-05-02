@@ -39,6 +39,8 @@ public class InitCLI {
         s.mkdir();
         s = new File(FilesPath.gameEventLogsPath);
         s.mkdir();
+        s = new File(FilesPath.heroDataPath);
+        s.mkdir();
         s = new File(FilesPath.playerDataPath);
         s.mkdir();
         s = new File(FilesPath.gameModel);

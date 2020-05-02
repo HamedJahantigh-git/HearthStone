@@ -3,6 +3,7 @@ package model;
 
 
 import defaults.ModelDefault;
+import enums.InfoPassiveEnum;
 import model.card.Card;
 import model.hero.Hero;
 
@@ -94,15 +95,16 @@ public class Player {
     }
 
     public class PlayerGame {
-        private ArrayList<Card> groundDeck;
+        private ArrayList<Card> groundCard;
         private ArrayList<Card> usedCard;
         private ArrayList<Card> handCard;
         private ArrayList<Card> aroundCard;
         private int randMana, currentMana;
         private Hero hero;
+        private InfoPassive infoPassive;
 
         public PlayerGame() {
-            this.groundDeck = new ArrayList<>();
+            this.groundCard = new ArrayList<>();
             this.usedCard = new ArrayList<>();
             this.handCard = new ArrayList<>();
             this.aroundCard = new ArrayList<>();
@@ -115,12 +117,8 @@ public class Player {
             this.hero = deck.getHero();
         }
 
-        public void creatAroundDeck(Deck deck) {
-
-        }
-
-        public ArrayList<Card> getGroundDeck() {
-            return groundDeck;
+        public ArrayList<Card> getGroundCard() {
+            return groundCard;
         }
 
         public ArrayList<Card> getUsedCard() {
@@ -139,12 +137,20 @@ public class Player {
             return randMana;
         }
 
+        public void setInfoPassive(InfoPassiveEnum infoPassiveType) {
+            this.infoPassive = new InfoPassive(infoPassiveType);
+        }
+
         public void setRandMana(int randMana) {
             this.randMana = randMana;
         }
 
         public int getCurrentMana() {
             return currentMana;
+        }
+
+        public void setCurrentMana(int currentMana) {
+            this.currentMana = currentMana;
         }
 
         public Hero getHero() {

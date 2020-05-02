@@ -115,7 +115,6 @@ public class CollectionMenu {
         deckPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/deckCollection2.png",
                 GraphicsDefault.Collection.rightPanel, userMenu.getPane(), false, 12);
         decksPageIndex = 0;
-        showDeckList();
     }
 
     private void initCardPanel() {

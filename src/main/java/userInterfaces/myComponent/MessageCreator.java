@@ -5,7 +5,9 @@ import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import enums.LogsEnum;
 import enums.MessageEnum;
+import enums.StatusLayer;
 import logs.PlayerLogs;
+import model.Deck;
 import model.hero.Hero;
 import userInterfaces.userMenu.CollectionMenu;
 
@@ -51,9 +53,9 @@ public class MessageCreator {
         return new JButton[]{yesButton, noButton};
     }
 
-    public JButton errorMessage(String text, JLayeredPane pane, int layer, int fontSize) {
+    public JButton errorMessage(String text, JLayeredPane pane,Bounds bounds ,int layer, int fontSize) {
         MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
-                GraphicsDefault.message.messagePanel, pane, false, layer);
+               bounds, pane, false, layer);
         label = ComponentCreator.getInstance().setText(text, messagePanel, "FORTE", fontSize
                 , Color.black, new Bounds(0, 0, messagePanel.getWidth(), messagePanel.getHeight()));
         JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
@@ -62,6 +64,7 @@ public class MessageCreator {
         messagePanel.setEnabled(true);
         return okButton;
     }
+
 
     public void creatDeckMessage(JLayeredPane pane, ArrayList<Hero> heroes, CollectionMenu collectionMenu) {
         MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
@@ -150,7 +153,7 @@ public class MessageCreator {
                 collectionMenu.onEnabledMenu();
                 collectionMenu.offEnabledMenu();
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
-                        MessageEnum.valueOf("editDeckMistake").getText(), collectionMenu.getUserMenu().getPane(), 19, 30);
+                        MessageEnum.valueOf("editDeckMistake").getText(), collectionMenu.getUserMenu().getPane(),  GraphicsDefault.message.messagePanel,19, 30);
                 okbutton.addActionListener(actionEvent3 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                             LogsEnum.valueOf("error").getEvent_description()[4],

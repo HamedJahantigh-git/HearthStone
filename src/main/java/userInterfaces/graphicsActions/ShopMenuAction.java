@@ -3,6 +3,7 @@ package userInterfaces.graphicsActions;
 import controller.FileManagement;
 import controller.PlayerController;
 import controller.ShopController;
+import defaults.GraphicsDefault;
 import enums.LogsEnum;
 import logs.PlayerLogs;
 import model.card.Card;
@@ -69,7 +70,7 @@ public class ShopMenuAction extends MainMenuAction {
             if (playerController.getPlayer().getMoney() < card.getBuyCost()) {
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
                         "<html><center>You haven't Enough Money for Buy." + "</center><br><center>Please Try other</center><br><center></center><br><center></center></html>",
-                        shopMenu.getUserMenu().getPane(), 29, 30);
+                        shopMenu.getUserMenu().getPane(), GraphicsDefault.message.messagePanel, 29, 30);
                 okbutton.addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                             LogsEnum.valueOf("error").getEvent_description()[0], playerController.getPlayer());
