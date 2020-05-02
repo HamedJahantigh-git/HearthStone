@@ -20,7 +20,8 @@ public class AccountMenuAction extends MyAction {
         super(playerController);
     }
 
-    public void signIn(JFrame accountFrame, JPanel messagePanel, JPanel mainPanel, JButton button, JTextField username, JPasswordField password) {
+    public void signIn(JFrame accountFrame, JPanel messagePanel, JPanel mainPanel, JButton button, JTextField username, JPasswordField password,
+                       Sounds sounds) {
         button.addActionListener(actionEvent -> {
             try {
 
@@ -30,6 +31,7 @@ public class AccountMenuAction extends MyAction {
                         LogsEnum.valueOf("sign").getEvent_description()[1], playerController.getPlayer());
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[1],
                         LogsEnum.valueOf("sign").getEvent_description()[1], playerController.getPlayer());
+                sounds.stopAudio();
                 accountFrame.dispose();
                 UserMenu userMenu = new UserMenu(playerController);
                 userMenu.startMainMenu();

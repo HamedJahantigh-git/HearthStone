@@ -13,6 +13,7 @@ public class HearthStone {
         initializer();
         //startCLIGame();
         startGraphicalGame();
+       // test();
 
     }
 
@@ -28,16 +29,16 @@ public class HearthStone {
         //CLIMenu.getInstance().accountMenu();
     }
 
-    /*private static void test(){
+    private static void test(){
         PlayerController hamed = new PlayerController();
         try {
-            hamed.signInPlayer("ali","ali");
+            hamed.signInPlayer("hamed","hamed");
         } catch (Exception e) {
             e.printStackTrace();
         }
         UserMenu userMenu = new UserMenu(hamed);
         userMenu.startMainMenu();
-    }*/
+    }
 
     private static void startGraphicalGame() {
         AccountMenu.getInstance().start();

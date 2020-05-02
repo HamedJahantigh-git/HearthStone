@@ -48,28 +48,29 @@ public class StatusController {
     }
 
     public String sortDeckCard(Deck deck) {
+        if (deck.getCards().size() == 0) {
+            return "Deck has'nt Eny Card";
+        }
+        System.out.println();
         for (int i = 0; i < deck.getCards().size() - 1; i++) {
             for (int j = 0; j < deck.getCards().size() - i - 1; j++) {
                 if (deck.getCards().get(j).getNumberUsage() < deck.getCards().get(j + 1).getNumberUsage()) {
-                    Collections.swap(playerDecks, j, j + 1);
+                    Collections.swap(deck.getCards(), j, j + 1);
                 }
                 if (deck.getCards().get(j).getNumberUsage() == deck.getCards().get(j + 1).getNumberUsage()) {
                     if (deck.getCards().get(j).getRarityLevel() < deck.getCards().get(j + 1).getRarityLevel()) {
-                        Collections.swap(playerDecks, j, j + 1);
+                        Collections.swap(deck.getCards(), j, j + 1);
                     }
                     if (deck.getCards().get(j).getRarityLevel() == deck.getCards().get(j + 1).getRarityLevel()) {
                         if (deck.getCards().get(j).getMana() < deck.getCards().get(j + 1).getMana()) {
-                            Collections.swap(playerDecks, j, j + 1);
+                            Collections.swap(deck.getCards(), j, j + 1);
                         }
                         if (deck.getCards().get(j + 1).getType().equals("Minion")) {
-                            Collections.swap(playerDecks, j, j + 1);
+                            Collections.swap(deck.getCards(), j, j + 1);
                         }
                     }
                 }
             }
-        }
-        if (deck.getCards().size() == 0) {
-            return "Deck has'nt Eny Card";
         }
         return deck.getCards().get(0).getName();
     }

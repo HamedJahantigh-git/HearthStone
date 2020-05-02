@@ -88,7 +88,7 @@ public class AccountMenu {
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 2 + 10,
                         GraphicsDefault.AccountMenu.componentWidth / 2,
                         GraphicsDefault.AccountMenu.componentHeight * 7 / 10), Color.black, 18, 0);
-        accountMenuAction.signIn(accountFrame, messagePanel, mainPanel, signInButton, tfUsername, pfPassword);
+        accountMenuAction.signIn(accountFrame, messagePanel, mainPanel, signInButton, tfUsername, pfPassword,accountSound);
         signUpButton = ComponentCreator.getInstance().setButton(
                 "Sign Up", mainPanel, buttonsImagePath,
                 new Bounds(GraphicsDefault.AccountMenu.mainBounds.getWidth() / 4 - 5,
