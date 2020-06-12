@@ -1,4 +1,5 @@
 
+import CLI.CLIMenu;
 import controller.FileManagement;
 import controller.PlayerController;
 import initializer.InitCLI;
@@ -11,7 +12,6 @@ import userInterfaces.userMenu.UserMenu;
 public class HearthStone {
     public static void main(String[] args) {
         initializer();
-        //startCLIGame();
         startGraphicalGame();
        // test();
 
@@ -25,8 +25,12 @@ public class HearthStone {
         InitCards.initWeapon();
     }
 
+    private static void startGraphicalGame() {
+        AccountMenu.getInstance().start();
+    }
+
     private static void startCLIGame() {
-        //CLIMenu.getInstance().accountMenu();
+        CLIMenu.getInstance();
     }
 
     private static void test(){
@@ -38,10 +42,6 @@ public class HearthStone {
         }
         UserMenu userMenu = new UserMenu(hamed);
         userMenu.startMainMenu();
-    }
-
-    private static void startGraphicalGame() {
-        AccountMenu.getInstance().start();
     }
 
 }

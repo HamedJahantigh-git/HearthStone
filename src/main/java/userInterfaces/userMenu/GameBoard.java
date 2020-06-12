@@ -7,6 +7,7 @@ import enums.GameLayer;
 import enums.InfoPassiveEnum;
 import model.InfoPassive;
 import model.Player;
+import model.card.Minion;
 import userInterfaces.Sounds;
 import userInterfaces.graphicsActions.GameAction;
 import userInterfaces.myComponent.ComponentCreator;

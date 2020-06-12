@@ -1,10 +1,9 @@
 package CLI;
 
+import initializer.InitCLI;
+
 public class CLIMenu {
-/*
     private static final CLIMenu instance = new CLIMenu();
-    private Scanner scanner = new Scanner(System.in);
-    private String command;
 
     private CLIMenu() {
         InitCLI.headerBox("Welcome To HearthStone Game");
@@ -13,6 +12,11 @@ public class CLIMenu {
     public static CLIMenu getInstance() {
         return instance;
     }
+
+/*
+
+    private Scanner scanner = new Scanner(System.in);
+    private String command;
 
     private void exitGame() {
         InitCLI.headerBox("Goodbye");

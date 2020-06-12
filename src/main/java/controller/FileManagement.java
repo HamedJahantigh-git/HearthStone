@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 public class FileManagement {
 
-    private static FileManagement instance = new FileManagement();
+    private static FileManagement instance = null;
     private ReadCardFromFile readCardFromFile;
     private CreatNewCardInFile creatNewCardInFile;
     private File file;
@@ -35,6 +35,8 @@ public class FileManagement {
     }
 
     public static FileManagement getInstance() {
+        if (instance == null)
+            instance = new FileManagement();
         return instance;
     }
 
@@ -48,9 +50,9 @@ public class FileManagement {
 
     public ArrayList<Card> getAllCardsFromFile() {
         ArrayList<Card> result = new ArrayList<>();
-            result.addAll(ModelDefault.CardDefaults.minions);
-            result.addAll(ModelDefault.CardDefaults.spells);
-            result.addAll(ModelDefault.CardDefaults.weapons);
+        result.addAll(ModelDefault.CardDefaults.minions);
+        result.addAll(ModelDefault.CardDefaults.spells);
+        result.addAll(ModelDefault.CardDefaults.weapons);
         return result;
     }
 
@@ -91,7 +93,7 @@ public class FileManagement {
         gson = new GsonBuilder().create();
         try {
             Writer writer = new FileWriter(
-                    FilesPath.heroDataPath+"/" + hero.getHeroName()+".txt");
+                    FilesPath.heroDataPath + "/" + hero.getHeroName() + ".txt");
             gson.toJson(hero, writer);
             writer.close();
         } catch (IOException e) {
@@ -118,13 +120,17 @@ public class FileManagement {
         return result;
     }
 
+    public void creatCardInFile(){
+
+    }
+
     public class CreatNewCardInFile {
 
         private Gson gson = new GsonBuilder().create();
 
         public void creatMinion(String name, String cardClass, int mana,
-                                       int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
-                                       String rarity, int health, int attack) {
+                                int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
+                                String rarity, int health, int attack) {
             Minion minion = new Minion(name, cardClass, "Minion", mana, buyCost, incomeSell, mechanics, description,
                     rarity, health, attack);
             try {
@@ -138,8 +144,8 @@ public class FileManagement {
         }
 
         public void creatSpell(String name, String cardClass, int mana,
-                                      int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
-                                      String rarity, String quest, String reward) {
+                               int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
+                               String rarity, String quest, String reward) {
             Spell spell = new Spell(name, cardClass, "Spell", mana,
                     buyCost, incomeSell, mechanics, description, rarity, quest, reward);
             try {
@@ -154,8 +160,8 @@ public class FileManagement {
         }
 
         public void creatWeapon(String name, String cardClass, int mana,
-                                       int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
-                                       String rarity, int durability, int attack) {
+                                int buyCost, int incomeSell, ArrayList<String> mechanics, String description,
+                                String rarity, int durability, int attack) {
             Weapon weapon = new Weapon(name, cardClass, "Weapon", mana,
                     buyCost, incomeSell, mechanics, description, rarity, durability, attack);
             try {
@@ -186,7 +192,7 @@ public class FileManagement {
             return minionsCards;
         }
 
-         public ArrayList<Spell> readSpell() {
+        public ArrayList<Spell> readSpell() {
             ArrayList<Spell> spellsCards = new ArrayList<>();
             ArrayList<String> spellsName = allFileNameInPath(FilesPath.spellDataPath);
             for (String s : spellsName) {
@@ -198,7 +204,7 @@ public class FileManagement {
             return spellsCards;
         }
 
-         public ArrayList<Weapon> readWeapon() {
+        public ArrayList<Weapon> readWeapon() {
             ArrayList<Weapon> weaponsCards = new ArrayList<>();
             ArrayList<String> weaponsName = allFileNameInPath(FilesPath.weaponDataPath);
             for (String s : weaponsName) {

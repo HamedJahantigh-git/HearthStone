@@ -1,10 +1,7 @@
 package userInterfaces.userMenu;
 
-import controller.FileManagement;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
-import enums.LogsEnum;
-import logs.PlayerLogs;
 import model.card.Card;
 import userInterfaces.graphicsActions.ShopMenuAction;
 import userInterfaces.myComponent.*;
