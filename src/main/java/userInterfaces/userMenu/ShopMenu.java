@@ -11,18 +11,18 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ShopMenu {
-    private UserMenu userMenu;
+    private UserFrame userFrame;
     private MyJPanel mainPanel;
     private MyJPanel cardPanel;
     private ShopMenuAction action;
     private int sellIndex, buyIndex;
 
 
-    public ShopMenu(UserMenu userMenu) {
-        this.userMenu = userMenu;
+    public ShopMenu(UserFrame userFrame) {
+        this.userFrame = userFrame;
         mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Main Shop.jpg",
-                GraphicsDefault.UserMenu.mainBounds, userMenu.getPane(), false, 20);
-        action = new ShopMenuAction(userMenu.getPlayerController());
+                GraphicsDefault.UserMenu.mainBounds, userFrame.getPane(), false, 20);
+        action = new ShopMenuAction(userFrame.getPlayerController());
         initMainPanel();
         initCardPanel();
         sellIndex = 0;
@@ -53,7 +53,7 @@ public class ShopMenu {
                 GraphicsDefault.ShopMenu.rightButton1, Color.white, 27, 1);
         JButton sellButton = ComponentCreator.getInstance().setButton("Sell", mainPanel, "buttons3.png",
                 GraphicsDefault.ShopMenu.rightButton2, Color.white, 27, 1);
-        action.backToUserMenu(back,userMenu);
+        action.backToUserMenu(back, userFrame);
         action.exitGame(exitGame);
         action.buyButton(buyButton, this);
         action.sellButton(sellButton, this);
@@ -62,12 +62,12 @@ public class ShopMenu {
 
     private void initCardPanel() {
         cardPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/CardShop.png",
-                GraphicsDefault.ShopMenu.cardPanel, userMenu.getPane(), false, 21);
+                GraphicsDefault.ShopMenu.cardPanel, userFrame.getPane(), false, 21);
 
     }
 
-    public UserMenu getUserMenu() {
-        return userMenu;
+    public UserFrame getUserFrame() {
+        return userFrame;
     }
 
     public void showCards(ArrayList<Card> cards, boolean sell) {
@@ -129,7 +129,7 @@ public class ShopMenu {
     }
 
     public void onEnabledMenu() {
-        userMenu.getPane().remove(userMenu.getPane().getComponentsInLayer(29)[0]);
+        userFrame.getPane().remove(userFrame.getPane().getComponentsInLayer(29)[0]);
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(true);
         }

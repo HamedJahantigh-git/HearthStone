@@ -1,6 +1,7 @@
 package initializer;
 
 
+import controller.FileManagement;
 import defaults.FilesPath;
 
 import java.io.File;
@@ -29,32 +30,19 @@ public class InitCLI {
     }
 
     public static void createNeedsFolder() {
-        File s = new File(FilesPath.gameDataPath);
-        s.mkdir();
-        s = new File(FilesPath.gameInfo);
-        s.mkdir();
-        s = new File(FilesPath.logsPath);
-        s.mkdir();
-        s = new File(FilesPath.playerLogsPath);
-        s.mkdir();
-        s = new File(FilesPath.gameEventLogsPath);
-        s.mkdir();
-        s = new File(FilesPath.heroDataPath);
-        s.mkdir();
-        s = new File(FilesPath.playerDataPath);
-        s.mkdir();
-        s = new File(FilesPath.gameModel);
-        s.mkdir();
-        s = new File(FilesPath.deletePlayerDataPath);
-        s.mkdir();
-        s = new File(FilesPath.cardDataPath);
-        s.mkdir();
-        s = new File(FilesPath.minionDataPath);
-        s.mkdir();
-        s = new File(FilesPath.spellDataPath);
-        s.mkdir();
-        s = new File(FilesPath.weaponDataPath);
-        s.mkdir();
+        FileManagement.getInstance().creatFolder(FilesPath.gameDataPath);
+        FileManagement.getInstance().creatFolder(FilesPath.gameInfo);
+        FileManagement.getInstance().creatFolder(FilesPath.logsPath);
+        FileManagement.getInstance().creatFolder(FilesPath.playerLogsPath);
+        FileManagement.getInstance().creatFolder(FilesPath.gameEventLogsPath);
+        FileManagement.getInstance().creatFolder(FilesPath.heroDataPath);
+        FileManagement.getInstance().creatFolder(FilesPath.playerDataPath);
+        FileManagement.getInstance().creatFolder(FilesPath.gameModel);
+        FileManagement.getInstance().creatFolder(FilesPath.deletePlayerDataPath);
+        FileManagement.getInstance().creatFolder(FilesPath.cardDataPath);
+        FileManagement.getInstance().creatFolder(FilesPath.minionDataPath);
+        FileManagement.getInstance().creatFolder(FilesPath.spellDataPath);
+        FileManagement.getInstance().creatFolder(FilesPath.weaponDataPath);
     }
 
 }

@@ -22,7 +22,7 @@ public class MyAction {
             if (playerController != null) {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[2],
                         LogsEnum.valueOf("sign").getEvent_description()[3], playerController.getPlayer());
-                FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
+                FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
             }
             System.exit(0);
         });

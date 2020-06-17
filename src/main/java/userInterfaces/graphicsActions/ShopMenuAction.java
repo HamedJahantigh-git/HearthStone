@@ -7,7 +7,6 @@ import defaults.GraphicsDefault;
 import enums.LogsEnum;
 import logs.PlayerLogs;
 import model.card.Card;
-import model.card.Minion;
 import userInterfaces.myComponent.MessageCreator;
 import userInterfaces.myComponent.MyCardButton;
 import userInterfaces.userMenu.ShopMenu;
@@ -45,12 +44,12 @@ public class ShopMenuAction extends MainMenuAction {
             shopMenu.offEnabledMenu();
             JButton[] buttons = MessageCreator.getInstance().yesNoMessage(
                     "<html><center>Your Income: " + card.getIncomeSell() + "</center><br><center>Do you like do it?</center><br><center></center><br><center></center></html>",
-                    shopMenu.getUserMenu().getPane(), 29, 30);
+                    shopMenu.getUserFrame().getPane(), 29, 30);
             buttons[0].addActionListener(actionEvent2 -> {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[5],
                         LogsEnum.valueOf("shop").getEvent_description()[5] + card.getName(), playerController.getPlayer());
                 ShopController.getInstance().sellCard(playerController.getPlayer(), card);
-                FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
+                FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
                 shopMenu.onEnabledMenu();
                 shopMenu.showCards(playerController.getPlayer().getFreeDeck().getCards(), true);
             });
@@ -70,7 +69,7 @@ public class ShopMenuAction extends MainMenuAction {
             if (playerController.getPlayer().getMoney() < card.getBuyCost()) {
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
                         "<html><center>You haven't Enough Money for Buy." + "</center><br><center>Please Try other</center><br><center></center><br><center></center></html>",
-                        shopMenu.getUserMenu().getPane(), GraphicsDefault.message.messagePanel, 29, 30);
+                        shopMenu.getUserFrame().getPane(), GraphicsDefault.message.messagePanel, 29, 30);
                 okbutton.addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                             LogsEnum.valueOf("error").getEvent_description()[0], playerController.getPlayer());
@@ -80,12 +79,12 @@ public class ShopMenuAction extends MainMenuAction {
             } else {
                 JButton[] buttons = MessageCreator.getInstance().yesNoMessage(
                         "<html><center>You Pay to Buy this Card: " + card.getBuyCost() + "</center><br><center>Do you like Buy this?</center><br><center></center><br><center></center></html>",
-                        shopMenu.getUserMenu().getPane(), 29, 30);
+                        shopMenu.getUserFrame().getPane(), 29, 30);
                 buttons[0].addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[5],
                             LogsEnum.valueOf("shop").getEvent_description()[6] + card.getName(), playerController.getPlayer());
                     ShopController.getInstance().buyCard(playerController.getPlayer(), card);
-                    FileManagement.getInstance().savePlayerToFile(playerController.getPlayer());
+                    FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
                     shopMenu.onEnabledMenu();
                     shopMenu.showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
                 });

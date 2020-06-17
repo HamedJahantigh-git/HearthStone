@@ -55,6 +55,27 @@ public class GraphicsDefault {
                 return new Bounds(0, 0, infoPassivePanelBounds.getWidth(), infoPassivePanelBounds.getHeight()/3);
             return null;
         }
+        // SelectCompetitor
+        public static Bounds selectCompetitorBound(int state) {
+            Bounds panelBounds = new Bounds(mainBounds.getWidth() * 70 / 200, mainBounds.getHeight() * 60 / 200,
+                    mainBounds.getWidth() * 60 / 200, mainBounds.getHeight() * 80 / 200);
+            if (state == 0)
+                return panelBounds;
+            //select button
+            if (state == 1)
+            return new Bounds(panelBounds.getWidth() * 60 / 200,
+                    panelBounds.getHeight() * 65 / 100, panelBounds.getWidth() * 80 / 200,
+                    panelBounds.getHeight() * 14 / 100);
+            //combo
+            if (state == 2)
+                return new Bounds(panelBounds.getWidth() * 40 / 200,
+                        panelBounds.getHeight() * 35 / 100, panelBounds.getWidth() * 120 / 200,
+                        panelBounds.getHeight() * 12 / 100);
+            // title
+            if (state == 3)
+                return new Bounds(0, 10, panelBounds.getWidth(), panelBounds.getHeight()/3);
+            return null;
+        }
 
         public static Bounds aroundDeckCard(int state, int index) {
             Bounds result = null;

@@ -1,19 +1,18 @@
 
 import CLI.CLIMenu;
-import controller.FileManagement;
 import controller.PlayerController;
 import initializer.InitCLI;
 import initializer.InitCards;
 import initializer.InitHero;
 import userInterfaces.AccountMenu;
-import userInterfaces.userMenu.UserMenu;
+import userInterfaces.userMenu.UserFrame;
 
 
 public class HearthStone {
     public static void main(String[] args) {
         initializer();
-        startGraphicalGame();
-       // test();
+        //startGraphicalGame();
+        test();
 
     }
 
@@ -40,8 +39,8 @@ public class HearthStone {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        UserMenu userMenu = new UserMenu(hamed);
-        userMenu.startMainMenu();
+        UserFrame userFrame = new UserFrame(hamed);
+        userFrame.startMainMenu();
     }
 
 }

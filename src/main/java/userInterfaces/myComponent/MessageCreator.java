@@ -5,9 +5,7 @@ import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import enums.LogsEnum;
 import enums.MessageEnum;
-import enums.StatusLayer;
 import logs.PlayerLogs;
-import model.Deck;
 import model.hero.Hero;
 import userInterfaces.userMenu.CollectionMenu;
 
@@ -87,8 +85,7 @@ public class MessageCreator {
             heroesName[i] = heroes.get(i).getHeroName();
         }
         JComboBox<String> heroDeck = ComponentCreator.getInstance().setStrComboBox(messagePanel,
-                heroesName, 3,
-                GraphicsDefault.message.component(5));
+                heroesName, 3, GraphicsDefault.message.component(5),18);
         JButton createButton = ComponentCreator.getInstance().setButton("Create", messagePanel, "buttons2.png",
                 GraphicsDefault.message.component(2), Color.white, 30, 0);
         JButton cancelButton = ComponentCreator.getInstance().setButton("Cancel", messagePanel, "buttons2.png",
@@ -99,7 +96,7 @@ public class MessageCreator {
            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[4],
                     LogsEnum.valueOf("collection").getEvent_description()[3]+"_"+deckName.getText()+":"+heroDeck.getSelectedItem().toString(),
                    collectionMenu.getAction().getPlayerController().getPlayer());
-            FileManagement.getInstance().savePlayerToFile(collectionMenu.getAction().getPlayerController().getPlayer());
+            FileManagement.getInstance().getPlayerFile().savePlayerToFile(collectionMenu.getAction().getPlayerController().getPlayer());
             collectionMenu.onEnabledMenu();
             collectionMenu.showDeckList();
         });
@@ -133,8 +130,7 @@ public class MessageCreator {
             heroesName[i] = heroes.get(i).getHeroName();
         }
         JComboBox<String> heroDeck = ComponentCreator.getInstance().setStrComboBox(messagePanel,
-                heroesName, 3,
-                GraphicsDefault.message.component(5));
+                heroesName, 3, GraphicsDefault.message.component(5),18);
         JButton editButton = ComponentCreator.getInstance().setButton("Edit", messagePanel, "buttons2.png",
                 GraphicsDefault.message.component(2), Color.white, 30, 0);
         JButton cancelButton = ComponentCreator.getInstance().setButton("Cancel", messagePanel, "buttons2.png",
@@ -146,14 +142,14 @@ public class MessageCreator {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[12],
                         LogsEnum.valueOf("collection").getEvent_description()[10]+deckName.getText()+"/"+heroDeck.getSelectedItem().toString(),
                         collectionMenu.getAction().getPlayerController().getPlayer());
-                FileManagement.getInstance().savePlayerToFile(collectionMenu.getAction().getPlayerController().getPlayer());
+                FileManagement.getInstance().getPlayerFile().savePlayerToFile(collectionMenu.getAction().getPlayerController().getPlayer());
                 collectionMenu.onEnabledMenu();
                 collectionMenu.showSelectedDeck(collectionMenu.getSelectedDeck(),collectionMenu.getCardInDeckIndex());
             } catch (Exception e) {
                 collectionMenu.onEnabledMenu();
                 collectionMenu.offEnabledMenu();
                 JButton okbutton = MessageCreator.getInstance().errorMessage(
-                        MessageEnum.valueOf("editDeckMistake").getText(), collectionMenu.getUserMenu().getPane(),  GraphicsDefault.message.messagePanel,19, 30);
+                        MessageEnum.valueOf("editDeckMistake").getText(), collectionMenu.getUserFrame().getPane(),  GraphicsDefault.message.messagePanel,19, 30);
                 okbutton.addActionListener(actionEvent3 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                             LogsEnum.valueOf("error").getEvent_description()[4],

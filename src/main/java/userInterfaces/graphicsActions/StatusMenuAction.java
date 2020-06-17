@@ -29,7 +29,7 @@ public class StatusMenuAction extends MainMenuAction {
 
 
             MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Status Message.png",
-                    GraphicsDefault.StatusMenu.messageBounds, statusMenu.getUserMenu().getPane(), false, StatusLayer.deckDetail.getLayer());
+                    GraphicsDefault.StatusMenu.messageBounds, statusMenu.getUserFrame().getPane(), false, StatusLayer.deckDetail.getLayer());
             String title = "<html><center>\""+deck.getName()+"\"</center></html>";
             ComponentCreator.getInstance().setText(title, messagePanel,
                     "Belwe Bd BT Bold", 60, Color.white, GraphicsDefault.StatusMenu.messageTitleBounds);

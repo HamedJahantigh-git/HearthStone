@@ -2,7 +2,6 @@ package userInterfaces.userMenu;
 
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
-import enums.StatusLayer;
 import userInterfaces.graphicsActions.MainMenuAction;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
@@ -16,20 +15,20 @@ public class MainMenu {
     private MyJPanel mainPanel;
     private MyJPanel boxPanel;
     private MainMenuAction action;
-    private UserMenu userMenu;
+    private UserFrame userFrame;
 
-    public MainMenu(UserMenu userMenu) {
-        this.userMenu = userMenu;
+    public MainMenu(UserFrame userFrame) {
+        this.userFrame = userFrame;
         mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/UserMenu1.jpg",
-                GraphicsDefault.UserMenu.mainBounds, userMenu.getPane(), false, 1);
+                GraphicsDefault.UserMenu.mainBounds, userFrame.getPane(), false, 1);
         boxPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/UserMenu2.png",
-                GraphicsDefault.UserMenu.boxMainBounds, userMenu.getPane(), false, 2);
-        action = new MainMenuAction(userMenu.getPlayerController());
+                GraphicsDefault.UserMenu.boxMainBounds, userFrame.getPane(), false, 2);
+        action = new MainMenuAction(userFrame.getPlayerController());
         init();
     }
 
     private void init() {
-        userMenu.getMainSounds().playLoop();
+        userFrame.getMainSounds().playLoop();
         JButton exitGame = ComponentCreator.getInstance().setButton("Exit Game", mainPanel, "buttons1.png",
                 new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() - GraphicsDefault.UserMenu.mainBounds.getWidth() / 6 - 40,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 12 - 50,
@@ -41,36 +40,36 @@ public class MainMenu {
                         20,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 8,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 8), Color.white, 35, 1);
-        action.goSetting(setting, userMenu);
+        action.goSetting(setting, userFrame);
         JButton playButton = ComponentCreator.getInstance().setButton("Play", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 3 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 30, 1);
-        action.playGame(playButton, userMenu);
+        action.playGame(playButton, userFrame);
         JButton shopButton = ComponentCreator.getInstance().setButton("Shop", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 5 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 30, 1);
-        action.goShop(shopButton, userMenu);
+        action.goShop(shopButton, userFrame);
         JButton collectionButton = ComponentCreator.getInstance().setButton("Collection", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 7 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 27, 1);
-        action.goCollection(collectionButton, userMenu);
+        action.goCollection(collectionButton, userFrame);
         JButton statusButton = ComponentCreator.getInstance().setButton("Status", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 9 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 27, 1);
-        action.goStatus(statusButton, userMenu);
+        action.goStatus(statusButton, userFrame);
     }
 
     public void offEnabledMenu() {
         for (int i = 2; i < 10; i++) {
-            for (Component component : userMenu.getPane().getComponentsInLayer(i)) {
+            for (Component component : userFrame.getPane().getComponentsInLayer(i)) {
                 component.setEnabled(false);
                 component.setVisible(false);
             }
@@ -82,11 +81,11 @@ public class MainMenu {
     }
 
     public void onEnabledMenu() {
-        for (Component c : userMenu.getPane().getComponentsInLayer(9)) {
-            userMenu.getPane().remove(c);
+        for (Component c : userFrame.getPane().getComponentsInLayer(9)) {
+            userFrame.getPane().remove(c);
         }
         for (int i = 2; i < 10; i++) {
-            for (Component component : userMenu.getPane().getComponentsInLayer(i)) {
+            for (Component component : userFrame.getPane().getComponentsInLayer(i)) {
                 component.setEnabled(true);
                 component.setVisible(true);
             }

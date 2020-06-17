@@ -17,7 +17,6 @@ public class PlayerController {
     private Player player;
     private CollectionController collectionController;
     private StatusController statusController;
-    Gson gson = new GsonBuilder().create();
 
     public PlayerController() {
     }
@@ -36,11 +35,10 @@ public class PlayerController {
 
     public void signInPlayer(String username, String password) throws Exception {
         if (!FileManagement.getInstance().allFileNameInPath(
-                FilesPath.playerDataPath).contains(username + ".txt")) {
+                FilesPath.playerDataPath).contains(username+".txt")) {
             throw new Exception(ExceptionsEnum.valueOf("userNoExist").getMessage());
         }
-        player = creatPlayerFromFile(
-                FilesPath.playerDataPath, username);
+        player = FileManagement.getInstance().getPlayerFile().creatPlayerFromFile(username);
         collectionController = new CollectionController(player);
         statusController = new StatusController(player.getPlayerDecks());
         if (!player.getPassword().equals(password)) {
@@ -59,19 +57,12 @@ public class PlayerController {
                 numberAllPlayerSignIn());
         collectionController = new CollectionController(player);
         statusController = new StatusController(player.getPlayerDecks());
-        try {
-            Writer writer = new FileWriter(
-                    FilesPath.playerDataPath + "/" + username + ".txt");
-            gson.toJson(player, writer);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileManagement.getInstance().getPlayerFile().creatPlayerFile(player);
     }
 
     public void deleteAccount(Player player) {
         //todo
-        player.setDeletePlayer(true);
+        /*player.setDeletePlayer(true);
         try {
             Writer writer = new FileWriter(
                     FilesPath.deletePlayerDataPath + "/" + player.getUserName() +
@@ -82,17 +73,7 @@ public class PlayerController {
             e.printStackTrace();
         }
         File file = new File(FilesPath.playerDataPath + "/" + player.getUserName() + ".txt");
-        file.delete();
-    }
-
-    public Player creatPlayerFromFile(String path, String name) {
-        Player player = null;
-        Gson gson = new Gson();
-        try (Reader reader = new FileReader(path + "/" + name + ".txt")) {
-            player = gson.fromJson(reader, Player.class);
-        } catch (Exception ignored) {
-        }
-        return player;
+        file.delete();*/
     }
 
     private boolean checkExistUsername(String username) {

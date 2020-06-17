@@ -3,8 +3,11 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import defaults.FilesPath;
 import defaults.ModelDefault;
+import io.gsonfire.GsonFireBuilder;
+import io.gsonfire.TypeSelector;
 import model.Game;
 import model.Player;
 import model.card.Card;
@@ -26,12 +29,14 @@ public class FileManagement {
     private static FileManagement instance = null;
     private ReadCardFromFile readCardFromFile;
     private CreatNewCardInFile creatNewCardInFile;
+    private PlayerFile playerFile;
     private File file;
-    private Gson gson;
+    //private Gson gson;
 
     private FileManagement() {
         readCardFromFile = new ReadCardFromFile();
         creatNewCardInFile = new CreatNewCardInFile();
+        playerFile = new PlayerFile();
     }
 
     public static FileManagement getInstance() {
@@ -46,6 +51,14 @@ public class FileManagement {
 
     public CreatNewCardInFile getCreatNewCardInFile() {
         return creatNewCardInFile;
+    }
+
+    public void creatFolder(String path) {
+        new File(path).mkdir();
+    }
+
+    public PlayerFile getPlayerFile() {
+        return playerFile;
     }
 
     public ArrayList<Card> getAllCardsFromFile() {
@@ -65,20 +78,8 @@ public class FileManagement {
         return result;
     }
 
-    public void savePlayerToFile(Player player) {
-        gson = new GsonBuilder().create();
-        try {
-            Writer writer = new FileWriter(
-                    FilesPath.playerDataPath + "/" + player.getUserName() + ".txt");
-            gson.toJson(player, writer);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void saveGameModelToFile(Game game) {
-        gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder().create();
         try {
             Writer writer = new FileWriter(
                     FilesPath.gameModel + "/battle#" + game.getID() + ".txt");
@@ -90,7 +91,7 @@ public class FileManagement {
     }
 
     public void saveHeroModelToFile(Hero hero) {
-        gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder().create();
         try {
             Writer writer = new FileWriter(
                     FilesPath.heroDataPath + "/" + hero.getHeroName() + ".txt");
@@ -118,10 +119,6 @@ public class FileManagement {
             }
         }
         return result;
-    }
-
-    public void creatCardInFile(){
-
     }
 
     public class CreatNewCardInFile {
@@ -214,6 +211,55 @@ public class FileManagement {
                 }
             }
             return weaponsCards;
+        }
+    }
+
+    public class PlayerFile {
+        public void creatPlayerFile(Player player) {
+            savePlayerToFile(player);
+        }
+
+        public void savePlayerToFile(Player player) {
+            Gson gson = handleSaveCardToGsonPolymorphism();
+            String path = FilesPath.playerDataPath + "/" + player.getUserName();
+            try {
+                Writer writer = new FileWriter(
+                        path + ".txt");
+                gson.toJson(player, writer);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public Player creatPlayerFromFile(String name) {
+            Player player = null;
+            Gson gson = handleSaveCardToGsonPolymorphism();
+            try (Reader reader = new FileReader(
+                    FilesPath.playerDataPath + "/" + name + ".txt")) {
+                player = gson.fromJson(reader, Player.class);
+            } catch (Exception ignored) {
+            }
+            return player;
+        }
+        public Gson handleSaveCardToGsonPolymorphism(){
+            GsonFireBuilder builder = new GsonFireBuilder()
+                    .registerTypeSelector(Card.class, new TypeSelector<Card>() {
+                        @Override
+                        public Class<? extends Card> getClassForElement(JsonElement readElement) {
+                            String type = readElement.getAsJsonObject().get("type").getAsString();
+                            if (type.equals("Minion")) {
+                                return Minion.class;
+                            } else if (type.equals("Spell")) {
+                                return Spell.class;
+                            } else if (type.equals("Weapon")) {
+                                return Weapon.class;
+                            } else {
+                                return null; //returning null will trigger Gson's default behavior
+                            }
+                        }
+                    });
+           return builder.createGson();
         }
     }
 

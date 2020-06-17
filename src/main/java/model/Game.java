@@ -8,13 +8,15 @@ import java.util.Random;
 
 public class Game {
     private int ID;
+    private Player[] players;
     private Player.PlayerGame[] playerGames;
-    private int playerTurnIndex, numberOfHand;
+    private int playerIndex, numberOfHand;
     private String[] event;
     private Random rand;
 
     public Game(Player[] players) {
-        ID = (FileManagement.getInstance().allFileNameInPath(FilesPath.gameModel).size()+1);
+        this.players = players;
+        ID = (FileManagement.getInstance().allFileNameInPath(FilesPath.gameModel).size() + 1);
         playerGames = new Player.PlayerGame[players.length];
         for (int i = 0; i < players.length; i++) {
             players[i].newPlayerGame();
@@ -22,11 +24,11 @@ public class Game {
             playerGames[i].startPlayerGame(players[i].getGameDeck());
         }
         rand = new Random();
-        playerTurnIndex =rand.nextInt(players.length);
-        numberOfHand=1;
+        playerIndex = 0;
+        numberOfHand = 1;
         event = new String[ModelDefault.gameDefaults.eventNumber];
-        for (int i = 0; i <event.length ; i++) {
-            event[i]="";
+        for (int i = 0; i < event.length; i++) {
+            event[i] = "";
         }
     }
 
@@ -48,5 +50,17 @@ public class Game {
 
     public Player.PlayerGame getPlayerGames(int index) {
         return playerGames[index];
+    }
+
+    public Player getPlayers(int index) {
+        return players[index];
+    }
+
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
+
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
     }
 }

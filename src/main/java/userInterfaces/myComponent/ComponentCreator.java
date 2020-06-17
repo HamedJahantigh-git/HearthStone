@@ -93,9 +93,10 @@ public class ComponentCreator {
         return button;
     }
 
-    public JComboBox<Integer> setIntComboBox(JPanel panel, int first, int last, int step, Bounds bounds) {
+    public JComboBox<Integer> setIntComboBox(JPanel panel, int first, int last, int step, Bounds bounds, int fontSize) {
         JComboBox<Integer> combo = new JComboBox<>(creatNumberForCombo(first, last));
         combo.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        combo.setFont(new Font("Belwe Bd BT Bold", Font.ITALIC, fontSize));
         combo.setForeground(Color.BLUE);
         combo.setMaximumRowCount(step);
         combo.setLayout(null);
@@ -103,9 +104,10 @@ public class ComponentCreator {
         return combo;
     }
 
-    public JComboBox<String> setStrComboBox(JPanel panel, String[] choice, int step,Bounds bounds){
+    public JComboBox<String> setStrComboBox(JPanel panel, String[] choice, int step,Bounds bounds, int fontSize){
         JComboBox<String> combo = new JComboBox<>(choice);
         combo.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        combo.setFont(new Font("Belwe Bd BT Bold", Font.ITALIC, fontSize));
         combo.setForeground(Color.BLUE);
         combo.setMaximumRowCount(step);
         combo.setLayout(null);

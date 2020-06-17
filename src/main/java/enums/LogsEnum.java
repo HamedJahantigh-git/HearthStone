@@ -5,7 +5,7 @@ public enum LogsEnum {
             new String[]{"creat_new_account", "go_to_userMenu", "user_exit", "click_exit_game"}),
     setting(new String[]{"click_play"},
             new String[]{"navigate_setting"}),
-    play(new String[]{"click_play","click_Menu_Icon","click_back","click_main_menu","click_around_deck","game_action"},
+    play(new String[]{"click_play","click_Menu_Icon","click_back","click_main_menu","click_around_deck","game_action","click_back","click_play_mine"},
             new String[]{"start_game","navigate_collection/empty_game_deck","open_Menu","continue_game","navigate_main_menu",
                     "show_around_deck","detail_gameEventLogs:"}),
     collection(new String[]{"click_collection", "click_hero_cards", "filter", "buy_closed_card", "click_new_deck",

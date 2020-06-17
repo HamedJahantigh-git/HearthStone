@@ -1,9 +1,10 @@
 package enums;
 
 public enum StatusLayer {
-    base(35),
+    mainPanel(35),
     deckShow(36),
-    deckDetail(37);
+    deckDetail(37),
+    endLayer(40);
 
     private int layer;
 

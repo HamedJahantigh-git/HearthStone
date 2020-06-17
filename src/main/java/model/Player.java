@@ -94,6 +94,8 @@ public class Player {
         return playerGame;
     }
 
+
+
     public class PlayerGame {
         private ArrayList<Card> groundCard;
         private ArrayList<Card> usedCard;
@@ -156,5 +158,7 @@ public class Player {
         public Hero getHero() {
             return hero;
         }
+
+
     }
 }

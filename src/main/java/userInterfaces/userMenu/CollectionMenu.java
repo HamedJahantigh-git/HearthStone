@@ -16,7 +16,7 @@ public class CollectionMenu {
     private MyJPanel deckPanel;
     private MyJPanel cardPanel;
     private CollectionMenuAction action;
-    private UserMenu userMenu;
+    private UserFrame userFrame;
 
     private Deck selectedDeck;
     private String currentHeroSelected;
@@ -25,9 +25,9 @@ public class CollectionMenu {
 
     private ArrayList<MyCardButton> heroesButton;
 
-    public CollectionMenu(UserMenu userMenu) {
-        this.userMenu = userMenu;
-        action = new CollectionMenuAction(userMenu.getPlayerController(), this);
+    public CollectionMenu(UserFrame userFrame) {
+        this.userFrame = userFrame;
+        action = new CollectionMenuAction(userFrame.getPlayerController(), this);
         heroesButton = new ArrayList<>();
         currentHeroSelected = null;
         selectedDeck = null;
@@ -40,8 +40,8 @@ public class CollectionMenu {
         return cardInDeckIndex;
     }
 
-    public UserMenu getUserMenu() {
-        return userMenu;
+    public UserFrame getUserFrame() {
+        return userFrame;
     }
 
     public CollectionMenuAction getAction() {
@@ -66,7 +66,7 @@ public class CollectionMenu {
 
     public void initMainPanel() {
         mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Main Collection.jpg",
-                GraphicsDefault.UserMenu.mainBounds, userMenu.getPane(), false, 10);
+                GraphicsDefault.UserMenu.mainBounds, userFrame.getPane(), false, 10);
         JButton exitGame = ComponentCreator.getInstance().setButton("Exit Game", mainPanel, "buttons1.png",
                 new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() * 5 / 24 + 5,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 12 - 50,
@@ -78,7 +78,7 @@ public class CollectionMenu {
                         GraphicsDefault.UserMenu.mainBounds.getHeight() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 12 - 50,
                         GraphicsDefault.UserMenu.mainBounds.getWidth() / 12,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 14), Color.white, 30, 0);
-        action.backToUserMenu(back,userMenu);
+        action.backToUserMenu(back, userFrame);
         ComponentCreator.getInstance().setText("Search By Name: ", mainPanel,
                 "FORTE", 20, Color.black,
                 GraphicsDefault.Collection.searchSection(1));
@@ -88,12 +88,12 @@ public class CollectionMenu {
                 "FORTE", 20, Color.black,
                 GraphicsDefault.Collection.searchSection(3));
         JComboBox<Integer> manaFilter = ComponentCreator.getInstance().setIntComboBox(mainPanel, 0, 15, 4,
-                GraphicsDefault.Collection.searchSection(4));
+                GraphicsDefault.Collection.searchSection(4), 15);
         ComponentCreator.getInstance().setText("Type Cards:", mainPanel,
                 "FORTE", 20, Color.black,
                 GraphicsDefault.Collection.searchSection(5));
         JComboBox<String> userHaveFilter = ComponentCreator.getInstance().setStrComboBox(mainPanel,
-                new String[]{"All Cards", "User Cards", "Close Cards"}, 3, GraphicsDefault.Collection.searchSection(6));
+                new String[]{"All Cards", "User Cards", "Close Cards"}, 3, GraphicsDefault.Collection.searchSection(6), 15);
         JButton filterButton = ComponentCreator.getInstance().setButton("Filter", mainPanel, "buttons1.png",
                 GraphicsDefault.Collection.searchSection(7), Color.white, 25, 0);
         action.filterAction(filterButton, searchCardName, manaFilter, userHaveFilter);
@@ -113,13 +113,13 @@ public class CollectionMenu {
 
     private void initDeckPanel() {
         deckPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/deckCollection2.png",
-                GraphicsDefault.Collection.rightPanel, userMenu.getPane(), false, 12);
+                GraphicsDefault.Collection.rightPanel, userFrame.getPane(), false, 12);
         decksPageIndex = 0;
     }
 
     private void initCardPanel() {
         cardPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/CardCollection.png",
-                GraphicsDefault.Collection.cardPanel, userMenu.getPane(), false, 11);
+                GraphicsDefault.Collection.cardPanel, userFrame.getPane(), false, 11);
     }
 
     public void startShowCardPanelContent(String type, ArrayList<Card> cards) {
@@ -173,17 +173,17 @@ public class CollectionMenu {
         ArrayList<Deck> playerDecks = action.getPlayerController().getPlayer().getPlayerDecks();
         ComponentCreator.getInstance().setText("My Decks", deckPanel,
                 "FORTE", 35, Color.black,
-                GraphicsDefault.Collection.deckSection(1,  1));
+                GraphicsDefault.Collection.deckSection(1, 1));
         ComponentCreator.getInstance().setText("Game Deck: " + action.getPlayerController().getPlayer().getGameDeck().getName()
                 , deckPanel, "FORTE", 20, Color.black,
-                GraphicsDefault.Collection.deckSection(0,  8));
+                GraphicsDefault.Collection.deckSection(0, 8));
         JButton newDeck = ComponentCreator.getInstance().setButton("New Deck", deckPanel, "buttons1.png",
-                GraphicsDefault.Collection.deckSection(1,  2), Color.white, 30, 0);
+                GraphicsDefault.Collection.deckSection(1, 2), Color.white, 30, 0);
         action.newDeckAction(newDeck);
         JButton nextPage = ComponentCreator.getInstance().setButton("", deckPanel, "Right Arrow.png",
                 GraphicsDefault.Collection.deckSection(0, 4), Color.white, 30, 3);
         JButton backPage = ComponentCreator.getInstance().setButton("", deckPanel, "Left Arrow.png",
-                GraphicsDefault.Collection.deckSection(0,  5), Color.white, 30, 2);
+                GraphicsDefault.Collection.deckSection(0, 5), Color.white, 30, 2);
         nextPage.addActionListener(actionEvent -> {
             if (playerDecks.size() > decksPageIndex + 5)
                 decksPageIndex += 5;
@@ -196,10 +196,10 @@ public class CollectionMenu {
         });
         for (int i = decksPageIndex; i < Math.min((decksPageIndex + 5), playerDecks.size()); i++) {
             MyCardButton card = new MyCardButton(deckPanel, FilesPath.graphicsPath.collectionPath + "/"
-                    + playerDecks.get(i).getHero().getHeroName() + " Deck.jpg", GraphicsDefault.Collection.deckSection(i - decksPageIndex,  6));
+                    + playerDecks.get(i).getHero().getHeroName() + " Deck.jpg", GraphicsDefault.Collection.deckSection(i - decksPageIndex, 6));
             ComponentCreator.getInstance().setText(playerDecks.get(i).getName(), deckPanel,
                     "FORTE", 25, Color.blue,
-                    GraphicsDefault.Collection.deckSection(i - decksPageIndex,  7));
+                    GraphicsDefault.Collection.deckSection(i - decksPageIndex, 7));
             card.moveListener();
             action.selectDeck(card, playerDecks.get(i));
         }
@@ -211,23 +211,23 @@ public class CollectionMenu {
         deckPanel.removeAll();
         ComponentCreator.getInstance().setText(deck.getName(), deckPanel,
                 "FORTE", 35, Color.black,
-                GraphicsDefault.Collection.deckSection(1,  1));
-         new MyCardButton(deckPanel, FilesPath.graphicsPath.collectionPath + "/"
-                +deck.getHero().getHeroName() + " Deck.jpg", GraphicsDefault.Collection.deckSection(0,  6));
+                GraphicsDefault.Collection.deckSection(1, 1));
+        new MyCardButton(deckPanel, FilesPath.graphicsPath.collectionPath + "/"
+                + deck.getHero().getHeroName() + " Deck.jpg", GraphicsDefault.Collection.deckSection(0, 6));
         JButton backToDecks = ComponentCreator.getInstance().setButton("Back To Decks", deckPanel, "buttons1.png",
-                GraphicsDefault.Collection.deckSection(1,  2), Color.white, 25, 0);
+                GraphicsDefault.Collection.deckSection(1, 2), Color.white, 25, 0);
         action.backToDecksAction(backToDecks);
         JButton deleteDeck = ComponentCreator.getInstance().setButton("Delete Deck", deckPanel, "buttons1.png",
                 GraphicsDefault.Collection.deckSection(0, 3), Color.white, 15, 0);
         action.deleteDeck(deleteDeck);
         JButton editDeck = ComponentCreator.getInstance().setButton("Edit Deck", deckPanel, "buttons1.png",
-                GraphicsDefault.Collection.deckSection(1,  3), Color.white, 15, 0);
+                GraphicsDefault.Collection.deckSection(1, 3), Color.white, 15, 0);
         action.editDeck(editDeck);
         JButton selectDeckForGame = ComponentCreator.getInstance().setButton("Game Deck", deckPanel, "buttons1.png",
-                GraphicsDefault.Collection.deckSection(2,  3), Color.white, 15, 0);
+                GraphicsDefault.Collection.deckSection(2, 3), Color.white, 15, 0);
         action.selectDeckForGame(selectDeckForGame);
         JButton nextPage = ComponentCreator.getInstance().setButton("", deckPanel, "Right Arrow.png",
-                GraphicsDefault.Collection.deckSection(0,  4), Color.white, 30, 3);
+                GraphicsDefault.Collection.deckSection(0, 4), Color.white, 30, 3);
         JButton backPage = ComponentCreator.getInstance().setButton("", deckPanel, "Left Arrow.png",
                 GraphicsDefault.Collection.deckSection(0, 5), Color.white, 30, 2);
         nextPage.addActionListener(actionEvent -> {
@@ -241,10 +241,10 @@ public class CollectionMenu {
             showSelectedDeck(deck, this.cardInDeckIndex);
         });
         for (int i = this.cardInDeckIndex; i < Math.min((this.cardInDeckIndex + 6), deck.getCards().size()); i++) {
-           MyCardButton card = new MyCardButton(deckPanel, FilesPath.graphicsPath.cardsPath + "/"
+            MyCardButton card = new MyCardButton(deckPanel, FilesPath.graphicsPath.cardsPath + "/"
                     + deck.getCards().get(i).getName() + ".png", GraphicsDefault.Collection.deckSection(i, 9));
-          card.moveListener();
-           action.deckCardSelect(card, deck.getCards().get(i));
+            card.moveListener();
+            action.deckCardSelect(card, deck.getCards().get(i));
         }
         deckPanel.paint(deckPanel.getGraphics());
     }
@@ -262,7 +262,7 @@ public class CollectionMenu {
     }
 
     public void onEnabledMenu() {
-        userMenu.getPane().remove(userMenu.getPane().getComponentsInLayer(19)[0]);
+        userFrame.getPane().remove(userFrame.getPane().getComponentsInLayer(19)[0]);
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(true);
         }
