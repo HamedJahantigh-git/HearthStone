@@ -2,6 +2,7 @@ package defaults;
 
 import controller.CollectionController;
 import controller.FileManagement;
+import enums.StatusLayer;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
@@ -78,7 +79,8 @@ public class ModelDefault {
     }
 
     static public class gameDefaults {
-        public static final int eventNumber = 8;
+        public static final int EVENT_NUMBER = 8;
+        public static final int MAX_START_PLAYER_CARDS = 3;
     }
 
 }

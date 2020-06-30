@@ -1,20 +1,16 @@
 package model.hero;
 
 import defaults.ModelDefault;
+import enums.HeroType;
 
 public class Warlock extends Hero {
-    {
-        super.heroName = "Warlock";
-        super.Health = ModelDefault.heroDefaults.baseOfHeroHealth + 5;
+
+    public Warlock() {
+        super(HeroType.Warlock.name());
     }
 
-
-    public void specialPower() {
-
-    }
-
-
-    public void heroPower() {
+    @Override
+    public void SpecialPower() {
 
     }
 }

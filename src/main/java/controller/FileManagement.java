@@ -15,6 +15,7 @@ import model.card.Minion;
 import model.card.Spell;
 import model.card.Weapon;
 import model.hero.Hero;
+import model.hero.HeroAbstractAdapter;
 
 import java.io.*;
 
@@ -220,7 +221,7 @@ public class FileManagement {
         }
 
         public void savePlayerToFile(Player player) {
-            Gson gson = handleSaveCardToGsonPolymorphism();
+            Gson gson = handleGsonProblems();
             String path = FilesPath.playerDataPath + "/" + player.getUserName();
             try {
                 Writer writer = new FileWriter(
@@ -234,7 +235,7 @@ public class FileManagement {
 
         public Player creatPlayerFromFile(String name) {
             Player player = null;
-            Gson gson = handleSaveCardToGsonPolymorphism();
+            Gson gson = handleGsonProblems();
             try (Reader reader = new FileReader(
                     FilesPath.playerDataPath + "/" + name + ".txt")) {
                 player = gson.fromJson(reader, Player.class);
@@ -242,7 +243,15 @@ public class FileManagement {
             }
             return player;
         }
-        public Gson handleSaveCardToGsonPolymorphism(){
+
+        private Gson handleGsonProblems() {
+            //GsonBuilder gsonBuilder = handleSaveCardToGsonPolymorphism();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = handleAbstractGsonSerDeSer(gsonBuilder);
+            return gson;
+        }
+
+        private GsonBuilder handleSaveCardToGsonPolymorphism() {
             GsonFireBuilder builder = new GsonFireBuilder()
                     .registerTypeSelector(Card.class, new TypeSelector<Card>() {
                         @Override
@@ -259,7 +268,16 @@ public class FileManagement {
                             }
                         }
                     });
-           return builder.createGson();
+            return builder.createGsonBuilder();
+        }
+
+        private Gson handleAbstractGsonSerDeSer(GsonBuilder gsonBuilder){
+            //gsonBuilder.registerTypeAdapter(Hero.class, new HeroAbstractAdapter());
+
+            return gsonBuilder.registerTypeAdapter(Hero.class,
+                    new HeroAbstractAdapter())
+                    .registerTypeAdapter(Hero.class,
+                            new HeroAbstractAdapter()).create();
         }
     }
 

@@ -24,7 +24,6 @@ public class AccountMenuAction extends MyAction {
                        Sounds sounds) {
         button.addActionListener(actionEvent -> {
             try {
-
                 PlayerController playerController = new PlayerController();
                 playerController.signInPlayer(username.getText(), String.valueOf(password.getPassword()));
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[1],

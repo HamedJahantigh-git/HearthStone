@@ -12,7 +12,8 @@ public enum ExceptionsEnum {
     fullGroundDeck("Fulled Ground Capacity"),
     minDeckCard("Small Deck for Game"),
     unEditableDeck("Current Hero Card Exist in Deck"),
-    lowMoney("low Money for Play Card");
+    lowMoney("low Money for Play Card"),
+    changeOneStartCard("This StartCard Changes");
 
     private String message;
 

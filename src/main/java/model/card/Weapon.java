@@ -14,4 +14,11 @@ public class Weapon extends Card {
         this.attack = attack;
     }
 
+    public int getDurability() {
+        return durability;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
 }

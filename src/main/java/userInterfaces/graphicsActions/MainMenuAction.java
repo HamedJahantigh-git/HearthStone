@@ -59,13 +59,9 @@ public class MainMenuAction extends MyAction {
                         GraphicsDefault.GameBoard.menuButtons(1), Color.white, 23, 1);
                 mainMenu.addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("play").getEvent()[7],
-                            LogsEnum.valueOf("play").getEvent_description()[0], playerController.getPlayer());
+                            LogsEnum.valueOf("play").getEvent_description()[7], playerController.getPlayer());
                     userFrame.startMineGame();
                 });
-               /* JButton exitGameButton = ComponentCreator.getInstance().setButton("Exit Game", messagePanel, "buttons3.png",
-                        GraphicsDefault.GameBoard.menuButtons(4), Color.white, 25, 1);
-                super.exitGame(exitGameButton);
-                */
                 JButton back = ComponentCreator.getInstance().setButton("Back", messagePanel, "buttons3.png",
                         GraphicsDefault.GameBoard.menuButtons(4), Color.white, 25, 1);
                 back.addActionListener(actionEvent2 -> {

@@ -1,21 +1,16 @@
 package model.hero;
 
 import defaults.ModelDefault;
+import enums.HeroType;
 
 public class Priest extends Hero {
 
-    {
-        super.heroName = "Priest";
-        super.Health = ModelDefault.heroDefaults.baseOfHeroHealth;
+    public Priest() {
+        super(HeroType.Priest.name());
     }
 
-
-    public void specialPower() {
-
-    }
-
-
-    public void heroPower() {
+    @Override
+    public void SpecialPower() {
 
     }
 }

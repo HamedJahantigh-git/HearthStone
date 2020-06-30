@@ -38,6 +38,7 @@ public class PlayerController {
                 FilesPath.playerDataPath).contains(username+".txt")) {
             throw new Exception(ExceptionsEnum.valueOf("userNoExist").getMessage());
         }
+
         player = FileManagement.getInstance().getPlayerFile().creatPlayerFromFile(username);
         collectionController = new CollectionController(player);
         statusController = new StatusController(player.getPlayerDecks());

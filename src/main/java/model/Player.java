@@ -6,9 +6,12 @@ import defaults.ModelDefault;
 import enums.InfoPassiveEnum;
 import model.card.Card;
 import model.hero.Hero;
+import model.infoPassive.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Player {
     private String userName;
@@ -50,8 +53,9 @@ public class Player {
         this.money += differ;
     }
 
-    public void newPlayerGame(){
+    public void newPlayerGame() {
         playerGame = new PlayerGame();
+        playerGame.startPlayerGame(gameDeck);
     }
 
     public String getUserName() {
@@ -95,7 +99,6 @@ public class Player {
     }
 
 
-
     public class PlayerGame {
         private ArrayList<Card> groundCard;
         private ArrayList<Card> usedCard;
@@ -104,6 +107,7 @@ public class Player {
         private int randMana, currentMana;
         private Hero hero;
         private InfoPassive infoPassive;
+        private Map<Integer, Boolean> selectedStartCard;
 
         public PlayerGame() {
             this.groundCard = new ArrayList<>();
@@ -112,11 +116,62 @@ public class Player {
             this.aroundCard = new ArrayList<>();
             this.randMana = 1;
             this.currentMana = 1;
+            newSelectedStartCard();
         }
 
         public void startPlayerGame(Deck deck) {
             aroundCard.addAll(deck.getCards());
             this.hero = deck.getHero();
+        }
+
+        public void newSelectedStartCard() {
+            selectedStartCard = new HashMap<>();
+            for (int i = 0; i < ModelDefault.gameDefaults.MAX_START_PLAYER_CARDS; i++)
+                selectedStartCard.put(i, false);
+
+        }
+
+        public void setTrueSelectedStartCard(int key) {
+            selectedStartCard.replace(key, true);
+        }
+
+        public void setInfoPassive(InfoPassiveEnum infoPassiveType) {
+            switch (infoPassiveType){
+                case nurse:
+                    this.infoPassive = new Nurse(); break;
+                case manaJump:
+                    this.infoPassive=new ManaJump(); break;
+                case offCards:
+                    this.infoPassive = new OffCards(); break;
+                case freePower:
+                    this.infoPassive = new FreePower(); break;
+                case twiceDraw:
+                    this.infoPassive = new TwiceDraw(); break;
+            }
+        }
+
+        public void setCurrentMana(int currentMana) {
+            this.currentMana = currentMana;
+        }
+
+        public void setRandMana(int randMana) {
+            this.randMana = randMana;
+        }
+
+        public Map<Integer, Boolean> getSelectedStartCard() {
+            return selectedStartCard;
+        }
+
+        public int getCurrentMana() {
+            return currentMana;
+        }
+
+        public Hero getHero() {
+            return hero;
+        }
+
+        public InfoPassive getInfoPassive() {
+            return infoPassive;
         }
 
         public ArrayList<Card> getGroundCard() {
@@ -138,27 +193,5 @@ public class Player {
         public int getRandMana() {
             return randMana;
         }
-
-        public void setInfoPassive(InfoPassiveEnum infoPassiveType) {
-            this.infoPassive = new InfoPassive(infoPassiveType);
-        }
-
-        public void setRandMana(int randMana) {
-            this.randMana = randMana;
-        }
-
-        public int getCurrentMana() {
-            return currentMana;
-        }
-
-        public void setCurrentMana(int currentMana) {
-            this.currentMana = currentMana;
-        }
-
-        public Hero getHero() {
-            return hero;
-        }
-
-
     }
 }

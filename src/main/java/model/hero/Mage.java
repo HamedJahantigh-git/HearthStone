@@ -1,20 +1,16 @@
 package model.hero;
 
 import defaults.ModelDefault;
+import enums.HeroType;
 
 public class Mage extends Hero {
-    {
-        super.heroName = "Mage";
-        super.Health = ModelDefault.heroDefaults.baseOfHeroHealth;
+
+    public Mage() {
+        super(HeroType.Mage.name());
     }
 
-
-    public void specialPower() {
-
-    }
-
-
-    public void heroPower() {
+    @Override
+    public void SpecialPower() {
 
     }
 }

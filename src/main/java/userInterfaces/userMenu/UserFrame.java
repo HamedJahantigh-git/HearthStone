@@ -76,10 +76,8 @@ public class UserFrame {
     public void startMineGame() {
         mainSounds.stopAudio();
         deleteLayer(MineGameLayer.mainPanel.getLayer(), MineGameLayer.endLayer.getLayer());
-        mineGameBoard = new MineGameBoard(this, playerController.getPlayer(), "Battle Ground 1")
-        //baseGameThread = new BaseGameThread(this,playerController.getPlayer(),"Battle Ground 1",new PlayerGraphicThread());
+        mineGameBoard = new MineGameBoard(this, playerController.getPlayer(), "Battle Ground 1");
         showPanel(AllMenuSwitch.playMine);
-        //baseGameThread.selectCompetitor();
     }
 
     public void startSettingMenu() {

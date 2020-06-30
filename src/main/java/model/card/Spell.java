@@ -14,4 +14,11 @@ public class Spell extends Card {
         this.reward = reward;
     }
 
+    public String getQuest() {
+        return quest;
+    }
+
+    public String getReward() {
+        return reward;
+    }
 }

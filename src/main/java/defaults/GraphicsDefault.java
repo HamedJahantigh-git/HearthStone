@@ -1,5 +1,6 @@
 package defaults;
 
+import enums.CardType;
 import userInterfaces.myComponent.Bounds;
 
 import java.awt.*;
@@ -22,8 +23,6 @@ public class GraphicsDefault {
 
     public static class GameBoard {
         public static Bounds mainBounds = new Bounds(0, 0, screenSize.width, screenSize.height);
-        public static Bounds aroundDeckIcon = new Bounds(mainBounds.getWidth() * 175 / 200, mainBounds.getHeight() * 50 / 100,
-                mainBounds.getWidth() * 8 / 200, mainBounds.getHeight() * 23 / 200);
         public static Bounds manaBar = new Bounds(mainBounds.getWidth() * 181 / 200, mainBounds.getHeight() * 65 / 100,
                 mainBounds.getWidth() * 18 / 200, mainBounds.getHeight() * 23 / 200);
         public static Bounds menuIcon = new Bounds(mainBounds.getWidth() - mainBounds.getHeight() / 8 - 40, 20,
@@ -31,12 +30,6 @@ public class GraphicsDefault {
         public static Bounds menuMessage = new Bounds(mainBounds.getWidth() * 35 / 100, mainBounds.getHeight() / 6, mainBounds.getWidth() * 3 / 10, mainBounds.getHeight() * 2 / 3);
         public static Bounds turnButton = new Bounds(mainBounds.getWidth() * 159 / 200, mainBounds.getHeight() * 41 / 100,
                 mainBounds.getWidth() * 20 / 200, mainBounds.getHeight() * 17 / 200);
-        public static Bounds heroBounds = new Bounds(mainBounds.getWidth() * 92 / 200, mainBounds.getHeight() * 60 / 100,
-                mainBounds.getWidth() * 26 / 200, mainBounds.getHeight() * 42 / 200);
-        public static Bounds heroPowerBounds = new Bounds(mainBounds.getWidth() * 120 / 200, mainBounds.getHeight() * 66 / 100,
-                mainBounds.getWidth() * 20 / 200, mainBounds.getHeight() * 23 / 200);
-        public static Bounds eventBounds = new Bounds(mainBounds.getWidth() * 1 / 200, mainBounds.getHeight() * 24 / 100,
-                mainBounds.getWidth() * 33 / 200, mainBounds.getHeight() * 90 / 200);
         public static Bounds aroundDeckPanel = new Bounds(mainBounds.getWidth() * 50 / 200, mainBounds.getHeight() * 20 / 100,
                 mainBounds.getWidth() * 100 / 200, mainBounds.getHeight() * 120 / 200);
 
@@ -44,17 +37,18 @@ public class GraphicsDefault {
         public static Bounds infoPassivePanelBounds = new Bounds(mainBounds.getWidth() * 60 / 200, mainBounds.getHeight() * 20 / 100,
                 mainBounds.getWidth() * 80 / 200, mainBounds.getHeight() * 120 / 200);
 
-        public static Bounds infoPassiveBounds(int state,int index) {
+        public static Bounds infoPassiveBounds(int state, int index) {
             // info Button
             if (state == 1)
                 return new Bounds(infoPassivePanelBounds.getWidth() / 6,
-                        index*infoPassivePanelBounds.getHeight() * 2 / 9, infoPassivePanelBounds.getWidth()*2 / 3,
+                        index * infoPassivePanelBounds.getHeight() * 2 / 9, infoPassivePanelBounds.getWidth() * 2 / 3,
                         infoPassivePanelBounds.getHeight() / 5);
             // title
             if (state == 2)
-                return new Bounds(0, 0, infoPassivePanelBounds.getWidth(), infoPassivePanelBounds.getHeight()/3);
+                return new Bounds(0, 0, infoPassivePanelBounds.getWidth(), infoPassivePanelBounds.getHeight() / 3);
             return null;
         }
+
         // SelectCompetitor
         public static Bounds selectCompetitorBound(int state) {
             Bounds panelBounds = new Bounds(mainBounds.getWidth() * 70 / 200, mainBounds.getHeight() * 60 / 200,
@@ -63,9 +57,9 @@ public class GraphicsDefault {
                 return panelBounds;
             //select button
             if (state == 1)
-            return new Bounds(panelBounds.getWidth() * 60 / 200,
-                    panelBounds.getHeight() * 65 / 100, panelBounds.getWidth() * 80 / 200,
-                    panelBounds.getHeight() * 14 / 100);
+                return new Bounds(panelBounds.getWidth() * 60 / 200,
+                        panelBounds.getHeight() * 65 / 100, panelBounds.getWidth() * 80 / 200,
+                        panelBounds.getHeight() * 14 / 100);
             //combo
             if (state == 2)
                 return new Bounds(panelBounds.getWidth() * 40 / 200,
@@ -73,54 +67,100 @@ public class GraphicsDefault {
                         panelBounds.getHeight() * 12 / 100);
             // title
             if (state == 3)
-                return new Bounds(0, 10, panelBounds.getWidth(), panelBounds.getHeight()/3);
+                return new Bounds(0, 10, panelBounds.getWidth(), panelBounds.getHeight() / 3);
             return null;
         }
 
-        public static Bounds aroundDeckCard(int state, int index) {
-            Bounds result = null;
+        public static Bounds changeStartCardBound(int state, int index) {
+            Bounds panelBounds = new Bounds(mainBounds.getWidth() * 50 / 200, mainBounds.getHeight() * 40 / 200,
+                    mainBounds.getWidth() * 100 / 200, mainBounds.getHeight() * 120 / 200);
+            if (state == 0)
+                return panelBounds;
+            if (state == 1)
+                return new Bounds(0, 10, panelBounds.getWidth(), panelBounds.getHeight() / 3);
+            //Finish button
+            if (state == 2)
+                return new Bounds(panelBounds.getWidth() * 80 / 200,
+                        panelBounds.getHeight() * 75 / 100, panelBounds.getWidth() * 40 / 200,
+                        panelBounds.getHeight() * 11 / 100);
+            if (state == 3) {
+                int aroundX = panelBounds.getWidth() * 14 / 100;
+                int aroundY = panelBounds.getHeight() * 12 / 100;
+                int width = panelBounds.getWidth() * 20 / 100;
+                int distance = width + (panelBounds.getWidth() - 2 * aroundX - width * ModelDefault.gameDefaults.MAX_START_PLAYER_CARDS)
+                        / (ModelDefault.gameDefaults.MAX_START_PLAYER_CARDS);
+                return new Bounds(aroundX + index * distance,
+                        aroundY + panelBounds.getHeight() * 10 / 100,
+                        width, panelBounds.getHeight() * 50 / 100);
+            }
+            return null;
+        }
+
+        public static Bounds aroundDeckCardBound(int playerIndex, int state, int index) {
+            Bounds aroundDeckIcon = new Bounds(mainBounds.getWidth() * 175 / 200,
+                    (mainBounds.getHeight() * 50 / 100) - playerIndex * mainBounds.getHeight() * 22 / 100,
+                    mainBounds.getWidth() * 8 / 200,
+                    mainBounds.getHeight() * 23 / 200);
+            //Around Deck Icon
+            if (state == 0) {
+                return aroundDeckIcon;
+            }
             //back button
             if (state == 1) {
-                result = new Bounds(aroundDeckPanel.getWidth() * 2 / 5, aroundDeckPanel.getHeight() * 7 / 9,
+                return new Bounds(aroundDeckPanel.getWidth() * 2 / 5, aroundDeckPanel.getHeight() * 7 / 9,
                         aroundDeckPanel.getWidth() / 5, aroundDeckPanel.getHeight() / 10);
             }
             //card position
             if (state == 2) {
                 int row;
-                int aroundX = mainBounds.getWidth() / 2 - aroundDeckPanel.getWidth() * 37 / 100;
-                int aroundY = mainBounds.getHeight() / 2 - aroundDeckPanel.getHeight() * 3 / 8;
+                int aroundX = aroundDeckPanel.getWidth() * 10 / 100;
+                int aroundY = aroundDeckPanel.getHeight() * 14 / 100;
                 if (Math.floorMod(index, 12) < 6) {
                     row = 0;
                 } else {
                     row = 1;
                 }
                 int column = Math.floorMod(index, 6);
-                result = new Bounds(aroundX + column * aroundDeckPanel.getWidth() * 13 / 100 + 10,
+                return new Bounds(aroundX + column * aroundDeckPanel.getWidth() * 13 / 100 + 10,
                         aroundY + row * aroundDeckPanel.getHeight() * 30 / 100,
                         aroundDeckPanel.getWidth() * 13 / 100, aroundDeckPanel.getHeight() * 30 / 100);
             }
+            // set title
+            if (state == 3)
+                return new Bounds(0, 10, aroundDeckPanel.getWidth(), aroundDeckPanel.getHeight() / 3);
 
-            return result;
+
+            return null;
         }
 
-        public static Bounds handDeckCard(int index, int size) {
+        public static Bounds manaBarBounds(int playerIndex) {
+            if (playerIndex == 0)
+                return new Bounds(mainBounds.getWidth() * 181 / 200, mainBounds.getHeight() * 70 / 100,
+                        mainBounds.getWidth() * 18 / 200, mainBounds.getHeight() * 23 / 200);
+            if (playerIndex == 1)
+                return new Bounds(mainBounds.getWidth() * 181 / 200, mainBounds.getHeight() * 15 / 100,
+                        mainBounds.getWidth() * 18 / 200, mainBounds.getHeight() * 23 / 200);
+            return null;
+        }
+
+        public static Bounds handDeckCard(int playerIndex, int index, int size) {
             int width = mainBounds.getWidth() * 8 / 100;
             int height = mainBounds.getHeight() * 15 / 100;
             int xStart = (mainBounds.getWidth() - width * size) / 2;
             int xEnd = width * size + xStart;
-            int y = mainBounds.getHeight() * 80 / 100;
+            int y = mainBounds.getHeight() * 80 / 100 - playerIndex * mainBounds.getHeight() * 79 / 100;
             int xPart = (xEnd - xStart) / size;
             return new Bounds(xEnd - xPart * (index + 1), y, width, height);
         }
 
-        public static Bounds groundDeckCard(int index, int size) {
+        public static Bounds groundDeckCard(int playerIndex, int cardIndex, int size) {
             int width = mainBounds.getWidth() * 7 / 100;
             int height = mainBounds.getHeight() * 13 / 100;
             int xStart = (mainBounds.getWidth() - width * size) / 2;
             int xEnd = width * size + xStart;
-            int y = mainBounds.getHeight() * 47 / 100;
+            int y = mainBounds.getHeight() * 47 / 100 - playerIndex * 40 / 100;
             int xPart = (xEnd - xStart) / size;
-            return new Bounds(xEnd - xPart * (index + 1), y, width, height);
+            return new Bounds(xEnd - xPart * (cardIndex + 1), y, width, height);
         }
 
         public static Bounds menuButtons(int index) {
@@ -129,6 +169,70 @@ public class GraphicsDefault {
                     GraphicsDefault.GameBoard.menuMessage.getWidth() * 6 / 10,
                     GraphicsDefault.GameBoard.menuMessage.getHeight() / 7 - 10);
         }
+
+        public static Bounds heroBounds(int playerIndex, int state) {
+            Bounds heroPanelBounds = new Bounds(mainBounds.getWidth() * 92 / 200,
+                    mainBounds.getHeight() * 60 / 100 - playerIndex * mainBounds.getHeight() * 47 / 100,
+                    mainBounds.getWidth() * 26 / 200, mainBounds.getHeight() * 42 / 200);
+
+            // main Bound
+            if (state == 1)
+                return heroPanelBounds;
+            // health Bound
+            if (state == 2)
+                return new Bounds(heroPanelBounds.getWidth() * 60 / 80, heroPanelBounds.getWidth() * 23 / 40,
+                        heroPanelBounds.getWidth() / 5, heroPanelBounds.getHeight() / 6);
+
+            return null;
+        }
+
+        public static Bounds heroPowerBounds(int playerIndex, int state) {
+            int width = mainBounds.getWidth() * 20 / 200;
+            int height = mainBounds.getHeight() * 23 / 200;
+            if (state ==1) {
+                if (playerIndex == 0)
+                    return new Bounds(mainBounds.getWidth() * 120 / 200, mainBounds.getHeight() * 66 / 100,
+                            width, height);
+                if (playerIndex == 1)
+                    return new Bounds(mainBounds.getWidth() * 120 / 200, mainBounds.getHeight() * 20 / 100,
+                            width, height);
+            }
+            if(state == 2)
+                return new Bounds(width*21/50, height/10,
+                        width*2/10, height * 2/10);
+            return null;
+        }
+
+        public static Bounds eventBounds(int state) {
+            Bounds eventBounds = new Bounds(mainBounds.getWidth() * 1 / 200, mainBounds.getHeight() * 24 / 100,
+                    mainBounds.getWidth() * 33 / 200, mainBounds.getHeight() * 90 / 200);
+            if (state == 1)
+                return eventBounds;
+            // title
+            if (state == 2)
+                return new Bounds(0, eventBounds.getHeight() / 10,
+                        eventBounds.getWidth(), eventBounds.getHeight() / 10);
+            // event message
+            if (state == 3)
+                return new Bounds(eventBounds.getWidth() / 10, eventBounds.getHeight() / 9,
+                        eventBounds.getWidth() * 8 / 10, eventBounds.getHeight() * 4 / 5);
+            return null;
+        }
+
+        public static Bounds cardTextBounds(int state, Bounds cardBound) {
+            // mana Bounds
+            if (state == 1)
+                return new Bounds(cardBound.getWidth() / 40, 0, cardBound.getWidth() / 5, cardBound.getHeight() / 6);
+            // left bottom Bound
+            if (state == 2)
+                return new Bounds(cardBound.getWidth() / 30, cardBound.getWidth() * 35 / 40, cardBound.getWidth() / 5, cardBound.getHeight() / 6);
+            // right bottom Bound
+            if (state == 3)
+                return new Bounds(cardBound.getWidth() * 63 / 80, cardBound.getWidth() * 35 / 40, cardBound.getWidth() / 5, cardBound.getHeight() / 6);
+            return null;
+
+        }
+
     }
 
     public static class UserMenu {

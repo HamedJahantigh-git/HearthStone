@@ -6,7 +6,6 @@ import enums.StatusLayer;
 import model.Deck;
 import userInterfaces.graphicsActions.StatusMenuAction;
 import userInterfaces.myComponent.ComponentCreator;
-import userInterfaces.myComponent.GameComponent;
 import userInterfaces.myComponent.MyJPanel;
 
 import javax.swing.*;
@@ -41,6 +40,9 @@ public class StatusMenu {
     }
 
     public void showTopDecks() {
+
+        //todo-build game component suitable
+        /*
         cleanStatusMenu();
         initMainPanel();
         ArrayList<Deck> topDeck = action.getPlayerController().getStatusController().topDeck();
@@ -53,7 +55,7 @@ public class StatusMenu {
                     20, Color.white, GraphicsDefault.StatusMenu.deckSection(i, 2));
             deckShow.moveListener(false);
             action.deckSelect(deckShow.getButton(), topDeck.get(i), i+1);
-        }
+        }*/
     }
 
     public void offEnabledMenu() {

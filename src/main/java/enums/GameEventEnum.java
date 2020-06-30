@@ -4,7 +4,10 @@ public enum GameEventEnum {
 
     playMinion("play_minion"), playWeapon("play_weapon"), playSpell("play_spell"),
     playHeroPower("play_hero_power"),
-    endTurn("end_turn"), selectInfoPassive("select_info_passive");
+    endTurn("end_turn"),
+    selectInfoPassive("select_info_passive"),
+    changeStartCard("change_start_card"),
+    stopGame("stop_game");
 
     private String type;
 
