@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import defaults.FilesPath;
 import defaults.ModelDefault;
+import enums.CardType;
+import enums.HeroType;
 import io.gsonfire.GsonFireBuilder;
 import io.gsonfire.TypeSelector;
 import model.Game;
@@ -14,8 +16,7 @@ import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
 import model.card.Weapon;
-import model.hero.Hero;
-import model.hero.HeroAbstractAdapter;
+import model.hero.*;
 
 import java.io.*;
 
@@ -245,39 +246,61 @@ public class FileManagement {
         }
 
         private Gson handleGsonProblems() {
-            //GsonBuilder gsonBuilder = handleSaveCardToGsonPolymorphism();
-            GsonBuilder gsonBuilder = new GsonBuilder();
+            GsonBuilder gsonBuilder = handleSaveGsonPolymorphism();
             Gson gson = handleAbstractGsonSerDeSer(gsonBuilder);
             return gson;
         }
 
-        private GsonBuilder handleSaveCardToGsonPolymorphism() {
-            GsonFireBuilder builder = new GsonFireBuilder()
-                    .registerTypeSelector(Card.class, new TypeSelector<Card>() {
-                        @Override
-                        public Class<? extends Card> getClassForElement(JsonElement readElement) {
-                            String type = readElement.getAsJsonObject().get("type").getAsString();
-                            if (type.equals("Minion")) {
-                                return Minion.class;
-                            } else if (type.equals("Spell")) {
-                                return Spell.class;
-                            } else if (type.equals("Weapon")) {
-                                return Weapon.class;
-                            } else {
-                                return null; //returning null will trigger Gson's default behavior
-                            }
-                        }
-                    });
+        private GsonBuilder handleSaveGsonPolymorphism() {
+            GsonFireBuilder builder = new GsonFireBuilder();
+            handleSaveCardToGsonPolymorphism(builder);
+            handleSaveHeroToGsonPolymorphism(builder);
             return builder.createGsonBuilder();
         }
 
-        private Gson handleAbstractGsonSerDeSer(GsonBuilder gsonBuilder){
-            //gsonBuilder.registerTypeAdapter(Hero.class, new HeroAbstractAdapter());
+        private void handleSaveHeroToGsonPolymorphism( GsonFireBuilder builder){
+            builder.registerTypeSelector(Hero.class, new TypeSelector<Hero>() {
+                @Override
+                public Class<? extends Hero> getClassForElement(JsonElement readElement) {
+                    String type = readElement.getAsJsonObject().get("type").getAsString();
+                    if (type.equals(HeroType.Hunter.name())) {
+                        return Hunter.class;
+                    } else if (type.equals(HeroType.Warlock.name())) {
+                        return Warlock.class;
+                    } else if (type.equals(HeroType.Mage.name())) {
+                        return Mage.class;
+                    } else if (type.equals(HeroType.Rogue.name())) {
+                        return Rogue.class;
+                    } else if (type.equals(HeroType.Priest.name())) {
+                        return Priest.class;
+                    } else {
+                        return null; //returning null will trigger Gson's default behavior
+                    }
+                }
+            });
+        }
 
-            return gsonBuilder.registerTypeAdapter(Hero.class,
-                    new HeroAbstractAdapter())
-                    .registerTypeAdapter(Hero.class,
-                            new HeroAbstractAdapter()).create();
+        private void handleSaveCardToGsonPolymorphism( GsonFireBuilder builder){
+            builder.registerTypeSelector(Card.class, new TypeSelector<Card>() {
+                @Override
+                public Class<? extends Card> getClassForElement(JsonElement readElement) {
+                    String type = readElement.getAsJsonObject().get("type").getAsString();
+                    if (type.equals(CardType.Minion.name())) {
+                        return Minion.class;
+                    } else if (type.equals(CardType.Spell.name())) {
+                        return Spell.class;
+                    } else if (type.equals(CardType.Weapon.name())) {
+                        return Weapon.class;
+                    } else {
+                        return null; //returning null will trigger Gson's default behavior
+                    }
+                }
+            });
+        }
+
+        private Gson handleAbstractGsonSerDeSer(GsonBuilder gsonBuilder){
+            return gsonBuilder.registerTypeAdapter
+                    (Hero.class, new HeroAbstractAdapter()).create();
         }
     }
 

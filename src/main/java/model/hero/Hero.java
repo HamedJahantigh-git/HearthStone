@@ -1,9 +1,7 @@
 package model.hero;
 import defaults.ModelDefault;
 
-import java.io.Serializable;
-
- public abstract class Hero {
+  abstract public class Hero {
 
     protected String heroName;
     protected int Health;
@@ -21,5 +19,5 @@ import java.io.Serializable;
         return Health;
     }
 
-     abstract public void SpecialPower ();
+       abstract public void SpecialPower ();
 }

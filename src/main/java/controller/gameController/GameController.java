@@ -38,7 +38,7 @@ public class GameController {
 
     private void handleSpecialPower() {
         for (int i = 0; i <2 ; i++) {
-            //game.getPlayers(i).getPlayerGame().getHero().SpecialPower();
+            game.getPlayers(i).getPlayerGame().getHero().SpecialPower();
         }
     }
 

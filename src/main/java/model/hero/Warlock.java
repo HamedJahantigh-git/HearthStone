@@ -11,6 +11,6 @@ public class Warlock extends Hero {
 
     @Override
     public void SpecialPower() {
-
+        System.out.println("warlock");
     }
 }

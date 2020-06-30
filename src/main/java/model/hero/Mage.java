@@ -9,8 +9,10 @@ public class Mage extends Hero {
         super(HeroType.Mage.name());
     }
 
+    public String test = "test";
+
     @Override
     public void SpecialPower() {
-
+        System.out.println("Mage");
     }
 }
