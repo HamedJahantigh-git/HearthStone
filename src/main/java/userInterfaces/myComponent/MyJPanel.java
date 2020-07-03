@@ -20,6 +20,19 @@ public class MyJPanel extends JPanel {
 
     }
 
+    public void clearAllComponent(){
+        for (Component component : this.getComponents()) {
+            this.remove(component);
+        }
+    }
+
+    public void showAllComponent(){
+        for (Component component : this.getComponents()) {
+            component.setVisible(true);
+            component.setEnabled(true);
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         Image image = null;

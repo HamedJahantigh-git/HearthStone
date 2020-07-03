@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class HearthStone {
     public static void main(String[] args) {
         initializer();
-        startGraphicalGame();
-        //test();
+        //startGraphicalGame();
+        test();
 
     }
 
@@ -39,7 +39,7 @@ public class HearthStone {
     private static void test(){
         PlayerController hamed = new PlayerController();
         try {
-            hamed.signInPlayer("ali","ali");
+            hamed.signInPlayer("test1","test1");
         } catch (Exception e) {
             e.printStackTrace();
         }

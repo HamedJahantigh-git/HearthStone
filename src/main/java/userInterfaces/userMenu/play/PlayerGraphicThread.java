@@ -1,15 +1,14 @@
 package userInterfaces.userMenu.play;
 
-import controller.gameController.GameController;
+import controller.game.GameController;
 import model.MyThread;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import defaults.ModelDefault;
 import enums.InfoPassiveEnum;
 import enums.MineGameLayer;
-import model.infoPassive.InfoPassive;
 import model.Player;
-import userInterfaces.graphicsActions.GameAction;
+import userInterfaces.graphicsActions.gameAction.GameAction;
 import userInterfaces.myComponent.ComponentCreator;
 import userInterfaces.myComponent.MyJPanel;
 import userInterfaces.myComponent.gameComponent.PanelComponentDrawer;
@@ -70,7 +69,7 @@ public class PlayerGraphicThread extends MyThread {
                         (gameController.getGame().getPlayerIndex() + 1),
                 messagePanel, "FORTE", 40, Color.black,
                 GraphicsDefault.GameBoard.infoPassiveBounds(2, 1));
-        ArrayList<InfoPassiveEnum> randomInfo = InfoPassive.creatRandomInfoPassive(3);
+        ArrayList<InfoPassiveEnum> randomInfo = gameController.getInfoPassiveController().creatRandomInfoPassive(3);
         for (int i = 0; i < randomInfo.size(); i++) {
             JButton info = ComponentCreator.getInstance().setButton(randomInfo.get(i).getTitle(), messagePanel,
                     "Info Passive Button.png",

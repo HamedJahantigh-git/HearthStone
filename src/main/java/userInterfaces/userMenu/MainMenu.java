@@ -67,6 +67,10 @@ public class MainMenu {
         action.goStatus(statusButton, userFrame);
     }
 
+    public MyJPanel getMainPanel() {
+        return mainPanel;
+    }
+
     public void offEnabledMenu() {
         for (int i = 2; i < 10; i++) {
             for (Component component : userFrame.getPane().getComponentsInLayer(i)) {

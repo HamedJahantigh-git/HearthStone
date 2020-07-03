@@ -3,6 +3,7 @@ package model.hero;
 import defaults.ModelDefault;
 import enums.HeroType;
 
+
 public class Hunter extends Hero {
 
     public Hunter() {

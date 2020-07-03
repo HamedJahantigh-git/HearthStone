@@ -27,7 +27,7 @@ public class FilesPath {
         public static final String heroPath = imagesPath+"/Hero";
         public static final String collectionPath = imagesPath+"/Collection";
         public static final String cardsPath = imagesPath + "/Cards";
-        public static final String gmaeCardsPath = imagesPath+"/Game Cards";
+        public static final String gameCardsPath = imagesPath+"/Game Cards";
     }
 
 }

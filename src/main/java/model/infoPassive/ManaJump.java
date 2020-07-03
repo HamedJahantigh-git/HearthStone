@@ -1,6 +1,7 @@
 package model.infoPassive;
 
 import enums.InfoPassiveEnum;
+import model.Player;
 
 public class ManaJump extends InfoPassive {
 

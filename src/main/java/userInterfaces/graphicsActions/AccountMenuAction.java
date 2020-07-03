@@ -35,14 +35,14 @@ public class AccountMenuAction extends MyAction {
                 UserFrame userFrame = new UserFrame(playerController);
                 userFrame.startMainMenu();
             } catch (Exception e) {
-                if (e.getMessage().equals(ExceptionsEnum.valueOf("userNoExist").getMessage())) {
+                if (e.getMessage().equals(ExceptionsEnum.userNoExist.getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
                             GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 35,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
                     MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("userNoExist"), messagePanel,
                             new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
                 }
-                if (e.getMessage().equals(ExceptionsEnum.valueOf("wrongPassword").getMessage())) {
+                if (e.getMessage().equals(ExceptionsEnum.wrongPassword.getMessage())) {
                     JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
                             GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
                     okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);

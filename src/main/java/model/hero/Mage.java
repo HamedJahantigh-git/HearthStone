@@ -13,6 +13,5 @@ public class Mage extends Hero {
 
     @Override
     public void SpecialPower() {
-        System.out.println("Mage");
     }
 }

@@ -13,7 +13,8 @@ public enum ExceptionsEnum {
     minDeckCard("Small Deck for Game"),
     unEditableDeck("Current Hero Card Exist in Deck"),
     lowMoney("low Money for Play Card"),
-    changeOneStartCard("This StartCard Changes");
+    changeOneStartCard("This StartCard Changes"),
+    illegalTurn("Illegal Turn");
 
     private String message;
 

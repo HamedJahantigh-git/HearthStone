@@ -32,6 +32,8 @@ public class GraphicsDefault {
                 mainBounds.getWidth() * 20 / 200, mainBounds.getHeight() * 17 / 200);
         public static Bounds aroundDeckPanel = new Bounds(mainBounds.getWidth() * 50 / 200, mainBounds.getHeight() * 20 / 100,
                 mainBounds.getWidth() * 100 / 200, mainBounds.getHeight() * 120 / 200);
+        public static Bounds clockBounds = new Bounds(mainBounds.getWidth() * 181 / 200, mainBounds.getHeight() * 41 / 100,
+                mainBounds.getWidth() * 15 / 200, mainBounds.getHeight() * 18 / 200);
 
         //Info Passive Bounds
         public static Bounds infoPassivePanelBounds = new Bounds(mainBounds.getWidth() * 60 / 200, mainBounds.getHeight() * 20 / 100,
@@ -158,7 +160,7 @@ public class GraphicsDefault {
             int height = mainBounds.getHeight() * 13 / 100;
             int xStart = (mainBounds.getWidth() - width * size) / 2;
             int xEnd = width * size + xStart;
-            int y = mainBounds.getHeight() * 47 / 100 - playerIndex * 40 / 100;
+            int y = mainBounds.getHeight() * 47 / 100 - mainBounds.getHeight()*playerIndex * 27 / 200;
             int xPart = (xEnd - xStart) / size;
             return new Bounds(xEnd - xPart * (cardIndex + 1), y, width, height);
         }

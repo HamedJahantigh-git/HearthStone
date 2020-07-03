@@ -2,6 +2,7 @@
 package model;
 
 
+import com.google.gson.annotations.Expose;
 import defaults.ModelDefault;
 import enums.InfoPassiveEnum;
 import model.card.Card;
@@ -135,18 +136,23 @@ public class Player {
             selectedStartCard.replace(key, true);
         }
 
-        public void setInfoPassive(InfoPassiveEnum infoPassiveType) {
-            switch (infoPassiveType){
+        public void setInfoPassive(InfoPassiveEnum infoPassiveType, Player player) {
+            switch (infoPassiveType) {
                 case nurse:
-                    this.infoPassive = new Nurse(); break;
+                    this.infoPassive = new Nurse();
+                    break;
                 case manaJump:
-                    this.infoPassive=new ManaJump(); break;
+                    this.infoPassive = new ManaJump();
+                    break;
                 case offCards:
-                    this.infoPassive = new OffCards(); break;
+                    this.infoPassive = new OffCards();
+                    break;
                 case freePower:
-                    this.infoPassive = new FreePower(); break;
+                    this.infoPassive = new FreePower();
+                    break;
                 case twiceDraw:
-                    this.infoPassive = new TwiceDraw(); break;
+                    this.infoPassive = new TwiceDraw();
+                    break;
             }
         }
 

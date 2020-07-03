@@ -79,8 +79,10 @@ public class ModelDefault {
     }
 
     static public class gameDefaults {
-        public static final int EVENT_NUMBER = 8;
+        public static final int EVENT_NUMBER = 6;
         public static final int MAX_START_PLAYER_CARDS = 3;
+        public static final int PLAYER_Time = 60; //second
+        public static final int PLAYER_ALARM_TIME = PLAYER_Time-20; //second
     }
 
 }

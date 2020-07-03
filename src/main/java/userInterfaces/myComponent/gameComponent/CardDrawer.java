@@ -15,10 +15,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CardDrawer extends GameComponent {
+public class CardDrawer extends LayerDrawer {
 
-    private JPanel backgroundPanel;
-    private JLayeredPane pane;
     private Bounds cardBound;
     private JLabel[] text;
     private int fontSize;
@@ -26,39 +24,16 @@ public class CardDrawer extends GameComponent {
 
     private Card card;
 
-    public CardDrawer(Card card, Bounds bounds, JPanel basePanel,
+    public CardDrawer(Card card, Bounds bounds,
                       JPanel backgroundPanel, int fontSize, JLayeredPane pane, int layer) {
-        super(FilesPath.graphicsPath.gmaeCardsPath + "/" + card.getName() + ".png", bounds, basePanel);
+        super(FilesPath.graphicsPath.gameCardsPath + "/" + card.getName() + ".png", bounds,backgroundPanel,pane,layer);
         this.card = card;
-        this.backgroundPanel = backgroundPanel;
-        this.pane = pane;
         this.fontSize = fontSize;
         cardBound = new Bounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        pane.add(this, Integer.valueOf(layer));
         handleCardText();
     }
 
-
-    @Override
-    public void selectable() {
-        buildButton();
-        button.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent me) {
-                setBorder(BorderFactory.createRaisedSoftBevelBorder());
-                click.playOne();
-                reShow();
-            }
-
-            public void mouseExited(MouseEvent me) {
-                setBorder(null);
-                reShow();
-            }
-
-        });
-    }
-
-
-    public void crossMagnifier(boolean UpperCard) {
+    public void rightClickMagnifier(boolean UpperCard) {
         selectable();
         Bounds boldBound;
         int newX;
@@ -74,25 +49,35 @@ public class CardDrawer extends GameComponent {
             newX = boldBound.getX() + boldBound.getWidth() / 2;
             newY = boldBound.getY() + boldBound.getWidth();
         }
-
         button.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent me) {
-                setButtonBounds(boldBound);
-                for (int i = 0; i < text.length; i++) {
-                    text[i].setFont(new Font(fontName, Font.ITALIC, fontSize * 2));
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    setButtonBounds(boldBound);
+                    for (int i = 0; i < text.length; i++) {
+                        text[i].setFont(new Font(fontName, Font.ITALIC, fontSize * 2));
+                        setTextBounds(text[i],GraphicsDefault.GameBoard.cardTextBounds(i+1, boldBound));
+                    }
+                    //moveMouseCursor(newX, newY);
+                    reShow();
                 }
-                //moveMouseCursor(newX, newY);
-                reShow();
             }
 
-            public void mouseExited(MouseEvent me) {
+            @Override
+            public void mouseReleased(MouseEvent e) {
                 setButtonBounds(bounds);
                 for (int i = 0; i < text.length; i++) {
                     text[i].setFont(new Font(fontName, Font.ITALIC, fontSize));
+                   setTextBounds(text[i],GraphicsDefault.GameBoard.cardTextBounds(i+1, bounds));
                 }
                 reShow();
             }
         });
+    }
+
+    private void setTextBounds(JLabel text, Bounds newBound){
+        text.setSize(newBound.getWidth(), newBound.getHeight());
+        text.setLocation(newBound.getX(), newBound.getY());
     }
 
     private void moveMouseCursor(int newX, int newY) {
@@ -158,13 +143,6 @@ public class CardDrawer extends GameComponent {
             setSpellText((Spell) (card));
         if (cardType.equals(CardType.Weapon.name()))
             setWeaponText((Weapon) (card));
-    }
-
-    @Override
-    public void reShow() {
-        super.reShow();
-        //backgroundPanel.validate();
-        //backgroundPanel.paintComponents(backgroundPanel.getGraphics());
     }
 
 }

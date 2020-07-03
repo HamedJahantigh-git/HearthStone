@@ -1,13 +1,13 @@
 package userInterfaces.userMenu.play;
 
-import controller.gameController.GameController;
+import controller.game.GameController;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import enums.MineGameLayer;
-import model.Game;
+import model.MyThread;
 import model.Player;
 import userInterfaces.Sounds;
-import userInterfaces.graphicsActions.GameAction;
+import userInterfaces.graphicsActions.gameAction.GameAction;
 import userInterfaces.myComponent.MyJPanel;
 import userInterfaces.userMenu.UserFrame;
 
@@ -40,9 +40,8 @@ public class MineGameBoard {
                 action, gameController);
         playerGraphicThread = new PlayerGraphicThread(userFrame, this,
                 action, gameController);
-
         baseGameThread.start();
-        delay(500);
+        MyThread.delay(500);
         playerGraphicThread.start();
     }
 
@@ -52,14 +51,6 @@ public class MineGameBoard {
 
     public PlayerGraphicThread getPlayerGraphicThread() {
         return playerGraphicThread;
-    }
-
-    private void delay(int milliSecond){
-        try {
-            Thread.sleep(milliSecond);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public JPanel getMainPanel() {
@@ -72,14 +63,26 @@ public class MineGameBoard {
 
     public void cleanGameBoard() {
         for (int i = 41; i < 60; i++) {
-            for (Component component : userFrame.getPane().getComponentsInLayer(i)) {
-                userFrame.getPane().remove(component);
-            }
+            cleanLayer(i);
         }
-        for (Component component : mainPanel.getComponents()) {
-            mainPanel.remove(component);
+        ((MyJPanel)mainPanel).clearAllComponent();
+    }
+
+    public void endGame (){
+        //gameController.getGame().getPlayerGames(0)=new Player.PlayerGame();
+        gameController.getGame().setFinish();
+        getMainGameSounds().stopAudio();
+        baseGameThread.getClockThread().getAlarmSound().stopAudio();
+        userFrame.getMainSounds().playLoop();
+        userFrame.startMainMenu();
+    }
+
+    public void cleanLayer(int layer){
+        for (Component component : userFrame.getPane().getComponentsInLayer(layer)) {
+            userFrame.getPane().remove(component);
         }
     }
+
 
     public void offEnabledMenu() {
         for (int i = 41; i < 49; i++) {

@@ -97,7 +97,9 @@ public class UserFrame {
         switch (s) {
             case mainMenu:
                 offAllLayer();
+                deleteLayer(MainLayer.message.getLayer(),MainLayer.message.getLayer()+1);
                 onLayer(MainLayer.mainPanel.getLayer(), MainLayer.endLayer.getLayer());
+                mainMenu.getMainPanel().showAllComponent();
                 break;
             case playMine:
                 offAllLayer();

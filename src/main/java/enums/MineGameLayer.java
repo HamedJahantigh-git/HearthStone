@@ -3,8 +3,9 @@ package enums;
 public enum MineGameLayer {
 
     mainPanel(40),
-    base(41),
     event(41),
+    clock(48),
+    mana(44),
     hero(42),
     groundCards(43),
     handCards(45),

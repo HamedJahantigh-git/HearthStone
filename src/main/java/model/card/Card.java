@@ -1,6 +1,20 @@
 package model.card;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import model.hero.*;
+
 import java.util.ArrayList;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Minion.class, name = "Minion"),
+        @JsonSubTypes.Type(value = Spell.class, name = "Spell"),
+        @JsonSubTypes.Type(value = Weapon.class, name = "Weapon"),
+})
 
 public class Card {
 
@@ -81,6 +95,10 @@ public class Card {
 
     public int getNumberUsage() {
         return numberUsage;
+    }
+
+    public void reduceMana(int differ) {
+        this.mana -= differ;
     }
 
     public int getRarityLevel() {

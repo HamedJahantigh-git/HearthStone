@@ -17,6 +17,8 @@ import model.card.Minion;
 import model.card.Spell;
 import model.card.Weapon;
 import model.hero.*;
+import model.infoPassive.InfoPassive;
+import model.infoPassive.InfoPassiveAbstractAdapter;
 
 import java.io.*;
 
@@ -33,7 +35,6 @@ public class FileManagement {
     private CreatNewCardInFile creatNewCardInFile;
     private PlayerFile playerFile;
     private File file;
-    //private Gson gson;
 
     private FileManagement() {
         readCardFromFile = new ReadCardFromFile();
@@ -217,11 +218,24 @@ public class FileManagement {
     }
 
     public class PlayerFile {
+
+        public PlayerFile() {
+        }
+
         public void creatPlayerFile(Player player) {
             savePlayerToFile(player);
         }
 
         public void savePlayerToFile(Player player) {
+            /*String path = FilesPath.playerDataPath + "/" + player.getUserName();
+            try {
+                Writer writer = new FileWriter(
+                        path + ".txt");
+                mapper.writeValue(writer, player);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
             Gson gson = handleGsonProblems();
             String path = FilesPath.playerDataPath + "/" + player.getUserName();
             try {
@@ -235,6 +249,13 @@ public class FileManagement {
         }
 
         public Player creatPlayerFromFile(String name) {
+            /*Player player = null;
+            try (Reader reader = new FileReader(
+                    FilesPath.playerDataPath + "/" + name + ".txt")) {
+                player = mapper.readValue(reader, Player.class);
+            } catch (Exception ignored) {
+            }
+            return player;*/
             Player player = null;
             Gson gson = handleGsonProblems();
             try (Reader reader = new FileReader(
@@ -247,6 +268,7 @@ public class FileManagement {
 
         private Gson handleGsonProblems() {
             GsonBuilder gsonBuilder = handleSaveGsonPolymorphism();
+            //gsonBuilder.excludeFieldsWithoutExposeAnnotation().setPrettyPrinting();
             Gson gson = handleAbstractGsonSerDeSer(gsonBuilder);
             return gson;
         }
@@ -254,11 +276,11 @@ public class FileManagement {
         private GsonBuilder handleSaveGsonPolymorphism() {
             GsonFireBuilder builder = new GsonFireBuilder();
             handleSaveCardToGsonPolymorphism(builder);
-            handleSaveHeroToGsonPolymorphism(builder);
+           // handleSaveHeroToGsonPolymorphism(builder);
             return builder.createGsonBuilder();
         }
 
-        private void handleSaveHeroToGsonPolymorphism( GsonFireBuilder builder){
+        private void handleSaveHeroToGsonPolymorphism(GsonFireBuilder builder) {
             builder.registerTypeSelector(Hero.class, new TypeSelector<Hero>() {
                 @Override
                 public Class<? extends Hero> getClassForElement(JsonElement readElement) {
@@ -280,7 +302,7 @@ public class FileManagement {
             });
         }
 
-        private void handleSaveCardToGsonPolymorphism( GsonFireBuilder builder){
+        private void handleSaveCardToGsonPolymorphism(GsonFireBuilder builder) {
             builder.registerTypeSelector(Card.class, new TypeSelector<Card>() {
                 @Override
                 public Class<? extends Card> getClassForElement(JsonElement readElement) {
@@ -298,7 +320,7 @@ public class FileManagement {
             });
         }
 
-        private Gson handleAbstractGsonSerDeSer(GsonBuilder gsonBuilder){
+        private Gson handleAbstractGsonSerDeSer(GsonBuilder gsonBuilder) {
             return gsonBuilder.registerTypeAdapter
                     (Hero.class, new HeroAbstractAdapter()).create();
         }

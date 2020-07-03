@@ -29,6 +29,17 @@ public class MyThread extends Thread {
 
     }
 
+    public static void delay(int milliSecond){
+        try {
+            Thread.sleep(milliSecond);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void endThread(){
+    }
+
     @Override
     public void run() {
 

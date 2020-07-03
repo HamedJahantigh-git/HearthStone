@@ -2,6 +2,7 @@ package initializer;
 
 
 import controller.FileManagement;
+import enums.MinionMechanicsEnum;
 
 import java.util.ArrayList;
 
@@ -11,100 +12,82 @@ public class InitCards {
 
     public static void initMinion() {
         mechanics.clear();
-        mechanics.add("Battlecry");
-        mechanics.add("Generate");
-        mechanics.add("Put into battlefield");
-        mechanics.add("Put into hand");
-        mechanics.add("Shuffle into deck");
-        mechanics.add("Targeted");
+        mechanics.add(MinionMechanicsEnum.Battlecry.name());
+        mechanics.add(MinionMechanicsEnum.CopyHand.name());
+        mechanics.add(MinionMechanicsEnum.Targeted.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Sathrovarr", "Neutral", 9, 9, 8, mechanics,
                 "Battlecry: Choose a friendly minion. Add a copy of it to your hand, deck and battlefield.", "Legendary", 5, 5);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Battlecry");
-        mechanics.add("Copy");
-        mechanics.add("Summon");
-        mechanics.add("Taunt");
-        mechanics.add("Mech-generating");
+        mechanics.add(MinionMechanicsEnum.Battlecry.name());
+        mechanics.add(MinionMechanicsEnum.CopyBattle.name());
+        mechanics.add(MinionMechanicsEnum.Summon.name());
+        mechanics.add(MinionMechanicsEnum.Taunt.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Tomb Warden", "Neutral", 8, 8, 7, mechanics,
-                "Taunt\n" + "Battlecry: Summon a copy of this minion.", "Rare", 6, 3);
+                "Taunt/" + "Battlecry: Summon a copy of this minion.", "Rare", 6, 3);
+        //***************************************************************************
+
+        mechanics.clear();
+        mechanics.add(MinionMechanicsEnum.Taunt.name());
+        FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Guard Bot", "Neutral", 2, 2, 1, mechanics,
+                "Taunt", "Rare", 3, 2);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Summon");
-        mechanics.add("Damage-related");
-        mechanics.add("Mech-generating");
-        mechanics.add("Taunt-generating");
-        mechanics.add("Triggered effect");
+        mechanics.add(MinionMechanicsEnum.Summon.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Security Rover", "Neutral", 6, 6, 5, mechanics,
-                "Whenever this minion takes damage, summon a 4/6 Mech with Taunt.", "Rare", 12, 4);
+                "Whenever this minion takes damage, summon a 4/6 Mech with Taunt.", "Rare", 6, 2);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Increment attribute");
-        mechanics.add("Draw-related");
-        mechanics.add("Triggered effect");
+        mechanics.add(MinionMechanicsEnum.Gain.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Curio Collector", "Neutral", 5, 5, 4, mechanics,
                 "Whenever you draw a card, gain +1/+1.", "Rare", 4, 4);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Set attribute");
-        mechanics.add("Health-related");
-        mechanics.add("Summoning-related");
-        mechanics.add("Triggered effect");
+        mechanics.add(MinionMechanicsEnum.Set.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("High Priest Amet", "Priest", 4, 4, 3, mechanics,
                 "Whenever you summon a minion, set its Health equal to this minion's.", "Legendary", 7, 2);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Summoning-related");
-        mechanics.add("Triggered effect");
+        mechanics.add(MinionMechanicsEnum.ForceAttack.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Swamp King Dred", "Hunter", 7, 7, 6, mechanics,
                 "After your opponent plays a minion, attack it.", "Legendary", 9, 9);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Deal damage");
-        mechanics.add("Area of effect");
-        mechanics.add("Triggered effect");
+        mechanics.add(MinionMechanicsEnum.DealDamage.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Dreadscale", "Warlock", 3, 3, 2, mechanics,
                 "At the end of your turn, deal 1 damage to all other minions.", "Legendary", 2, 4);
         //***************************************************************************
         mechanics.clear();
         mechanics.add("Battlecry");
-        mechanics.add("Deal damage");
+        mechanics.add(MinionMechanicsEnum.Battlecry.name());
+        mechanics.add(MinionMechanicsEnum.DealDamage.name());
+        mechanics.add(MinionMechanicsEnum.Taunt.name());
         mechanics.add("Taunt");
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Vulgar Homunculus", "Warlock", 2, 2, 1, mechanics,
-                "Taunt\n" + "Battlecry: Deal 2 damage to your hero.", "Common", 4, 2);
+                "Taunt/" + "Battlecry: Deal 2 damage to your hero.", "Common", 4, 2);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Increment attribute");
-        mechanics.add("Modify cost");
-        mechanics.add("Ongoing effect");
-        mechanics.add("Weapon-related");
+        mechanics.add(MinionMechanicsEnum.ModifyCost.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Blackwater Pirate", "Neutral", 4, 4, 3, mechanics,
                 "Your weapons cost (2) less.", "Rare", 5, 2);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Inspire");
-        mechanics.add("Return to hand");
-        mechanics.add("Hero Power-related");
+        mechanics.add(MinionMechanicsEnum.Inspire.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Coliseum Manager", "Neutral", 3, 3, 2, mechanics,
                 "Inspire: Return this minion to your hand.", "Rare", 5, 2);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Battlecry");
-        mechanics.add("Increment attribute");
-        mechanics.add("Hand-related");
+        mechanics.add(MinionMechanicsEnum.Battlecry.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Fire Hawk", "Neutral", 3, 3, 2, mechanics,
                 "Battlecry: Gain +1 Attack for each card in your opponent's hand.", "Common", 3, 1);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Increment attribute");
-        mechanics.add("Triggered effect");
+        mechanics.add(MinionMechanicsEnum.Increment.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Hot Air Balloon", "Neutral", 1, 1, 0, mechanics,
                 "At the start of your turn, gain +1 Health.", "Common", 2, 1);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Battlecry");
-        mechanics.add("Deal damage");
-        mechanics.add("Raymond Swanland");
+        mechanics.add(MinionMechanicsEnum.Battlecry.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Nightblade", "Neutral", 5, 5, 4, mechanics,
                 "Battlecry: Deal 3 damage to the enemy hero.", "Common", 4, 4);
         //***************************************************************************
@@ -113,35 +96,28 @@ public class InitCards {
                 null, "Common", 2, 3);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Taunt");
+        mechanics.add(MinionMechanicsEnum.Taunt.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Senjin Shieldmasta", "Neutral", 4, 4, 3, mechanics,
                 "Taunt", "Common", 5, 3);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Enrage");
-        mechanics.add("Increment attribute");
-        mechanics.add("Reborn");
-        mechanics.add("Damaged-related");
+        mechanics.add(MinionMechanicsEnum.Reborn.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Temple Berserker", "Neutral", 2, 2, 1, mechanics,
-                "Reborn\n" + "Has +2 Attack while damaged.", "Common", 2, 1);
+                "Reborn/" + "Has +2 Attack while damaged.", "Common", 2, 1);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Deal damage");
-        mechanics.add("Deathrattle");
-        mechanics.add("Taunt");
-        mechanics.add("Area of effect");
+        mechanics.add(MinionMechanicsEnum.Deathrattle.name());
+        mechanics.add(MinionMechanicsEnum.Taunt.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Tunnel Blaster", "Neutral", 7, 7, 6, mechanics,
-                "Taunt\n" + "Deathrattle: Deal 3 damage to all minions.", "Common", 7, 3);
+                "Taunt" + "Deathrattle: Deal 3 damage to all minions.", "Common", 7, 3);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Increment attribute");
-        mechanics.add("Modify cost");
-        mechanics.add("Ongoing effect");
+        mechanics.add(MinionMechanicsEnum.Increment.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Venture Co. Mercenary", "Neutral", 5, 5, 4, mechanics,
                 "Your minions cost (3) more.", "Common", 6, 7);
         //***************************************************************************
         mechanics.clear();
-        mechanics.add("Charge");
+        mechanics.add(MinionMechanicsEnum.Charge.name());
         FileManagement.getInstance().getCreatNewCardInFile().creatMinion("Wolfrider", "Neutral", 3, 3, 2, mechanics,
                 "Charge", "Common", 1, 3);
         //***************************************************************************
