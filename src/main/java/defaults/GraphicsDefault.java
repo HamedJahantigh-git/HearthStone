@@ -155,20 +155,47 @@ public class GraphicsDefault {
             return new Bounds(xEnd - xPart * (index + 1), y, width, height);
         }
 
+        public static Bounds questBounds(int playerIndex, int stat) {
+            int x = mainBounds.getHeight() * 5 / 100;
+            int y = mainBounds.getHeight() * 68 / 100 - playerIndex * mainBounds.getHeight() * 60 / 100;
+            int width = mainBounds.getWidth() * 9 / 100;
+            int height = mainBounds.getHeight() * 15 / 100;
+            if (stat == 0) {
+                return new Bounds(x, y, width, height);
+            }
+            if(stat == 1){
+                return new Bounds(0, height*4/10, width,height*2/10);
+            }
+            return null;
+        }
+
         public static Bounds groundDeckCard(int playerIndex, int cardIndex, int size) {
             int width = mainBounds.getWidth() * 7 / 100;
             int height = mainBounds.getHeight() * 13 / 100;
             int xStart = (mainBounds.getWidth() - width * size) / 2;
             int xEnd = width * size + xStart;
-            int y = mainBounds.getHeight() * 47 / 100 - mainBounds.getHeight()*playerIndex * 27 / 200;
+            int y = mainBounds.getHeight() * 47 / 100 - mainBounds.getHeight() * playerIndex * 27 / 200;
             int xPart = (xEnd - xStart) / size;
             return new Bounds(xEnd - xPart * (cardIndex + 1), y, width, height);
+        }
+
+        public static Bounds weaponGroundBounds(int playerIndex) {
+            int y = mainBounds.getHeight() * 64 / 100 - mainBounds.getHeight() * playerIndex * 47 / 100;
+            return new Bounds(mainBounds.getWidth() * 74 / 200, y, mainBounds.getWidth() * 8 / 100, mainBounds.getHeight() * 15 / 100);
         }
 
         public static Bounds menuButtons(int index) {
             return new Bounds(GraphicsDefault.GameBoard.menuMessage.getWidth() / 5,
                     GraphicsDefault.GameBoard.menuMessage.getHeight() * (2 * index + 1) / 12,
                     GraphicsDefault.GameBoard.menuMessage.getWidth() * 6 / 10,
+                    GraphicsDefault.GameBoard.menuMessage.getHeight() / 7 - 10);
+        }
+
+        public static Bounds deleteAccountButtons(int index) {
+            return new Bounds(GraphicsDefault.GameBoard.menuMessage.getWidth() / 5 +
+                    index*( GraphicsDefault.GameBoard.menuMessage.getWidth() * 6 / 20+20)-10,
+                    GraphicsDefault.GameBoard.menuMessage.getHeight() * 9 / 12,
+                    GraphicsDefault.GameBoard.menuMessage.getWidth() * 6 / 20,
                     GraphicsDefault.GameBoard.menuMessage.getHeight() / 7 - 10);
         }
 
@@ -191,7 +218,7 @@ public class GraphicsDefault {
         public static Bounds heroPowerBounds(int playerIndex, int state) {
             int width = mainBounds.getWidth() * 20 / 200;
             int height = mainBounds.getHeight() * 23 / 200;
-            if (state ==1) {
+            if (state == 1) {
                 if (playerIndex == 0)
                     return new Bounds(mainBounds.getWidth() * 120 / 200, mainBounds.getHeight() * 66 / 100,
                             width, height);
@@ -199,9 +226,9 @@ public class GraphicsDefault {
                     return new Bounds(mainBounds.getWidth() * 120 / 200, mainBounds.getHeight() * 20 / 100,
                             width, height);
             }
-            if(state == 2)
-                return new Bounds(width*21/50, height/10,
-                        width*2/10, height * 2/10);
+            if (state == 2)
+                return new Bounds(width * 21 / 50, height / 10,
+                        width * 2 / 10, height * 2 / 10);
             return null;
         }
 

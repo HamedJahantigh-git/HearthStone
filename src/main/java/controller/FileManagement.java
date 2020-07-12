@@ -17,8 +17,6 @@ import model.card.Minion;
 import model.card.Spell;
 import model.card.Weapon;
 import model.hero.*;
-import model.infoPassive.InfoPassive;
-import model.infoPassive.InfoPassiveAbstractAdapter;
 
 import java.io.*;
 
@@ -33,10 +31,12 @@ public class FileManagement {
     private static FileManagement instance = null;
     private ReadCardFromFile readCardFromFile;
     private CreatNewCardInFile creatNewCardInFile;
+    private Copy copy;
     private PlayerFile playerFile;
     private File file;
 
     private FileManagement() {
+        copy = new Copy();
         readCardFromFile = new ReadCardFromFile();
         creatNewCardInFile = new CreatNewCardInFile();
         playerFile = new PlayerFile();
@@ -122,6 +122,63 @@ public class FileManagement {
             }
         }
         return result;
+    }
+
+    public class Copy {
+
+        public Hero copyHero(Hero hero) {
+            Hero result = null;
+            switch (hero.getHeroName()) {
+                case "Mage":
+                    result = new Mage();
+                    break;
+                case "Warlock":
+                    result = new Warlock();
+                    break;
+                case "Priest":
+                    result = new Priest();
+                    break;
+                case "Hunter":
+                    result = new Hunter();
+                    break;
+                case "Rogue":
+                    result = new Rogue();
+                    break;
+            }
+            return result;
+        }
+
+        public Card copyCard(Card card) {
+            Card result = null;
+            switch (card.getType()) {
+                case "Minion":
+                    result = copyMinion((Minion) card);
+                    break;
+                case "Spell":
+                    result = copySpell((Spell) card);
+                    break;
+                case "Weapon":
+                    result = copyWeapon((Weapon) card);
+                    break;
+            }
+            return result;
+        }
+
+        private Weapon copyWeapon(Weapon card) {
+            return new Weapon(card.getName(), card.getCardClass(), card.getType(), card.getMana(), card.getBuyCost(),
+                    card.getIncomeSell(), card.getMechanics(), card.getDescription(), card.getRarity(), card.getDurability(), card.getAttack());
+        }
+
+        private Minion copyMinion(Minion card) {
+            return new Minion(card.getName(), card.getCardClass(), card.getType(), card.getMana(),
+                    card.getBuyCost(), card.getIncomeSell(), card.getMechanics(), card.getDescription(), card.getRarity(), card.getHealth(),
+                    card.getAttack());
+        }
+
+        private Spell copySpell(Spell card) {
+            return new Spell(card.getName(), card.getCardClass(), card.getType(), card.getMana(), card.getBuyCost(),
+                    card.getIncomeSell(), card.getMechanics(), card.getDescription(), card.getRarity(), card.getQuest(), card.getReward());
+        }
     }
 
     public class CreatNewCardInFile {
@@ -276,7 +333,7 @@ public class FileManagement {
         private GsonBuilder handleSaveGsonPolymorphism() {
             GsonFireBuilder builder = new GsonFireBuilder();
             handleSaveCardToGsonPolymorphism(builder);
-           // handleSaveHeroToGsonPolymorphism(builder);
+            // handleSaveHeroToGsonPolymorphism(builder);
             return builder.createGsonBuilder();
         }
 
@@ -326,4 +383,7 @@ public class FileManagement {
         }
     }
 
+    public Copy getCopy() {
+        return copy;
+    }
 }

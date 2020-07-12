@@ -1,5 +1,6 @@
 package model.infoPassive;
 
+import controller.game.GameController;
 import enums.InfoPassiveEnum;
 import model.Player;
 import model.card.Card;
@@ -13,7 +14,12 @@ public class OffCards extends InfoPassive {
     }
 
     @Override
-    public void applyInfo() {
-
+    public void applyInfo(GameController gameController, int playerIndex) {
+        for (Card card: gameController.getGame().getPlayerGames(playerIndex).getHandCard()) {
+            card.minusMana(1);
+        }
+        for (Card card: gameController.getGame().getPlayerGames(playerIndex).getAroundCard()) {
+            card.minusMana(1);
+        }
     }
 }

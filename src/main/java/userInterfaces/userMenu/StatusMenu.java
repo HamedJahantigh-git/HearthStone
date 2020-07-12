@@ -7,6 +7,7 @@ import model.Deck;
 import userInterfaces.graphicsActions.StatusMenuAction;
 import userInterfaces.myComponent.ComponentCreator;
 import userInterfaces.myComponent.MyJPanel;
+import userInterfaces.myComponent.gameComponent.LayerDrawer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,22 +41,18 @@ public class StatusMenu {
     }
 
     public void showTopDecks() {
-
-        //todo-build game component suitable
-        /*
         cleanStatusMenu();
         initMainPanel();
         ArrayList<Deck> topDeck = action.getPlayerController().getStatusController().topDeck();
         for (int i = 0; i < topDeck.size(); i++) {
-            GameComponent deckShow = new GameComponent(userFrame.getPane(), StatusLayer.deckShow.getLayer(),
-                    FilesPath.graphicsPath.collectionPath + "/" +
-                            topDeck.get(i).getHero().getHeroName() + " Deck.jpg",
-                    GraphicsDefault.StatusMenu.deckSection(i, 1));
-            ComponentCreator.getInstance().setText("Top#" + (i + 1) + " (" + topDeck.get(i).getName() + ")", mainPanel, "FORTE",
-                    20, Color.white, GraphicsDefault.StatusMenu.deckSection(i, 2));
-            deckShow.moveListener(false);
+            LayerDrawer deckShow = new LayerDrawer(FilesPath.graphicsPath.collectionPath + "/" +
+                    topDeck.get(i).getHero().getHeroName() + " Deck.jpg",  GraphicsDefault.StatusMenu.deckSection(i, 1)
+            ,mainPanel,userFrame.getPane(),StatusLayer.deckShow.getLayer());
+            ComponentCreator.getInstance().setText("Top#" + (i + 1) + " (" + topDeck.get(i).getName() + ")",mainPanel, "FORTE",
+                    20, Color.white,GraphicsDefault.StatusMenu.deckSection(i, 2));
+            deckShow.selectable();
             action.deckSelect(deckShow.getButton(), topDeck.get(i), i+1);
-        }*/
+        }
     }
 
     public void offEnabledMenu() {

@@ -7,7 +7,9 @@ public enum GameEventEnum {
     endTurn("end_turn"),
     selectInfoPassive("select_info_passive"),
     changeStartCard("change_start_card"),
-    stopGame("stop_game");
+    stopGame("stop_game"),
+    attack("attack"),
+    finishedGame("finished_game");
 
     private String type;
 

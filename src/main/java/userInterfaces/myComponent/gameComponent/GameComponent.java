@@ -28,7 +28,7 @@ abstract public class GameComponent extends MyJPanel {
         this.backgroundPanel = backgroundPanel;
     }
 
-    protected void buildButton() {
+    public void buildButton() {
         button = new JButton();
         button.setContentAreaFilled(false);
         button.setBounds(0, 0, this.getWidth(), this.getHeight());

@@ -13,6 +13,7 @@ import model.MyThread;
 import userInterfaces.Sounds;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MouseManager;
 import userInterfaces.myComponent.gameComponent.LayerDrawer;
 import userInterfaces.myComponent.gameComponent.PanelComponentDrawer;
 
@@ -74,7 +75,7 @@ public class ClockThread extends MyThread {
     }
 
     private void alarm() {
-        if (game.getDifferPlayerSecondsTime() > ModelDefault.gameDefaults.PLAYER_ALARM_TIME & (!doAlarm)) {
+        if (game.getDifferPlayerSecondsTime() > ModelDefault.gameDefaults.PLAYER_ALARM_TIME && (!doAlarm)) {
             alarmSound.playOne();
             doAlarm = true;
         }
@@ -84,6 +85,7 @@ public class ClockThread extends MyThread {
         if (game.getDifferPlayerSecondsTime() > ModelDefault.gameDefaults.PLAYER_Time) {
             gameController.addGameEvent(gameController.getGame().getPlayerIndex(), GameEventEnum.endTurn, "time_ended");
             gameController.endTurn();
+            MouseManager.getInstance().defaultCursorImage(baseGameThread.getUserFrame().getUserFrame());
             FileManagement.getInstance().saveGameModelToFile(gameController.getGame());
             baseGameThread.drawAfterEndTurn();
             doAlarm = false;

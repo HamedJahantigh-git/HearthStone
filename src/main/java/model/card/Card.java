@@ -85,6 +85,10 @@ public class Card {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getBuyCost() {
         return buyCost;
     }
@@ -97,8 +101,8 @@ public class Card {
         return numberUsage;
     }
 
-    public void reduceMana(int differ) {
-        this.mana -= differ;
+    public void minusMana(int reduce) {
+        this.mana -= reduce;
     }
 
     public int getRarityLevel() {
@@ -111,5 +115,9 @@ public class Card {
         if (rarity.equals("Legendary"))
             return 4;
         return 0;
+    }
+
+    public void setMechanics(ArrayList<String> mechanics) {
+        this.mechanics = mechanics;
     }
 }

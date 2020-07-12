@@ -65,19 +65,21 @@ public class MineGameBoard {
         for (int i = 41; i < 60; i++) {
             cleanLayer(i);
         }
-        ((MyJPanel)mainPanel).clearAllComponent();
+        ((MyJPanel) mainPanel).clearAllComponent();
     }
 
-    public void endGame (){
-        //gameController.getGame().getPlayerGames(0)=new Player.PlayerGame();
+    public void endGame() {
         gameController.getGame().setFinish();
         getMainGameSounds().stopAudio();
         baseGameThread.getClockThread().getAlarmSound().stopAudio();
         userFrame.getMainSounds().playLoop();
+        for (int i = 0; i < 2; i++) {
+            gameController.getGame().getPlayers(i).newPlayerGame();
+        }
         userFrame.startMainMenu();
     }
 
-    public void cleanLayer(int layer){
+    public void cleanLayer(int layer) {
         for (Component component : userFrame.getPane().getComponentsInLayer(layer)) {
             userFrame.getPane().remove(component);
         }

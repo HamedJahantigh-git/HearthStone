@@ -5,9 +5,8 @@ import defaults.GraphicsDefault;
 import enums.*;
 import model.card.Card;
 import userInterfaces.Sounds;
-import userInterfaces.myComponent.MyFrame;
+import userInterfaces.myComponent.MyJFrame;
 import userInterfaces.userMenu.play.MineGameBoard;
-import userInterfaces.userMenu.play.PlayerGraphicThread;
 
 
 import javax.swing.*;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 public class UserFrame {
 
     private PlayerController playerController;
-    private MyFrame userFrame;
+    private MyJFrame userFrame;
     private JLayeredPane pane;
     private Sounds mainSounds;
     private MainMenu mainMenu;
@@ -30,7 +29,7 @@ public class UserFrame {
 
     public UserFrame(PlayerController playerController) {
         this.playerController = playerController;
-        userFrame = new MyFrame("User Menu",
+        userFrame = new MyJFrame("User Menu",
                 GraphicsDefault.UserMenu.mainBounds);
         pane = userFrame.getLayeredPane();
         mainSounds = new Sounds("MainMenu.wav");
@@ -148,4 +147,7 @@ public class UserFrame {
         }
     }
 
+    public MyJFrame getUserFrame() {
+        return userFrame;
+    }
 }

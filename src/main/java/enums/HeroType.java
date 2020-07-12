@@ -5,5 +5,6 @@ public enum HeroType {
     Hunter,
     Priest,
     Rogue,
-    Warlock;
+    Warlock,
+    Neutral;
 }

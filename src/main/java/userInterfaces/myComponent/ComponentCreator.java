@@ -42,7 +42,7 @@ public class ComponentCreator {
 
     public JButton setButton(String text, JPanel panel, String buttonBackgroundName,
                              Bounds bounds, Color color, int fontSize, int state) {
-        //todo
+
         JButton button;
         if (buttonBackgroundName != null)
             button = new JButton(text, new ImageIcon(setImage(

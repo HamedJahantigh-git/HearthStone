@@ -20,15 +20,17 @@ public class HeroHeroPowerDrawer extends LayerDrawer {
 
     private Hero hero;
 
-    public HeroHeroPowerDrawer(Hero hero, String background,Bounds bounds,
+    public HeroHeroPowerDrawer(Hero hero, String background, Bounds bounds,
                                JPanel backgroundPanel, int fontSize, JLayeredPane pane, int layer) {
-        super(background, bounds, backgroundPanel, pane,layer);
+        super(background, bounds, backgroundPanel, pane, layer);
         this.fontSize = fontSize;
         cardBound = new Bounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         this.hero = hero;
     }
 
     public void setHeroHealth() {
+        if (text!= null)
+            this.remove(text[0]);
         text = new JLabel[1];
         text[0] = ComponentCreator.getInstance().setText(Integer.toString(hero.getHealth()), this,
                 fontName, fontSize, Color.white,
@@ -36,9 +38,8 @@ public class HeroHeroPowerDrawer extends LayerDrawer {
     }
 
     public void setHeroPowerMana() {
-        //todo hero power cost
         text = new JLabel[1];
-        text[0] = ComponentCreator.getInstance().setText("2", this,
+        text[0] = ComponentCreator.getInstance().setText(String.valueOf(hero.getHeroPowerMana()), this,
                 fontName, fontSize, Color.white,
                 GraphicsDefault.GameBoard.heroPowerBounds(-1, 2));
     }

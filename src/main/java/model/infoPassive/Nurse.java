@@ -1,5 +1,6 @@
 package model.infoPassive;
 
+import controller.game.GameController;
 import enums.InfoPassiveEnum;
 import model.Player;
 
@@ -11,7 +12,7 @@ public class Nurse extends InfoPassive {
     }
 
     @Override
-    public void applyInfo() {
+    public void applyInfo(GameController gameController, int playerIndex) {
 
     }
 }

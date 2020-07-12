@@ -9,10 +9,10 @@ import java.util.Random;
 
 public class InfoPassiveController {
 
-    private Game game;
+    private GameController gameController;
 
-    public InfoPassiveController(Game game) {
-        this.game = game;
+    public InfoPassiveController(GameController gameController) {
+        this.gameController = gameController;
     }
 
     public ArrayList<InfoPassiveEnum> creatRandomInfoPassive(int number) {
@@ -28,8 +28,8 @@ public class InfoPassiveController {
     }
 
     protected void handleInfoPassive() {
-            for (int i = 0; i <2 ; i++) {
-                game.getPlayers(i).getPlayerGame().getInfoPassive().applyInfo();
-            }
+        for (int i = 0; i < 2; i++) {
+            gameController.getGame().getPlayers(i).getPlayerGame().getInfoPassive().applyInfo(gameController, i);
+        }
     }
 }

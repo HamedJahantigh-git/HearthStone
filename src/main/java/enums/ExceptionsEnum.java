@@ -14,7 +14,24 @@ public enum ExceptionsEnum {
     unEditableDeck("Current Hero Card Exist in Deck"),
     lowMoney("low Money for Play Card"),
     changeOneStartCard("This StartCard Changes"),
-    illegalTurn("Illegal Turn");
+    illegalTurn("Illegal Turn"),
+    selfMinion("Self Minion"),
+    selfHero("Self Hero"),
+    tauntExist("Taunt Exist in Ground"),
+    newPlayCard("New Play Card Cant Attack Immediately"),
+    beforeAttacked("In This Turn Attacked"),
+    attackerDead("Attacker Dead"),
+    attackedDead("Attacked Dead"),
+    allDead("Attacker And Attacked Dead"),
+    weaponAndMinionDead("Weapon And MinionDead"),
+    destroyWeapon("Destroy Weapon"),
+    forceAttack("Force Attack"),
+    targetedNotValid("Targeted Not Valid"),
+    rebornAttacker("Reborn Attacker"),
+    rebornAttacked("Reborn Attacked"),
+    doMoreHeroPower("Do More Hero Power"),
+    doQuest("Do Quest"),
+    gameFinished("Game Finished");
 
     private String message;
 

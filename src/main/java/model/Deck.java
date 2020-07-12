@@ -2,6 +2,7 @@ package model;
 
 import model.card.Card;
 import model.hero.Hero;
+import model.hero.Mage;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class Deck {
         //use for create free deck player
         this.name = "No Selected";
         this.cards = cards;
+        this.hero = new Mage();
     }
 
     public String getName() {

@@ -32,7 +32,7 @@ public class Sounds {
     }
 
     public void playLoop() {
-        //audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        audioClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void playOne() {
@@ -44,7 +44,7 @@ public class Sounds {
         }
 
     }
-
+    
     public void stopAudio() {
         audioClip.stop();
     }

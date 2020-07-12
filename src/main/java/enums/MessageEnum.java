@@ -30,7 +30,9 @@ public enum MessageEnum {
     playMenu("Play Menu", "<html><center>Menu</center>" +
             "<br><center></center><br><center></center><br><center></center><br><center></center><br><center></center></html>"),
     lowDeckCards("Low Deck Cards for Game","<html><center>This Deck have Low Card for Game.</center>" +
-            "<br><center>You need at least "+ ModelDefault.deckDefaults.minNumberCards +" Cards for Game.</center><br><center></center></html>");
+            "<br><center>You need at least "+ ModelDefault.deckDefaults.minNumberCards +" Cards for Game.</center><br><center></center></html>"),
+    deleteAccount("Delete Account ", "<html><center>Delete Account</center>" +
+            "<br><center></center><br><center></center><br><center></center><br><center></center></html>");
 
     private String title, text;
 

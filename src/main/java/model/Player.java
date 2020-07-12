@@ -2,10 +2,14 @@
 package model;
 
 
-import com.google.gson.annotations.Expose;
+import com.google.gson.Gson;
+import controller.FileManagement;
 import defaults.ModelDefault;
 import enums.InfoPassiveEnum;
 import model.card.Card;
+import model.card.Minion;
+import model.card.Spell;
+import model.card.Weapon;
 import model.hero.Hero;
 import model.infoPassive.*;
 
@@ -23,7 +27,7 @@ public class Player {
     private boolean deletePlayer;
     private ArrayList<Hero> playerHeroes;
     private ArrayList<Deck> playerDecks;
-    private Deck gameDeck;
+    private int gameDeckIndex;
     private Deck freeDeck;
     private PlayerGame playerGame;
 
@@ -34,7 +38,7 @@ public class Player {
         money = ModelDefault.PlayerDefaults.defaultMoney;
         playerHeroes = ModelDefault.PlayerDefaults.defaultPlayerHeroes;
         freeDeck = new Deck(ModelDefault.CardDefaults.defaultPlayerCards());
-        gameDeck = freeDeck;
+        gameDeckIndex = -1;
         newPlayerGame();
     }
 
@@ -56,7 +60,7 @@ public class Player {
 
     public void newPlayerGame() {
         playerGame = new PlayerGame();
-        playerGame.startPlayerGame(gameDeck);
+        playerGame.startPlayerGame(getGameDeck());
     }
 
     public String getUserName() {
@@ -75,8 +79,17 @@ public class Player {
         this.deletePlayer = deletePlayer;
     }
 
-    public void setGameDeck(Deck gameDeck) {
-        this.gameDeck = gameDeck;
+    public void setGameDeck(Deck deck) {
+        if(deck==freeDeck)
+            gameDeckIndex = -1;
+        else{
+            for (int i = 0; i <playerDecks.size() ; i++) {
+                if(playerDecks.get(i)==deck){
+                    gameDeckIndex = i;
+                    return;
+                }
+            }
+        }
     }
 
     public int getId() {
@@ -92,37 +105,57 @@ public class Player {
     }
 
     public Deck getGameDeck() {
-        return gameDeck;
+        if (gameDeckIndex == -1)
+            return freeDeck;
+        else
+            return playerDecks.get(gameDeckIndex);
     }
 
     public PlayerGame getPlayerGame() {
         return playerGame;
     }
 
-
     public class PlayerGame {
         private ArrayList<Card> groundCard;
         private ArrayList<Card> usedCard;
         private ArrayList<Card> handCard;
         private ArrayList<Card> aroundCard;
+        private Weapon weapon;
         private int randMana, currentMana;
         private Hero hero;
         private InfoPassive infoPassive;
         private Map<Integer, Boolean> selectedStartCard;
+
+        private Minion forceAttackCard;
+        private Minion setEqualCard;
+        private Minion gainDrawCard;
+        private Quest quest;
+
+        private int heroPowerUsedInTurn;
+        private int numberDrawCardInTurn;
 
         public PlayerGame() {
             this.groundCard = new ArrayList<>();
             this.usedCard = new ArrayList<>();
             this.handCard = new ArrayList<>();
             this.aroundCard = new ArrayList<>();
+            quest = new Quest();
             this.randMana = 1;
+            numberDrawCardInTurn = 1;
             this.currentMana = 1;
+            heroPowerUsedInTurn = 0;
+            this.setEqualCard = null;
+            this.forceAttackCard = null;
+            this.weapon = null;
+            this.gainDrawCard = null;
             newSelectedStartCard();
         }
 
         public void startPlayerGame(Deck deck) {
-            aroundCard.addAll(deck.getCards());
-            this.hero = deck.getHero();
+            for (Card card:deck.getCards()) {
+                aroundCard.add(FileManagement.getInstance().getCopy().copyCard(card));
+            }
+            hero = FileManagement.getInstance().getCopy().copyHero(deck.getHero());
         }
 
         public void newSelectedStartCard() {
@@ -154,6 +187,14 @@ public class Player {
                     this.infoPassive = new TwiceDraw();
                     break;
             }
+        }
+
+        public int getHeroPowerUsedInTurn() {
+            return heroPowerUsedInTurn;
+        }
+
+        public void setHeroPowerUsedInTurn(int heroPowerUsedInTurn) {
+            this.heroPowerUsedInTurn = heroPowerUsedInTurn;
         }
 
         public void setCurrentMana(int currentMana) {
@@ -198,6 +239,50 @@ public class Player {
 
         public int getRandMana() {
             return randMana;
+        }
+
+        public Weapon getWeapon() {
+            return weapon;
+        }
+
+        public void setWeapon(Weapon weapon) {
+            this.weapon = weapon;
+        }
+
+        public Minion getForceAttackCard() {
+            return forceAttackCard;
+        }
+
+        public void setForceAttackCard(Minion forceAttackCard) {
+            this.forceAttackCard = forceAttackCard;
+        }
+
+        public Minion getSetEqualCard() {
+            return setEqualCard;
+        }
+
+        public void setSetEqualCard(Minion setEqualCard) {
+            this.setEqualCard = setEqualCard;
+        }
+
+        public Minion getGainDrawCard() {
+            return gainDrawCard;
+        }
+
+        public void setGainDrawCard(Minion gainDrawCard) {
+            this.gainDrawCard = gainDrawCard;
+        }
+
+        public int getNumberDrawCardInTurn() {
+            return numberDrawCardInTurn;
+        }
+
+        public void setNumberDrawCardInTurn(int numberDrawCardInTurn) {
+            this.numberDrawCardInTurn = numberDrawCardInTurn;
+        }
+
+        public Quest getQuest() {
+            return quest;
         }
     }
 }

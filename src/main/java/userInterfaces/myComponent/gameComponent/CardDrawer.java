@@ -26,7 +26,7 @@ public class CardDrawer extends LayerDrawer {
 
     public CardDrawer(Card card, Bounds bounds,
                       JPanel backgroundPanel, int fontSize, JLayeredPane pane, int layer) {
-        super(FilesPath.graphicsPath.gameCardsPath + "/" + card.getName() + ".png", bounds,backgroundPanel,pane,layer);
+        super(FilesPath.graphicsPath.gameCardsPath + "/" + card.getName() + ".png", bounds, backgroundPanel, pane, layer);
         this.card = card;
         this.fontSize = fontSize;
         cardBound = new Bounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
@@ -56,7 +56,7 @@ public class CardDrawer extends LayerDrawer {
                     setButtonBounds(boldBound);
                     for (int i = 0; i < text.length; i++) {
                         text[i].setFont(new Font(fontName, Font.ITALIC, fontSize * 2));
-                        setTextBounds(text[i],GraphicsDefault.GameBoard.cardTextBounds(i+1, boldBound));
+                        setTextBounds(text[i], GraphicsDefault.GameBoard.cardTextBounds(i + 1, boldBound));
                     }
                     //moveMouseCursor(newX, newY);
                     reShow();
@@ -68,34 +68,16 @@ public class CardDrawer extends LayerDrawer {
                 setButtonBounds(bounds);
                 for (int i = 0; i < text.length; i++) {
                     text[i].setFont(new Font(fontName, Font.ITALIC, fontSize));
-                   setTextBounds(text[i],GraphicsDefault.GameBoard.cardTextBounds(i+1, bounds));
+                    setTextBounds(text[i], GraphicsDefault.GameBoard.cardTextBounds(i + 1, bounds));
                 }
                 reShow();
             }
         });
     }
 
-    private void setTextBounds(JLabel text, Bounds newBound){
+    private void setTextBounds(JLabel text, Bounds newBound) {
         text.setSize(newBound.getWidth(), newBound.getHeight());
         text.setLocation(newBound.getX(), newBound.getY());
-    }
-
-    private void moveMouseCursor(int newX, int newY) {
-        try {
-            Robot r = new Robot();
-            r.mouseMove(newX, newY);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addClick() {
-        button.addActionListener(actionEvent -> {
-            button.setEnabled(false);
-            button.setVisible(false);
-            /*setVisible(false);
-            setEnabled(false);*/
-        });
     }
 
     private void setMinionText(Minion card) {
@@ -118,24 +100,30 @@ public class CardDrawer extends LayerDrawer {
     }
 
     private void setCardManaText(String message) {
+        if (text[0] != null)
+            remove(text[0]);
         text[0] = ComponentCreator.getInstance().setText(message, this,
                 fontName, fontSize, Color.white,
                 GraphicsDefault.GameBoard.cardTextBounds(1, cardBound));
     }
 
     private void setBottomLeftCardText(String message) {
+        if (text[1] != null)
+            remove(text[1]);
         text[1] = ComponentCreator.getInstance().setText(message, this,
                 fontName, fontSize, Color.white,
                 GraphicsDefault.GameBoard.cardTextBounds(2, cardBound));
     }
 
     private void setBottomRightCardText(String message) {
+        if (text[2] != null)
+            remove(text[2]);
         text[2] = ComponentCreator.getInstance().setText(message, this,
                 fontName, fontSize, Color.white,
                 GraphicsDefault.GameBoard.cardTextBounds(3, cardBound));
     }
 
-    private void handleCardText() {
+    public void handleCardText() {
         String cardType = card.getType();
         if (cardType.equals(CardType.Minion.name()))
             setMinionText((Minion) (card));

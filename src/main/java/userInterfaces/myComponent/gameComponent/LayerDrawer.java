@@ -15,7 +15,6 @@ public class LayerDrawer extends GameComponent {
         pane.add(this, Integer.valueOf(layer));
     }
 
-
     @Override
     public void reShow() {
         backgroundPanel.validate();

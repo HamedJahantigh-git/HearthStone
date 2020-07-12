@@ -2,6 +2,7 @@ package model.infoPassive;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import controller.game.GameController;
 import enums.InfoPassiveEnum;
 import model.Player;
 import model.hero.*;
@@ -32,6 +33,6 @@ abstract public class InfoPassive {
         return type;
     }
 
-    abstract public void applyInfo();
+    abstract public void applyInfo(GameController gameController, int playerIndex);
 
 }

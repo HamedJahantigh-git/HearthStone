@@ -3,10 +3,9 @@ package userInterfaces;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import userInterfaces.graphicsActions.AccountMenuAction;
-import userInterfaces.graphicsActions.MyAction;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
-import userInterfaces.myComponent.MyFrame;
+import userInterfaces.myComponent.MyJFrame;
 import userInterfaces.myComponent.MyJPanel;
 
 import javax.swing.*;
@@ -15,7 +14,7 @@ import java.awt.*;
 
 public class AccountMenu {
     private static final AccountMenu instance = new AccountMenu();
-    private MyFrame accountFrame;
+    private MyJFrame accountFrame;
     private JLayeredPane pane;
     private MyJPanel mainPanel, messagePanel;
     private JButton exitGameButton, signInButton, signUpButton;
@@ -30,7 +29,7 @@ public class AccountMenu {
         accountMenuAction = new AccountMenuAction(null);
         accountSound = new Sounds("AccountMenu.wav");
         accountSound.playLoop();
-        accountFrame = new MyFrame("Account Menu", GraphicsDefault.AccountMenu.mainBounds);
+        accountFrame = new MyJFrame("Account Menu", GraphicsDefault.AccountMenu.mainBounds);
         pane = accountFrame.getLayeredPane();
         pane.setLayout(null);
         mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/accountMenu.jpg",

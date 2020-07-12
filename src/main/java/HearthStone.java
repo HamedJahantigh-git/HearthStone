@@ -1,11 +1,15 @@
 
 import CLI.CLIMenu;
 import controller.PlayerController;
-import enums.CardType;
+import controller.game.playingCard.CardController;
+import enums.CardMechanicsEnum;
 import initializer.InitCLI;
 import initializer.InitCards;
 import initializer.InitHero;
 import model.card.Card;
+import model.card.Minion;
+import model.hero.Hero;
+import model.hero.Mage;
 import userInterfaces.AccountMenu;
 import userInterfaces.userMenu.UserFrame;
 
@@ -17,7 +21,6 @@ public class HearthStone {
         initializer();
         //startGraphicalGame();
         test();
-
     }
 
     private static void initializer() {
@@ -36,16 +39,16 @@ public class HearthStone {
         CLIMenu.getInstance();
     }
 
-    private static void test(){
+    private static void test() {
         PlayerController hamed = new PlayerController();
         try {
-            hamed.signInPlayer("test1","test1");
+            hamed.signInPlayer("test1", "test1");
         } catch (Exception e) {
             e.printStackTrace();
         }
         UserFrame userFrame = new UserFrame(hamed);
-        //userFrame.startMainMenu();
-        userFrame.startMineGame();
+        userFrame.startMainMenu();
+        //userFrame.startMineGame();
     }
-
 }
+

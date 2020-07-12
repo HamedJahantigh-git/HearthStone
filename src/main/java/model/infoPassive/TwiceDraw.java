@@ -1,5 +1,6 @@
 package model.infoPassive;
 
+import controller.game.GameController;
 import enums.InfoPassiveEnum;
 import model.Player;
 
@@ -10,7 +11,7 @@ public class TwiceDraw extends InfoPassive {
     }
 
     @Override
-    public void applyInfo() {
-
+    public void applyInfo(GameController gameController, int playerIndex) {
+        gameController.getGame().getPlayerGames(playerIndex).setNumberDrawCardInTurn(2);
     }
 }

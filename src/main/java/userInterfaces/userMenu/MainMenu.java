@@ -35,6 +35,12 @@ public class MainMenu {
                         GraphicsDefault.UserMenu.mainBounds.getWidth() / 6,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 12), Color.white, 35, 0);
         action.exitGame(exitGame);
+        JButton deleteAccount = ComponentCreator.getInstance().setButton("Delete Account", mainPanel, "buttons1.png",
+                new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() - GraphicsDefault.UserMenu.mainBounds.getWidth() / 3 - 60,
+                        GraphicsDefault.UserMenu.mainBounds.getHeight() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 12 - 50,
+                        GraphicsDefault.UserMenu.mainBounds.getWidth() / 6,
+                        GraphicsDefault.UserMenu.mainBounds.getHeight() / 12), Color.white, 35, 0);
+        action.deleteAccountAction(deleteAccount, userFrame);
         JButton setting = ComponentCreator.getInstance().setButton("", mainPanel, "setting1.png",
                 new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 8 - 40,
                         20,

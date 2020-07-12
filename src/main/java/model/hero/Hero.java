@@ -1,8 +1,9 @@
 package model.hero;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import defaults.ModelDefault;
-import enums.HeroType;
+import model.Player;
 
 
 @JsonTypeInfo(
@@ -17,14 +18,24 @@ import enums.HeroType;
         @JsonSubTypes.Type(value = Warlock.class, name = "Warlock"),
 })
 
- public class Hero {
+public class Hero {
 
     protected String heroName;
-    protected int Health;
+    protected int health;
 
-    protected Hero(String heroName){
+    protected int heroPowerMana;
+    protected int heroPowerCanUseInEveryTurn;
+
+    protected boolean isHeroPowerTargeted;
+
+    public Hero(){};
+
+    protected Hero(String heroName, int heroPowerMana, boolean isHeroPowerTargeted) {
         this.heroName = heroName;
-        this.Health = ModelDefault.heroDefaults.baseOfHeroHealth;
+        this.isHeroPowerTargeted = isHeroPowerTargeted;
+        this.heroPowerMana = heroPowerMana;
+        this.heroPowerCanUseInEveryTurn = 1;
+        this.health = ModelDefault.heroDefaults.baseOfHeroHealth;
     }
 
     public String getHeroName() {
@@ -32,8 +43,41 @@ import enums.HeroType;
     }
 
     public int getHealth() {
-        return Health;
+        return health;
     }
 
-   public void SpecialPower (){};
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void minusHealth(int reduce) {
+        health -= reduce;
+    }
+
+    public void SpecialPower(Player.PlayerGame playerGame) {
+    }
+
+    public boolean isHeroPowerTargeted() {
+        return isHeroPowerTargeted;
+    }
+
+    public void setHeroName(String heroName) {
+        this.heroName = heroName;
+    }
+
+    public int getHeroPowerMana() {
+        return heroPowerMana;
+    }
+
+    public void setHeroPowerCanUseInEveryTurn(int heroPowerCanUseInEveryTurn) {
+        this.heroPowerCanUseInEveryTurn = heroPowerCanUseInEveryTurn;
+    }
+
+    public void minusHeroPowerMana(int reduce) {
+        this.heroPowerMana -= reduce;
+    }
+
+    public int getHeroPowerCanUseInEveryTurn() {
+        return heroPowerCanUseInEveryTurn;
+    }
 }

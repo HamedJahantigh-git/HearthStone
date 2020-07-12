@@ -61,9 +61,11 @@ public class PlayerController {
         FileManagement.getInstance().getPlayerFile().creatPlayerFile(player);
     }
 
-    public void deleteAccount(Player player) {
-        //todo
-        /*player.setDeletePlayer(true);
+    public void deleteAccount(String password) throws Exception {
+        Gson gson = new Gson();
+        player.setDeletePlayer(true);
+        if(!password.equals(player.getPassword()))
+            throw new Exception(ExceptionsEnum.wrongPassword.getMessage());
         try {
             Writer writer = new FileWriter(
                     FilesPath.deletePlayerDataPath + "/" + player.getUserName() +
@@ -74,7 +76,7 @@ public class PlayerController {
             e.printStackTrace();
         }
         File file = new File(FilesPath.playerDataPath + "/" + player.getUserName() + ".txt");
-        file.delete();*/
+        file.delete();
     }
 
     private boolean checkExistUsername(String username) {
