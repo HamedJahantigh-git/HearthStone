@@ -59,7 +59,7 @@ abstract public class GameComponent extends MyJPanel {
             }
 
         });
-    };
+    }
 
     protected void setButtonBounds (Bounds newBound){
         setSize(newBound.getWidth(), newBound.getHeight());

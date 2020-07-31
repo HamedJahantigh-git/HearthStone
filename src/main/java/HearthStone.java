@@ -19,8 +19,8 @@ import java.util.ArrayList;
 public class HearthStone {
     public static void main(String[] args) {
         initializer();
-        //startGraphicalGame();
-        test();
+        startGraphicalGame();
+        //test();
     }
 
     private static void initializer() {
