@@ -1,8 +1,9 @@
 package model.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Spell extends Card {
+public class Spell extends Card implements Serializable {
     private String quest;
     private String reward;
 

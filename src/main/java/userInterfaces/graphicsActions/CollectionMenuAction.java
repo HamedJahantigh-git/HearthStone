@@ -22,7 +22,7 @@ public class CollectionMenuAction extends MainMenuAction {
     private CollectionMenu collectionMenu;
 
     public CollectionMenuAction(PlayerController playerController, CollectionMenu collectionMenu) {
-        super(playerController);
+        super(null);
         this.collectionMenu = collectionMenu;
     }
 
@@ -80,7 +80,7 @@ public class CollectionMenuAction extends MainMenuAction {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("error").getEvent()[0],
                             LogsEnum.valueOf("error").getEvent_description()[0], playerController.getPlayer());
                     collectionMenu.getUserFrame().getShopMenu().onEnabledMenu();
-                    collectionMenu.getUserFrame().getShopMenu().showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
+                    //collectionMenu.getUserFrame().getShopMenu().showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
                 });
             } else {
                 JButton[] buttons = MessageCreator.getInstance().yesNoMessage(
@@ -89,10 +89,10 @@ public class CollectionMenuAction extends MainMenuAction {
                 buttons[0].addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[5],
                             LogsEnum.valueOf("shop").getEvent_description()[6] + card.getName(), playerController.getPlayer());
-                    ShopController.getInstance().buyCard(playerController.getPlayer(), card);
+                    //ShopController.getInstance().buyCard(playerController.getPlayer(), card);
                     FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
                     collectionMenu.getUserFrame().getShopMenu().onEnabledMenu();
-                    collectionMenu.getUserFrame().getShopMenu().showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
+                    //collectionMenu.getUserFrame().getShopMenu().showCards(FileManagement.getInstance().getAllCardsFromFile(), false);
                 });
                 buttons[1].addActionListener(actionEvent2 -> {
                     PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[4],

@@ -23,7 +23,7 @@ public class MainMenu {
                 GraphicsDefault.UserMenu.mainBounds, userFrame.getPane(), false, 1);
         boxPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/UserMenu2.png",
                 GraphicsDefault.UserMenu.boxMainBounds, userFrame.getPane(), false, 2);
-        action = new MainMenuAction(userFrame.getPlayerController());
+        action = new MainMenuAction(userFrame.getMyGraphics());
         init();
     }
 
@@ -40,7 +40,7 @@ public class MainMenu {
                         GraphicsDefault.UserMenu.mainBounds.getHeight() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 12 - 50,
                         GraphicsDefault.UserMenu.mainBounds.getWidth() / 6,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 12), Color.white, 35, 0);
-        action.deleteAccountAction(deleteAccount, userFrame);
+        action.deleteAccountAction(deleteAccount);
         JButton setting = ComponentCreator.getInstance().setButton("", mainPanel, "setting1.png",
                 new Bounds(GraphicsDefault.UserMenu.mainBounds.getWidth() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 8 - 40,
                         20,
@@ -58,7 +58,7 @@ public class MainMenu {
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 5 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 30, 1);
-        action.goShop(shopButton, userFrame);
+        action.goShop(shopButton);
         JButton collectionButton = ComponentCreator.getInstance().setButton("Collection", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 7 / 12,
@@ -105,5 +105,9 @@ public class MainMenu {
             component.setVisible(true);
         }
         mainPanel.paint(mainPanel.getGraphics());
+    }
+
+    public MainMenuAction getAction() {
+        return action;
     }
 }

@@ -4,6 +4,8 @@ import controller.FileManagement;
 import controller.PlayerController;
 import enums.LogsEnum;
 import logs.PlayerLogs;
+import network.client.ClientNetwork;
+import userInterfaces.MyGraphics;
 
 
 import javax.swing.*;
@@ -11,19 +13,24 @@ import java.awt.*;
 
 public class MyAction {
 
+    //todo delete in final
     protected PlayerController playerController;
 
-    public MyAction(PlayerController playerController) {
-        this.playerController = playerController;
+    protected ClientNetwork clientNetwork;
+
+    protected MyGraphics myGraphics;
+
+    protected MyAction(MyGraphics myGraphics){
+        this.myGraphics = myGraphics;
+    }
+
+    protected void setGraphics(MyGraphics myGraphics){
+        this.myGraphics = myGraphics;
     }
 
     public void exitGame(JButton button) {
         button.addActionListener(actionEvent -> {
-            if (playerController != null) {
-                PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[2],
-                        LogsEnum.valueOf("sign").getEvent_description()[3], playerController.getPlayer());
-                FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
-            }
+            clientNetwork.getSender().exitGame();
             System.exit(0);
         });
     }

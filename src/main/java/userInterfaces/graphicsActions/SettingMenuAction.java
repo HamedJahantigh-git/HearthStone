@@ -5,7 +5,7 @@ import controller.PlayerController;
 public class SettingMenuAction extends MainMenuAction {
 
     public SettingMenuAction(PlayerController playerController) {
-        super(playerController);
+        super(null);
     }
 
 }

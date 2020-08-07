@@ -1,6 +1,7 @@
 package userInterfaces.userMenu.play;
 
 import controller.game.GameController;
+import enums.FontEnum;
 import model.MyThread;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
@@ -10,6 +11,7 @@ import enums.MineGameLayer;
 import model.Player;
 import userInterfaces.graphicsActions.gameAction.GameAction;
 import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MyFont;
 import userInterfaces.myComponent.MyJPanel;
 import userInterfaces.myComponent.gameComponent.PanelComponentDrawer;
 import userInterfaces.userMenu.UserFrame;
@@ -67,7 +69,7 @@ public class PlayerGraphicThread extends MyThread {
                 GraphicsDefault.GameBoard.infoPassivePanelBounds, userFrame.getPane(), false, MineGameLayer.message.getLayer());
         ComponentCreator.getInstance().setText("Info Passive P#" +
                         (gameController.getGame().getPlayerIndex() + 1),
-                messagePanel, "FORTE", 40, Color.black,
+                messagePanel, new MyFont(FontEnum.LABEl.getName(),40), Color.black,
                 GraphicsDefault.GameBoard.infoPassiveBounds(2, 1));
         ArrayList<InfoPassiveEnum> randomInfo = gameController.getInfoPassiveController().creatRandomInfoPassive(3);
         for (int i = 0; i < randomInfo.size(); i++) {
@@ -87,7 +89,7 @@ public class PlayerGraphicThread extends MyThread {
                 GraphicsDefault.GameBoard.changeStartCardBound(0, 0), userFrame.getPane(), false, MineGameLayer.message.getLayer());
         ComponentCreator.getInstance().setText("Change Start Cards P#" +
                         (gameController.getGame().getPlayerIndex() + 1),
-                messagePanel, "FORTE", 40, Color.black,
+                messagePanel, new MyFont(FontEnum.LABEl.getName(),40), Color.black,
                 GraphicsDefault.GameBoard.changeStartCardBound(1, 0));
         JButton finishButton = ComponentCreator.getInstance().setButton("Finish", messagePanel, "buttons1.png",
                 GraphicsDefault.GameBoard.changeStartCardBound(2, 0), Color.white, 30, 0);

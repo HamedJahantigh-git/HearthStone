@@ -3,12 +3,14 @@ package userInterfaces.myComponent.gameComponent;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import enums.CardType;
+import enums.FontEnum;
 import model.card.Card;
 import model.card.Minion;
 import model.card.Spell;
 import model.card.Weapon;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MyFont;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,16 +21,14 @@ public class CardDrawer extends LayerDrawer {
 
     private Bounds cardBound;
     private JLabel[] text;
-    private int fontSize;
-    private String fontName = "Belwe Bd BT Bold";
-
+    private MyFont font;
     private Card card;
 
     public CardDrawer(Card card, Bounds bounds,
                       JPanel backgroundPanel, int fontSize, JLayeredPane pane, int layer) {
         super(FilesPath.graphicsPath.gameCardsPath + "/" + card.getName() + ".png", bounds, backgroundPanel, pane, layer);
         this.card = card;
-        this.fontSize = fontSize;
+        this.font = new MyFont(FontEnum.CARD.getName(),fontSize);
         cardBound = new Bounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         handleCardText();
     }
@@ -55,7 +55,7 @@ public class CardDrawer extends LayerDrawer {
                 if (SwingUtilities.isRightMouseButton(e)) {
                     setButtonBounds(boldBound);
                     for (int i = 0; i < text.length; i++) {
-                        text[i].setFont(new Font(fontName, Font.ITALIC, fontSize * 2));
+                        text[i].setFont(new MyFont(font.getFontName(),  font.getFontSize() * 2).getFont());
                         setTextBounds(text[i], GraphicsDefault.GameBoard.cardTextBounds(i + 1, boldBound));
                     }
                     //moveMouseCursor(newX, newY);
@@ -67,7 +67,7 @@ public class CardDrawer extends LayerDrawer {
             public void mouseReleased(MouseEvent e) {
                 setButtonBounds(bounds);
                 for (int i = 0; i < text.length; i++) {
-                    text[i].setFont(new Font(fontName, Font.ITALIC, fontSize));
+                    text[i].setFont(font.getFont());
                     setTextBounds(text[i], GraphicsDefault.GameBoard.cardTextBounds(i + 1, bounds));
                 }
                 reShow();
@@ -103,24 +103,21 @@ public class CardDrawer extends LayerDrawer {
         if (text[0] != null)
             remove(text[0]);
         text[0] = ComponentCreator.getInstance().setText(message, this,
-                fontName, fontSize, Color.white,
-                GraphicsDefault.GameBoard.cardTextBounds(1, cardBound));
+                font, Color.white, GraphicsDefault.GameBoard.cardTextBounds(1, cardBound));
     }
 
     private void setBottomLeftCardText(String message) {
         if (text[1] != null)
             remove(text[1]);
         text[1] = ComponentCreator.getInstance().setText(message, this,
-                fontName, fontSize, Color.white,
-                GraphicsDefault.GameBoard.cardTextBounds(2, cardBound));
+                font, Color.white, GraphicsDefault.GameBoard.cardTextBounds(2, cardBound));
     }
 
     private void setBottomRightCardText(String message) {
         if (text[2] != null)
             remove(text[2]);
         text[2] = ComponentCreator.getInstance().setText(message, this,
-                fontName, fontSize, Color.white,
-                GraphicsDefault.GameBoard.cardTextBounds(3, cardBound));
+                font, Color.white, GraphicsDefault.GameBoard.cardTextBounds(3, cardBound));
     }
 
     public void handleCardText() {

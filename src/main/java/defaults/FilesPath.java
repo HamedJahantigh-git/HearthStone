@@ -2,20 +2,23 @@ package defaults;
 
 public class FilesPath {
 
-    public static final String gameDataPath = "src/main/resources/Game Data";
-    public static final String logsPath = gameDataPath + "/Logs";
-    public static final String playerLogsPath = logsPath + "/Player Logs";
-    public static final String gameEventLogsPath = logsPath + "/Game Event Logs";
-    public static final String gameInfo = gameDataPath + "/Game Information";
-    public static final String gameModel = gameDataPath + "/Battle Data";
-    public static final String playerDataPath = gameDataPath + "/Player Data";
-    public static final String heroDataPath = gameDataPath + "/Hero Data";
-    public static final String deletePlayerDataPath = playerDataPath + "/Deleted Account";
-    public static final String cardDataPath = gameDataPath + "/Card Data";
-    public static final String minionDataPath = cardDataPath + "/Minion";
-    public static final String spellDataPath = cardDataPath + "/Spell";
-    public static final String weaponDataPath = cardDataPath + "/Weapon";
-    public static final String defaultPlayerCardsName = gameInfo + "/PlayerDefaultCards.txt";
+    public static final String CONFIGURATION = "src/main/resources/Configuration";
+    public static final String CONFIGURATION_FILE = CONFIGURATION+"/Game Config.txt";
+    public static final String GAME_DATA_PATH = "src/main/resources/Game Data";
+    public static final String LOGS_PATH = GAME_DATA_PATH + "/Logs";
+    public static final String PLAYER_LOGS_PATH = LOGS_PATH + "/Player Logs";
+    public static final String GAME_EVENT_LOGS_PATH = LOGS_PATH + "/Game Event Logs";
+    public static final String GAME_INFO = GAME_DATA_PATH + "/Game Information";
+    public static final String GAME_MODEL = GAME_DATA_PATH + "/Battle Data";
+    public static final String PLAYER_DATA_PATH = GAME_DATA_PATH + "/Player Data";
+    public static final String HERO_DATA_PATH = GAME_DATA_PATH + "/Hero Data";
+    public static final String DELETE_PLAYER_DATA_PATH = PLAYER_DATA_PATH + "/Deleted Account";
+    public static final String CARD_DATA_PATH = GAME_DATA_PATH + "/Card Data";
+    public static final String MINION_DATA_PATH = CARD_DATA_PATH + "/Minion";
+    public static final String SPELL_DATA_PATH = CARD_DATA_PATH + "/Spell";
+    public static final String WEAPON_DATA_PATH = CARD_DATA_PATH + "/Weapon";
+    public static final String defaultPlayerCardsName = GAME_INFO + "/PlayerDefaultCards.txt";
+
 
 
     public static class graphicsPath {

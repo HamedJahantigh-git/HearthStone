@@ -4,9 +4,10 @@ import enums.ExceptionsEnum;
 import model.Attacker;
 import model.hero.Hero;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Minion extends Card implements Attacker {
+public class Minion extends Card implements Attacker, Serializable {
 
     private int health;
     private int attack;

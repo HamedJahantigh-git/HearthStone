@@ -29,20 +29,5 @@ public class InitCLI {
         System.out.println(org.apache.commons.lang3.StringUtils.rightPad("\\", length - 1, "*") + "/");
     }
 
-    public static void createNeedsFolder() {
-        FileManagement.getInstance().creatFolder(FilesPath.gameDataPath);
-        FileManagement.getInstance().creatFolder(FilesPath.gameInfo);
-        FileManagement.getInstance().creatFolder(FilesPath.logsPath);
-        FileManagement.getInstance().creatFolder(FilesPath.playerLogsPath);
-        FileManagement.getInstance().creatFolder(FilesPath.gameEventLogsPath);
-        FileManagement.getInstance().creatFolder(FilesPath.heroDataPath);
-        FileManagement.getInstance().creatFolder(FilesPath.playerDataPath);
-        FileManagement.getInstance().creatFolder(FilesPath.gameModel);
-        FileManagement.getInstance().creatFolder(FilesPath.deletePlayerDataPath);
-        FileManagement.getInstance().creatFolder(FilesPath.cardDataPath);
-        FileManagement.getInstance().creatFolder(FilesPath.minionDataPath);
-        FileManagement.getInstance().creatFolder(FilesPath.spellDataPath);
-        FileManagement.getInstance().creatFolder(FilesPath.weaponDataPath);
-    }
 
 }

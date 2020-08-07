@@ -1,7 +1,5 @@
 package logs;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import defaults.FilesPath;
 import model.Player;
 
@@ -19,7 +17,7 @@ public class PlayerLogs {
         String[] logHeader = new String[3];
         try {
             Writer writer = new FileWriter(
-                    FilesPath.playerLogsPath + "/" + player.getUserName() + "-"
+                    FilesPath.PLAYER_LOGS_PATH + "/" + player.getUserName() + "-"
                             + String.valueOf(player.getId()) + ".log");
             Date date = new Date();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -40,7 +38,7 @@ public class PlayerLogs {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         try {
             BufferedWriter writer = new BufferedWriter(
-                    new FileWriter(FilesPath.playerLogsPath + "/" + player.getUserName() + "-"
+                    new FileWriter(FilesPath.PLAYER_LOGS_PATH + "/" + player.getUserName() + "-"
                             + String.valueOf(player.getId()) + ".log", true));
             writer.newLine();
             writer.write("\"" + event + "\" @ " + dateFormat.format(date) + " ---> " + eventDescription);

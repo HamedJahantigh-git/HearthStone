@@ -15,7 +15,7 @@ public class SettingMenu {
         this.userFrame = userFrame;
         mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Main Shop.jpg",
                 GraphicsDefault.UserMenu.mainBounds, userFrame.getPane(), false, SettingLayer.mainPanel.getLayer());
-        action = new SettingMenuAction(userFrame.getPlayerController());
+        //action = new SettingMenuAction(userFrame.getPlayerController());
     }
 
 }

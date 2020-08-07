@@ -5,9 +5,10 @@ import model.Attacker;
 import model.hero.Hero;
 import userInterfaces.myComponent.MouseManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Weapon extends Card implements Attacker {
+public class Weapon extends Card implements Attacker, Serializable {
     private int durability;
     private int attack;
 

@@ -12,10 +12,7 @@ import model.card.Card;
 import model.hero.Hero;
 import userInterfaces.Sounds;
 import userInterfaces.graphicsActions.gameAction.GameAction;
-import userInterfaces.myComponent.Bounds;
-import userInterfaces.myComponent.ComponentCreator;
-import userInterfaces.myComponent.MouseManager;
-import userInterfaces.myComponent.MyJPanel;
+import userInterfaces.myComponent.*;
 import userInterfaces.myComponent.gameComponent.*;
 import userInterfaces.userMenu.UserFrame;
 
@@ -80,7 +77,7 @@ public class BaseGameThread extends MyThread {
         mineGameBoard.onEnabledMenu();
         MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
                 GraphicsDefault.GameBoard.selectCompetitorBound(0), userFrame.getPane(), true, MineGameLayer.message.getLayer());
-        ComponentCreator.getInstance().setText("Competitor Selection", messagePanel, "FORTE", 30, Color.black,
+        ComponentCreator.getInstance().setText("Competitor Selection", messagePanel, new MyFont(FontEnum.LABEl.getName(),30), Color.black,
                 GraphicsDefault.GameBoard.selectCompetitorBound(3));
         JComboBox combo = ComponentCreator.getInstance().setStrComboBox(messagePanel,
                 competitorList(), 4,
@@ -93,7 +90,7 @@ public class BaseGameThread extends MyThread {
     }
 
     private String[] competitorList() {
-        ArrayList<String> list = FileManagement.getInstance().allFileNameInPath(FilesPath.playerDataPath);
+        ArrayList<String> list = FileManagement.getInstance().allFileNameInPath(FilesPath.PLAYER_DATA_PATH);
         for (int i = 0; i < list.size(); i++) {
             String s = list.get(i);
             if (s.endsWith(".txt")) {
@@ -125,7 +122,7 @@ public class BaseGameThread extends MyThread {
         String text =  "<html><center>Game Finished</center>" +
                 "<br><center>Winier #"+(gameController.getGame().getWinnerPlayerIndex()+1)+"</center></html>";
         ComponentCreator.getInstance().setText(text,
-                messagePanel, "FORTE", 45
+                messagePanel, new MyFont(FontEnum.LABEl.getName(),45)
                 , Color.black, new Bounds(0, 0, GraphicsDefault.GameBoard.menuMessage.getWidth(), GraphicsDefault.GameBoard.menuMessage.getHeight()));
         JButton finishedButton = ComponentCreator.getInstance().setButton("Menu", messagePanel, "buttons3.png",
                 GraphicsDefault.GameBoard.menuButtons(4), Color.white, 25, 1);

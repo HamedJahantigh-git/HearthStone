@@ -2,9 +2,11 @@
 package userInterfaces.myComponent.gameComponent;
 
 import defaults.GraphicsDefault;
+import enums.FontEnum;
 import userInterfaces.Sounds;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MyFont;
 import userInterfaces.myComponent.MyJPanel;
 
 import javax.swing.*;
@@ -37,9 +39,8 @@ abstract public class GameComponent extends MyJPanel {
         this.add(button);
     }
 
-    protected JLabel setText(String text, Bounds bounds, int font, Color color) {
-        return ComponentCreator.getInstance().setText(text, this, "Belwe Bd BT Bold",
-                font, color, bounds);
+    protected JLabel setText(String text, Bounds bounds, int fontSize, Color color) {
+        return ComponentCreator.getInstance().setText(text, this, new MyFont(FontEnum.LABEl.getName(),fontSize), color, bounds);
     }
 
     public void selectable(){

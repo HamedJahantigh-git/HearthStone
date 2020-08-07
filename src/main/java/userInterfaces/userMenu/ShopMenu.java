@@ -2,7 +2,9 @@ package userInterfaces.userMenu;
 
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
+import enums.FontEnum;
 import model.card.Card;
+import network.protocol.ShopProtocol;
 import userInterfaces.graphicsActions.ShopMenuAction;
 import userInterfaces.myComponent.*;
 
@@ -17,16 +19,21 @@ public class ShopMenu {
     private ShopMenuAction action;
     private int sellIndex, buyIndex;
 
+    private ShopProtocol shopProtocol;
 
     public ShopMenu(UserFrame userFrame) {
         this.userFrame = userFrame;
         mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Main Shop.jpg",
                 GraphicsDefault.UserMenu.mainBounds, userFrame.getPane(), false, 20);
-        action = new ShopMenuAction(userFrame.getPlayerController());
+        action = new ShopMenuAction(userFrame.getMyGraphics());
         initMainPanel();
         initCardPanel();
         sellIndex = 0;
         buyIndex = 0;
+    }
+
+    public void setShopProtocol(ShopProtocol shopProtocol) {
+        this.shopProtocol = shopProtocol;
     }
 
     public MyJPanel getCardPanel() {
@@ -53,10 +60,10 @@ public class ShopMenu {
                 GraphicsDefault.ShopMenu.rightButton1, Color.white, 27, 1);
         JButton sellButton = ComponentCreator.getInstance().setButton("Sell", mainPanel, "buttons3.png",
                 GraphicsDefault.ShopMenu.rightButton2, Color.white, 27, 1);
-        action.backToUserMenu(back, userFrame);
+        action.backToMainMenu(back);
         action.exitGame(exitGame);
-        action.buyButton(buyButton, this);
-        action.sellButton(sellButton, this);
+        action.buyButton(buyButton);
+        action.sellButton(sellButton);
 
     }
 
@@ -70,50 +77,52 @@ public class ShopMenu {
         return userFrame;
     }
 
-    public void showCards(ArrayList<Card> cards, boolean sell) {
+    public void showCards(boolean sell) {
         cardPanel.removeAll();
         JButton nextPage = ComponentCreator.getInstance().setButton("", cardPanel, "Right Arrow.png",
                 GraphicsDefault.ShopMenu.cardsSection(0, 1), Color.white, 30, 3);
         JButton backPage = ComponentCreator.getInstance().setButton("", cardPanel, "Left Arrow.png",
                 GraphicsDefault.ShopMenu.cardsSection(0, 2), Color.white, 30, 2);
-        JLabel money = ComponentCreator.getInstance().setText("Your Money: " + action.getPlayerController().getPlayer().getMoney(),
-                cardPanel, "FORTE", 30, Color.black, GraphicsDefault.ShopMenu.cardsSection(0, 3));
+        ComponentCreator.getInstance().setText("Your Money: " + shopProtocol.getPlayerMoney(),
+                cardPanel, new MyFont(FontEnum.LABEl.getName(),30), Color.black, GraphicsDefault.ShopMenu.cardsSection(0, 3));
         if (sell) {
+            ArrayList<Card> cards = shopProtocol.getSellCard();
             nextPage.addActionListener(actionEvent -> {
                 if (cards.size() > sellIndex + 8)
                     sellIndex += 8;
-                showCards(cards, true);
+                showCards(true);
             });
             backPage.addActionListener(actionEvent -> {
                 if (0 <= sellIndex - 8)
                     sellIndex -= 8;
-                showCards(cards, true);
+                showCards(true);
             });
             for (int i = sellIndex; i < Math.min((sellIndex + 8), cards.size()); i++) {
 
                 MyCardButton card = new MyCardButton(cardPanel, FilesPath.graphicsPath.cardsPath + "/"
                         + cards.get(i).getName() + ".png", GraphicsDefault.ShopMenu.cardsSection(i, 0));
                 card.moveListener();
-                action.sellCardAction(card,cards.get(i),this);
+                action.sellCardAction(card,cards.get(i));
             }
         } else {
+            ArrayList<Card> cards = shopProtocol.getBuyCard();
             nextPage.addActionListener(actionEvent -> {
                 if (cards.size() > buyIndex + 8)
                     buyIndex += 8;
-                showCards(cards, false);
+                showCards(false);
             });
             backPage.addActionListener(actionEvent -> {
                 if (0 <= buyIndex - 8)
                     buyIndex -= 8;
-                showCards(cards, false);
+                showCards(false);
             });
             for (int i = buyIndex; i < Math.min((buyIndex + 8), cards.size()); i++) {
                 MyCardButton card = new MyCardButton(cardPanel, FilesPath.graphicsPath.cardsPath + "/"
                         + cards.get(i).getName() + ".png", GraphicsDefault.ShopMenu.cardsSection(i, 0));
                 JLabel price = ComponentCreator.getInstance().setText("Card Price: "+cards.get(i).getBuyCost(),
-                        cardPanel, "FORTE", 20, Color.black,  GraphicsDefault.ShopMenu.cardsSection(i, 4));
+                        cardPanel, new MyFont(FontEnum.LABEl.getName(),20), Color.black,  GraphicsDefault.ShopMenu.cardsSection(i, 4));
                 card.moveListener();
-                action.buyCardAction(card,cards.get(i),this);
+                action.buyCardAction(card,cards.get(i));
             }
         }
         cardPanel.paint(cardPanel.getGraphics());
@@ -122,9 +131,11 @@ public class ShopMenu {
     public void offEnabledMenu(){
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(false);
+            component.setVisible(false);
         }
         for (Component component : cardPanel.getComponents()) {
             component.setEnabled(false);
+            component.setVisible(false);
         }
     }
 
@@ -132,11 +143,15 @@ public class ShopMenu {
         userFrame.getPane().remove(userFrame.getPane().getComponentsInLayer(29)[0]);
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(true);
+            component.setVisible(true);
         }
         for (Component component : cardPanel.getComponents()) {
             component.setEnabled(true);
+            component.setVisible(true);
         }
-        mainPanel.paint(mainPanel.getGraphics());
-        cardPanel.paint(cardPanel.getGraphics());
+    }
+
+    public ShopProtocol getShopProtocol() {
+        return shopProtocol;
     }
 }

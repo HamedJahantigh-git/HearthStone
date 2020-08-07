@@ -2,6 +2,7 @@ package userInterfaces.userMenu;
 
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
+import enums.FontEnum;
 import model.Deck;
 import model.card.Card;
 import userInterfaces.graphicsActions.CollectionMenuAction;
@@ -27,7 +28,7 @@ public class CollectionMenu {
 
     public CollectionMenu(UserFrame userFrame) {
         this.userFrame = userFrame;
-        action = new CollectionMenuAction(userFrame.getPlayerController(), this);
+        //action = new CollectionMenuAction(userFrame.getPlayerController(), this);
         heroesButton = new ArrayList<>();
         currentHeroSelected = null;
         selectedDeck = null;
@@ -78,19 +79,19 @@ public class CollectionMenu {
                         GraphicsDefault.UserMenu.mainBounds.getHeight() - GraphicsDefault.UserMenu.mainBounds.getHeight() / 12 - 50,
                         GraphicsDefault.UserMenu.mainBounds.getWidth() / 12,
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 14), Color.white, 30, 0);
-        action.backToUserMenu(back, userFrame);
+        action.backToMainMenu(back);
         ComponentCreator.getInstance().setText("Search By Name: ", mainPanel,
-                "FORTE", 20, Color.black,
+                new MyFont(FontEnum.LABEl.getName(),20), Color.black,
                 GraphicsDefault.Collection.searchSection(1));
         JTextField searchCardName = ComponentCreator.getInstance().setImportBox(mainPanel, 30, new Color(0, 136, 204),
                 GraphicsDefault.Collection.searchSection(2));
         ComponentCreator.getInstance().setText("Mana:", mainPanel,
-                "FORTE", 20, Color.black,
+                new MyFont(FontEnum.LABEl.getName(),20), Color.black,
                 GraphicsDefault.Collection.searchSection(3));
         JComboBox<Integer> manaFilter = ComponentCreator.getInstance().setIntComboBox(mainPanel, 0, 15, 4,
                 GraphicsDefault.Collection.searchSection(4), 15);
         ComponentCreator.getInstance().setText("Type Cards:", mainPanel,
-                "FORTE", 20, Color.black,
+                new MyFont(FontEnum.LABEl.getName(),20), Color.black,
                 GraphicsDefault.Collection.searchSection(5));
         JComboBox<String> userHaveFilter = ComponentCreator.getInstance().setStrComboBox(mainPanel,
                 new String[]{"All Cards", "User Cards", "Close Cards"}, 3, GraphicsDefault.Collection.searchSection(6), 15);
@@ -130,7 +131,7 @@ public class CollectionMenu {
     private void ShowCardPanelContent(String type, ArrayList<Card> cards) {
         cardPanel.removeAll();
         ComponentCreator.getInstance().setText("\"" + type + "\"", cardPanel,
-                "FORTE", 40, Color.black,
+                new MyFont(FontEnum.LABEl.getName(),40), Color.black,
                 GraphicsDefault.Collection.cardsSection(0, 0));
         JButton nextPage = ComponentCreator.getInstance().setButton("", cardPanel, "Right Arrow.png",
                 GraphicsDefault.Collection.cardsSection(0, 1), Color.white, 30, 3);
@@ -157,11 +158,11 @@ public class CollectionMenu {
             card.moveListener();
             if (cards.get(i).getNumber() == 0) {
                 ComponentCreator.getInstance().setText("Closed",
-                        cardPanel, "FORTE", 30, Color.red, GraphicsDefault.Collection.cardsSection(i, 4));
+                        cardPanel, new MyFont(FontEnum.LABEl.getName(),30), Color.red, GraphicsDefault.Collection.cardsSection(i, 4));
                 action.closedCardsSelect(card, cards.get(i));
             } else {
                 ComponentCreator.getInstance().setText("Number: " + cards.get(i).getNumber(),
-                        cardPanel, "FORTE", 20, Color.black, GraphicsDefault.Collection.cardsSection(i, 4));
+                        cardPanel, new MyFont(FontEnum.LABEl.getName(),20), Color.black, GraphicsDefault.Collection.cardsSection(i, 4));
                 action.playerCardSelect(card, cards.get(i));
             }
         }
@@ -172,10 +173,10 @@ public class CollectionMenu {
         deckPanel.removeAll();
         ArrayList<Deck> playerDecks = action.getPlayerController().getPlayer().getPlayerDecks();
         ComponentCreator.getInstance().setText("My Decks", deckPanel,
-                "FORTE", 35, Color.black,
+                new MyFont(FontEnum.LABEl.getName(),35), Color.black,
                 GraphicsDefault.Collection.deckSection(1, 1));
         ComponentCreator.getInstance().setText("Game Deck: " + action.getPlayerController().getPlayer().getGameDeck().getName()
-                , deckPanel, "FORTE", 20, Color.black,
+                , deckPanel, new MyFont(FontEnum.LABEl.getName(),20), Color.black,
                 GraphicsDefault.Collection.deckSection(0, 8));
         JButton newDeck = ComponentCreator.getInstance().setButton("New Deck", deckPanel, "buttons1.png",
                 GraphicsDefault.Collection.deckSection(1, 2), Color.white, 30, 0);
@@ -198,7 +199,7 @@ public class CollectionMenu {
             MyCardButton card = new MyCardButton(deckPanel, FilesPath.graphicsPath.collectionPath + "/"
                     + playerDecks.get(i).getHero().getHeroName() + " Deck.jpg", GraphicsDefault.Collection.deckSection(i - decksPageIndex, 6));
             ComponentCreator.getInstance().setText(playerDecks.get(i).getName(), deckPanel,
-                    "FORTE", 25, Color.blue,
+                    new MyFont(FontEnum.LABEl.getName(),25), Color.blue,
                     GraphicsDefault.Collection.deckSection(i - decksPageIndex, 7));
             card.moveListener();
             action.selectDeck(card, playerDecks.get(i));
@@ -210,7 +211,7 @@ public class CollectionMenu {
         this.cardInDeckIndex = cardInDeckIndex;
         deckPanel.removeAll();
         ComponentCreator.getInstance().setText(deck.getName(), deckPanel,
-                "FORTE", 35, Color.black,
+                new MyFont(FontEnum.LABEl.getName(),35), Color.black,
                 GraphicsDefault.Collection.deckSection(1, 1));
         new MyCardButton(deckPanel, FilesPath.graphicsPath.collectionPath + "/"
                 + deck.getHero().getHeroName() + " Deck.jpg", GraphicsDefault.Collection.deckSection(0, 6));

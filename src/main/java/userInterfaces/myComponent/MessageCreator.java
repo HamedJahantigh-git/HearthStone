@@ -3,6 +3,7 @@ package userInterfaces.myComponent;
 import controller.FileManagement;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
+import enums.FontEnum;
 import enums.LogsEnum;
 import enums.MessageEnum;
 import logs.PlayerLogs;
@@ -25,7 +26,7 @@ public class MessageCreator {
     }
 
     public void accountMessage(MessageEnum message, JPanel jPanel, JPanel[] offPanels, int fontSize, JButton[] jButtons) {
-        label = ComponentCreator.getInstance().setText(message.getText(), jPanel, "FORTE", fontSize
+        label = ComponentCreator.getInstance().setText(message.getText(), jPanel,   new MyFont(FontEnum.MESSAGE.getName(),fontSize)
                 , Color.black, new Bounds(0, 0, jPanel.getWidth(), jPanel.getHeight()));
         if (jButtons != null)
             for (JButton button : jButtons)
@@ -40,7 +41,7 @@ public class MessageCreator {
     public JButton[] yesNoMessage(String text, JLayeredPane pane, int layer, int fontSize) {
         MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
                 GraphicsDefault.message.messagePanel, pane, false, layer);
-        label = ComponentCreator.getInstance().setText(text, messagePanel, "FORTE", fontSize
+        label = ComponentCreator.getInstance().setText(text, messagePanel,  new MyFont(FontEnum.MESSAGE.getName(),fontSize)
                 , Color.black, new Bounds(0, 0, messagePanel.getWidth(), messagePanel.getHeight()));
         JButton yesButton = ComponentCreator.getInstance().setButton("Yes", messagePanel, "buttons2.png",
                 GraphicsDefault.message.component(2), Color.white, 30, 0);
@@ -54,7 +55,7 @@ public class MessageCreator {
     public JButton errorMessage(String text, JLayeredPane pane,Bounds bounds ,int layer, int fontSize) {
         MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
                bounds, pane, false, layer);
-        label = ComponentCreator.getInstance().setText(text, messagePanel, "FORTE", fontSize
+        label = ComponentCreator.getInstance().setText(text, messagePanel,  new MyFont(FontEnum.MESSAGE.getName(),fontSize)
                 , Color.black, new Bounds(0, 0, messagePanel.getWidth(), messagePanel.getHeight()));
         JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
                 GraphicsDefault.message.component(1), Color.white, 30, 0);
@@ -70,15 +71,15 @@ public class MessageCreator {
         label = ComponentCreator.getInstance().setText(
                 "<html></center><br><center>\"Create New Deck\"</center><br><center></center><br><center></center>" +
                         "<br><center></center><br><center></center></html><br><center></center></html></html>",
-                messagePanel, "FORTE", 30
+                messagePanel,  new MyFont(FontEnum.MESSAGE.getName(),30)
                 , Color.black, new Bounds(0, 0, messagePanel.getWidth(), messagePanel.getHeight()));
         ComponentCreator.getInstance().setText("Enter Your Deck Name:", messagePanel,
-                "FORTE", 20, Color.black,
+                new MyFont(FontEnum.MESSAGE.getName(),20), Color.black,
                 GraphicsDefault.message.component(6));
         JTextField deckName = ComponentCreator.getInstance().setImportBox(messagePanel, 30, new Color(0, 136, 204),
                 GraphicsDefault.message.component(7));
         ComponentCreator.getInstance().setText("Select Hero:", messagePanel,
-                "FORTE", 20, Color.black,
+                new MyFont(FontEnum.MESSAGE.getName(),20), Color.black,
                 GraphicsDefault.message.component(4));
         String[] heroesName = new String[heroes.size()];
         for (int i = 0; i < heroes.size(); i++) {
@@ -115,15 +116,15 @@ public class MessageCreator {
         label = ComponentCreator.getInstance().setText(
                 "<html></center><br><center>\"Edit Deck Characteristics\"</center><br><center></center><br><center></center>" +
                         "<br><center></center><br><center></center></html><br><center></center></html></html>",
-                messagePanel, "FORTE", 30
+                messagePanel,  new MyFont(FontEnum.MESSAGE.getName(),30)
                 , Color.black, new Bounds(0, 0, messagePanel.getWidth(), messagePanel.getHeight()));
         ComponentCreator.getInstance().setText("Enter New Deck Name:", messagePanel,
-                "FORTE", 20, Color.black,
+                new MyFont(FontEnum.MESSAGE.getName(),20), Color.black,
                 GraphicsDefault.message.component(6));
         JTextField deckName = ComponentCreator.getInstance().setImportBox(messagePanel, 30, new Color(0, 136, 204),
                 GraphicsDefault.message.component(7));
         ComponentCreator.getInstance().setText("Select New Hero:", messagePanel,
-                "FORTE", 20, Color.black,
+                new MyFont(FontEnum.MESSAGE.getName(),20), Color.black,
                 GraphicsDefault.message.component(4));
         String[] heroesName = new String[heroes.size()];
         for (int i = 0; i < heroes.size(); i++) {

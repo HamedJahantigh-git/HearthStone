@@ -2,17 +2,16 @@
 package model;
 
 
-import com.google.gson.Gson;
 import controller.FileManagement;
 import defaults.ModelDefault;
 import enums.InfoPassiveEnum;
 import model.card.Card;
 import model.card.Minion;
-import model.card.Spell;
 import model.card.Weapon;
 import model.hero.Hero;
 import model.infoPassive.*;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +20,7 @@ import java.util.Map;
 public class Player {
     private String userName;
     private String password;
+    private String authToken;
     private int id;
     private int money;
     private Date registerTime;
@@ -52,6 +52,7 @@ public class Player {
         this.password = password;
         this.registerTime = registerTime;
         this.id = id;
+        setAuthToken();
     }
 
     public void changeMoney(int differ) {
@@ -61,6 +62,10 @@ public class Player {
     public void newPlayerGame() {
         playerGame = new PlayerGame();
         playerGame.startPlayerGame(getGameDeck());
+    }
+
+    public String getAuthToken() {
+        return authToken;
     }
 
     public String getUserName() {
@@ -80,11 +85,11 @@ public class Player {
     }
 
     public void setGameDeck(Deck deck) {
-        if(deck==freeDeck)
+        if (deck == freeDeck)
             gameDeckIndex = -1;
-        else{
-            for (int i = 0; i <playerDecks.size() ; i++) {
-                if(playerDecks.get(i)==deck){
+        else {
+            for (int i = 0; i < playerDecks.size(); i++) {
+                if (playerDecks.get(i) == deck) {
                     gameDeckIndex = i;
                     return;
                 }
@@ -94,6 +99,13 @@ public class Player {
 
     public int getId() {
         return id;
+    }
+
+    public void setAuthToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[32];
+        random.nextBytes(bytes);
+        authToken = bytes.toString();
     }
 
     public ArrayList<Hero> getPlayerHeroes() {
@@ -152,7 +164,7 @@ public class Player {
         }
 
         public void startPlayerGame(Deck deck) {
-            for (Card card:deck.getCards()) {
+            for (Card card : deck.getCards()) {
                 aroundCard.add(FileManagement.getInstance().getCopy().copyCard(card));
             }
             hero = FileManagement.getInstance().getCopy().copyHero(deck.getHero());

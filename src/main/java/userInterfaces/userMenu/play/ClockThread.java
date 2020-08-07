@@ -5,6 +5,7 @@ import controller.game.GameController;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import defaults.ModelDefault;
+import enums.FontEnum;
 import enums.GameEventEnum;
 import enums.GameSoundsEnum;
 import enums.MineGameLayer;
@@ -14,6 +15,7 @@ import userInterfaces.Sounds;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
 import userInterfaces.myComponent.MouseManager;
+import userInterfaces.myComponent.MyFont;
 import userInterfaces.myComponent.gameComponent.LayerDrawer;
 import userInterfaces.myComponent.gameComponent.PanelComponentDrawer;
 
@@ -57,7 +59,7 @@ public class ClockThread extends MyThread {
             clockPanel.clearAllComponent();
             time = ModelDefault.gameDefaults.PLAYER_Time - game.getDifferPlayerSecondsTime();
             ComponentCreator.getInstance().setText(Integer.toString(time), clockPanel,
-                    "Belwe Bd BT Bold", 40, timerColor(),
+                    new MyFont(FontEnum.TIMER.getName(),40), timerColor(),
                     new Bounds(0, 0, GraphicsDefault.GameBoard.clockBounds.getWidth() * 9 / 10,
                             GraphicsDefault.GameBoard.clockBounds.getHeight() * 10 / 9));
             clockPanel.reShow();

@@ -1,18 +1,13 @@
 package userInterfaces.graphicsActions;
 
-import controller.PlayerController;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
-import enums.GameSoundsEnum;
-import enums.LogsEnum;
-import enums.MainLayer;
-import enums.MessageEnum;
+import enums.*;
 import logs.PlayerLogs;
+import network.protocol.ShopProtocol;
+import userInterfaces.MyGraphics;
 import userInterfaces.Sounds;
-import userInterfaces.myComponent.Bounds;
-import userInterfaces.myComponent.ComponentCreator;
-import userInterfaces.myComponent.MessageCreator;
-import userInterfaces.myComponent.MyJPanel;
+import userInterfaces.myComponent.*;
 import userInterfaces.userMenu.UserFrame;
 
 import javax.swing.*;
@@ -20,25 +15,25 @@ import java.awt.*;
 
 public class MainMenuAction extends MyAction {
 
-    public MainMenuAction(PlayerController playerController) {
-        super(playerController);
+    public MainMenuAction(MyGraphics myGraphics) {
+        super(myGraphics);
+        clientNetwork = myGraphics.getClientNetwork();
     }
 
 
-    public void backToUserMenu(JButton button, UserFrame userFrame) {
+    public void backToMainMenu(JButton button) {
         button.addActionListener(actionEvent -> {
-            PlayerLogs.addToLogBody(LogsEnum.valueOf("back").getEvent()[0],
-                    LogsEnum.valueOf("back").getEvent_description()[0], playerController.getPlayer());
-            userFrame.startMainMenu();
+            clientNetwork.getSender().getMainMenuHandler().backToMainMenu();
+            myGraphics.getUserFrame().startMainMenu();
         });
     }
 
     public void playGame(JButton button, UserFrame userFrame) {
         button.addActionListener(actionEvent -> {
-            if(playerController.getPlayer().getGameDeck().getName().equals(playerController.getPlayer().getFreeDeck().getName())){
+            if (playerController.getPlayer().getGameDeck().getName().equals(playerController.getPlayer().getFreeDeck().getName())) {
                 JButton okButton = MessageCreator.getInstance().errorMessage(
                         MessageEnum.valueOf("emptyGameDeck").getText(), userFrame.getPane(),
-                        GraphicsDefault.message.mainMenuMessagePanel, 30,30);
+                        GraphicsDefault.message.mainMenuMessagePanel, 30, 30);
                 userFrame.getMainMenu().offEnabledMenu();
                 okButton.addActionListener(actionEvent2 -> {
                     for (Component c : userFrame.getPane().getComponentsInLayer(MainLayer.message.getLayer()))
@@ -48,14 +43,14 @@ public class MainMenuAction extends MyAction {
                     userFrame.getMainMenu().onEnabledMenu();
                     userFrame.startCollection();
                 });
-            }else {
+            } else {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("play").getEvent()[0],
                         LogsEnum.valueOf("play").getEvent_description()[0], playerController.getPlayer());
                 userFrame.getMainMenu().offEnabledMenu();
                 MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
-                        GraphicsDefault.GameBoard.menuMessage,  userFrame.getPane(), true, MainLayer.message.getLayer());
+                        GraphicsDefault.GameBoard.menuMessage, userFrame.getPane(), true, MainLayer.message.getLayer());
                 ComponentCreator.getInstance().setText(MessageEnum.playMenu.getText(),
-                        messagePanel, "FORTE", 35
+                        messagePanel, new MyFont(FontEnum.LABEl.getName(), 35)
                         , Color.black, new Bounds(0, 0, GraphicsDefault.GameBoard.menuMessage.getWidth(), GraphicsDefault.GameBoard.menuMessage.getHeight()));
                 JButton mainMenu = ComponentCreator.getInstance().setButton("Play With Mine", messagePanel, "buttons3.png",
                         GraphicsDefault.GameBoard.menuButtons(1), Color.white, 23, 1);
@@ -78,12 +73,15 @@ public class MainMenuAction extends MyAction {
 
     }
 
-    public void goShop(JButton button, UserFrame userFrame) {
+    public void goShop(JButton button) {
         button.addActionListener(actionEvent -> {
-            PlayerLogs.addToLogBody(LogsEnum.valueOf("shop").getEvent()[0],
-                    LogsEnum.valueOf("shop").getEvent_description()[0], playerController.getPlayer());
-            userFrame.startShopMenu();
+            clientNetwork.getSender().getMainMenuHandler().goShop();
         });
+    }
+
+    public void goShopSuccessFul(ShopProtocol shopProtocol){
+        myGraphics.getUserFrame().getShopMenu().setShopProtocol(shopProtocol);
+        myGraphics.getUserFrame().startShopMenu();
     }
 
     public void goStatus(JButton button, UserFrame userFrame) {
@@ -110,13 +108,14 @@ public class MainMenuAction extends MyAction {
         });
     }
 
-    public void deleteAccountAction(JButton deleteAccount,  UserFrame userFrame) {
+    public void deleteAccountAction(JButton deleteAccount) {
         deleteAccount.addActionListener(actionEvent -> {
+            UserFrame userFrame = myGraphics.getUserFrame();
             userFrame.getMainMenu().offEnabledMenu();
             MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
-                    GraphicsDefault.GameBoard.menuMessage,  userFrame.getPane(), true, MainLayer.message.getLayer());
+                    GraphicsDefault.GameBoard.menuMessage, userFrame.getPane(), true, MainLayer.message.getLayer());
             ComponentCreator.getInstance().setText(MessageEnum.deleteAccount.getText(),
-                    messagePanel, "FORTE", 35
+                    messagePanel, new MyFont(FontEnum.LABEl.getName(), 35)
                     , Color.black, new Bounds(0, 0, GraphicsDefault.GameBoard.menuMessage.getWidth(), GraphicsDefault.GameBoard.menuMessage.getHeight()));
             JPasswordField pfPassword = ComponentCreator.getInstance().setPasswordField(messagePanel,
                     new Bounds(GraphicsDefault.AccountMenu.mainBounds.getWidth() / 4,
@@ -125,21 +124,15 @@ public class MainMenuAction extends MyAction {
                             GraphicsDefault.AccountMenu.componentHeight * 2 / 3), 20, new Color(0, 136, 204));
 
             ComponentCreator.getInstance().setText("Enter Your Password:", messagePanel,
-                    "FORTE", 21, Color.BLACK,
+                    new MyFont(FontEnum.LABEl.getName(), 35), Color.BLACK,
                     new Bounds(0, GraphicsDefault.AccountMenu.componentHeight * 6 / 2 + 10,
                             GraphicsDefault.AccountMenu.mainBounds.getWidth(),
                             GraphicsDefault.AccountMenu.componentHeight * 2 / 3));
 
-
             JButton delete = ComponentCreator.getInstance().setButton("Delete", messagePanel, "buttons3.png",
                     GraphicsDefault.GameBoard.deleteAccountButtons(0), Color.white, 25, 1);
             delete.addActionListener(actionEvent2 -> {
-                try {
-                    playerController.deleteAccount(String.valueOf(pfPassword.getPassword()));
-                    System.exit(0);
-                } catch (Exception e) {
-                        new Sounds(GameSoundsEnum.mistake.getPath()).playOne();
-                }
+                clientNetwork.getSender().getMainMenuHandler().deleteAccount(String.valueOf(pfPassword.getPassword()));
             });
             JButton back = ComponentCreator.getInstance().setButton("Back", messagePanel, "buttons3.png",
                     GraphicsDefault.GameBoard.deleteAccountButtons(1), Color.white, 25, 1);
@@ -150,4 +143,13 @@ public class MainMenuAction extends MyAction {
             });
         });
     }
+
+    public void deleteAccountSuccessful() {
+        System.exit(0);
+    }
+
+    public void deleteAccountUnsuccessful() {
+        new Sounds(GameSoundsEnum.mistake.getPath()).playOne();
+    }
+
 }

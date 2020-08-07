@@ -6,83 +6,109 @@ import enums.ExceptionsEnum;
 import enums.LogsEnum;
 import enums.MessageEnum;
 import logs.PlayerLogs;
+import network.client.ClientNetwork;
+import userInterfaces.AccountMenu;
+import userInterfaces.MyGraphics;
 import userInterfaces.Sounds;
+import userInterfaces.myComponent.MyJPanel;
 import userInterfaces.userMenu.UserFrame;
 import userInterfaces.myComponent.ComponentCreator;
 import userInterfaces.myComponent.MessageCreator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class AccountMenuAction extends MyAction {
 
-    public AccountMenuAction(PlayerController playerController) {
-        super(playerController);
+    private MyJPanel messagePanel;
+    private MyJPanel mainPanel;
+
+    public AccountMenuAction() {
+        super(null);
     }
 
-    public void signIn(JFrame accountFrame, JPanel messagePanel, JPanel mainPanel, JButton button, JTextField username, JPasswordField password,
-                       Sounds sounds) {
+    public void networkConnect(JButton button, JTextField tfIp, JTextField tfPort,
+                               MyGraphics myGraphics) {
         button.addActionListener(actionEvent -> {
             try {
-                PlayerController playerController = new PlayerController();
-                playerController.signInPlayer(username.getText(), String.valueOf(password.getPassword()));
-                PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[1],
-                        LogsEnum.valueOf("sign").getEvent_description()[1], playerController.getPlayer());
-                PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[1],
-                        LogsEnum.valueOf("sign").getEvent_description()[1], playerController.getPlayer());
-                sounds.stopAudio();
-                accountFrame.dispose();
-                UserFrame userFrame = new UserFrame(playerController);
-                userFrame.startMainMenu();
+                checkStringIsNumber(tfPort.getText());
+                setGraphics(myGraphics);
+                messagePanel = myGraphics.getAccountMenu().getMessagePanel();
+                mainPanel = myGraphics.getAccountMenu().getMainPanel();
+                clientNetwork = new ClientNetwork(myGraphics, tfIp.getText(),
+                        Integer.parseInt(tfPort.getText()));
+                myGraphics.setClientNetwork(clientNetwork);
+                clientNetwork.start();
             } catch (Exception e) {
-                if (e.getMessage().equals(ExceptionsEnum.userNoExist.getMessage())) {
-                    JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
-                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 35,0);
-                    okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
-                    MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("userNoExist"), messagePanel,
-                            new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
-                }
-                if (e.getMessage().equals(ExceptionsEnum.wrongPassword.getMessage())) {
-                    JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
-                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
-                    okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
-                    MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("wrongPassword"), messagePanel,
-                            new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
-                }
             }
         });
     }
 
-    public void signUp(JFrame accountFrame, JPanel messagePanel, JPanel mainPanel, JButton button, JTextField username,
-                       JPasswordField password, Sounds sounds) {
+    private void checkStringIsNumber(String str) throws Exception {
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isDigit(str.charAt(i)))
+                throw new Exception(ExceptionsEnum.WRONG_PORT.getMessage());
+        }
+    }
+
+    public void connectSuccessful() {
+        myGraphics.getAccountMenu().startAccount();
+    }
+
+    public void signIn(JButton button, JTextField username, JPasswordField password) {
         button.addActionListener(actionEvent -> {
-            try {
-                PlayerController playerController = new PlayerController();
-                playerController.signUpPlayer(username.getText(), String.valueOf(password.getPassword()));
-                PlayerLogs.creatLogFile(playerController.getPlayer());
-                PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[0],
-                        LogsEnum.valueOf("sign").getEvent_description()[0], playerController.getPlayer());
-                sounds.stopAudio();
-                accountFrame.dispose();
-                UserFrame userFrame = new UserFrame(playerController);
-                userFrame.startMainMenu();
-            } catch (Exception e) {
-                if (e.getMessage().equals(ExceptionsEnum.valueOf("emptyImport").getMessage())) {
-                    JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
-                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
-                    okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
-                    MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("emptyImport"), messagePanel,
-                            new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
-                }
-                if (e.getMessage().equals(ExceptionsEnum.valueOf("userRepeated").getMessage())) {
-                    JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
-                            GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30,0);
-                    okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
-                    MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("repeatedUsername"), messagePanel,
-                            new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
-                }
-            }
+            clientNetwork.getSender().getAccountHandler().signIn(
+                    username.getText(), String.valueOf(password.getPassword()));
+                    });
+    }
+
+    public void signUp(JButton button, JTextField username, JPasswordField password) {
+        button.addActionListener(actionEvent -> {
+            clientNetwork.getSender().getAccountHandler().signUp(
+                    username.getText(), String.valueOf(password.getPassword()));
         });
     }
 
+    public void signSuccess() {
+        myGraphics.getAccountMenu().getAccountSound().stopAudio();
+        myGraphics.getAccountMenu().getAccountFrame().dispose();
+        UserFrame userFrame = new UserFrame(myGraphics);
+        myGraphics.setUserFrame(userFrame);
+        userFrame.startMainMenu();
+    }
+
+    public void emptyImport() {
+        JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
+                GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30, 0);
+        okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
+        MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("emptyImport"), messagePanel,
+                new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
+
+    }
+
+    public void repeatedUsername() {
+        JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
+                GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30, 0);
+        okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
+        MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("repeatedUsername"), messagePanel,
+                new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
+
+    }
+
+    public void wrongPassword() {
+        JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
+                GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 30, 0);
+        okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
+        MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("wrongPassword"), messagePanel,
+                new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
+    }
+
+    public void userNoExist() {
+        JButton okButton = ComponentCreator.getInstance().setButton("OK", messagePanel, "buttons2.png",
+                GraphicsDefault.AccountMenu.messageButtonBounds, Color.white, 35, 0);
+        okMessage(messagePanel, new JPanel[]{mainPanel}, okButton);
+        MessageCreator.getInstance().accountMessage(MessageEnum.valueOf("userNoExist"), messagePanel,
+                new JPanel[]{mainPanel}, 25, new JButton[]{okButton});
+    }
 }

@@ -4,6 +4,7 @@ import controller.PlayerController;
 import defaults.GraphicsDefault;
 import enums.*;
 import model.card.Card;
+import userInterfaces.MyGraphics;
 import userInterfaces.Sounds;
 import userInterfaces.myComponent.MyJFrame;
 import userInterfaces.userMenu.play.MineGameBoard;
@@ -16,7 +17,8 @@ import java.util.ArrayList;
 
 public class UserFrame {
 
-    private PlayerController playerController;
+    private MyGraphics myGraphics;
+
     private MyJFrame userFrame;
     private JLayeredPane pane;
     private Sounds mainSounds;
@@ -27,21 +29,17 @@ public class UserFrame {
     private SettingMenu settingMenu;
     private MineGameBoard mineGameBoard;
 
-    public UserFrame(PlayerController playerController) {
-        this.playerController = playerController;
+    public UserFrame(MyGraphics myGraphics) {
+        this.myGraphics = myGraphics;
         userFrame = new MyJFrame("User Menu",
                 GraphicsDefault.UserMenu.mainBounds);
         pane = userFrame.getLayeredPane();
         mainSounds = new Sounds("MainMenu.wav");
         mainMenu = new MainMenu(this);
         shopMenu = new ShopMenu(this);
-        collectionMenu = new CollectionMenu(this);
-        statusMenu = new StatusMenu(this);
-        settingMenu = new SettingMenu(this);
-    }
-
-    public PlayerController getPlayerController() {
-        return playerController;
+        //collectionMenu = new CollectionMenu(this);
+        //statusMenu = new StatusMenu(this);
+        //settingMenu = new SettingMenu(this);
     }
 
     public JLayeredPane getPane() {
@@ -75,7 +73,7 @@ public class UserFrame {
     public void startMineGame() {
         mainSounds.stopAudio();
         deleteLayer(MineGameLayer.mainPanel.getLayer(), MineGameLayer.endLayer.getLayer());
-        mineGameBoard = new MineGameBoard(this, playerController.getPlayer(), "Battle Ground 1");
+        //mineGameBoard = new MineGameBoard(this, playerController.getPlayer(), "Battle Ground 1");
         showPanel(AllMenuSwitch.playMine);
     }
 
@@ -145,6 +143,10 @@ public class UserFrame {
                 pane.remove(component);
             }
         }
+    }
+
+    public MyGraphics getMyGraphics() {
+        return myGraphics;
     }
 
     public MyJFrame getUserFrame() {

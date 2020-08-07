@@ -3,11 +3,13 @@ package userInterfaces.graphicsActions;
 import controller.PlayerController;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
+import enums.FontEnum;
 import enums.LogsEnum;
 import enums.StatusLayer;
 import logs.PlayerLogs;
 import model.Deck;
 import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MyFont;
 import userInterfaces.myComponent.MyJPanel;
 import userInterfaces.userMenu.StatusMenu;
 
@@ -18,7 +20,7 @@ public class StatusMenuAction extends MainMenuAction {
 
     private StatusMenu statusMenu;
     public StatusMenuAction(PlayerController playerController, StatusMenu statusMenu) {
-        super(playerController);
+        super(null);
         this.statusMenu = statusMenu;
     }
 
@@ -32,7 +34,7 @@ public class StatusMenuAction extends MainMenuAction {
                     GraphicsDefault.StatusMenu.messageBounds, statusMenu.getUserFrame().getPane(), false, StatusLayer.deckDetail.getLayer());
             String title = "<html><center>\""+deck.getName()+"\"</center></html>";
             ComponentCreator.getInstance().setText(title, messagePanel,
-                    "Belwe Bd BT Bold", 60, Color.white, GraphicsDefault.StatusMenu.messageTitleBounds);
+                    new MyFont(FontEnum.TITLE.getName(),60), Color.white, GraphicsDefault.StatusMenu.messageTitleBounds);
             String content = "<html>" +
                     "Victory Density: "+deck.getVictoryDensity()+"<br>"+
                     "Number of Victory: " +deck.getVictoryNumber()+"<br>"+
@@ -42,7 +44,7 @@ public class StatusMenuAction extends MainMenuAction {
                     "Top Deck Card Name: " +playerController.getStatusController().sortDeckCard(deck)+"<br>"+
                     "</html>";
             ComponentCreator.getInstance().setText(content, messagePanel,
-                    "FORTE", 30, Color.white,
+                    new MyFont(FontEnum.MESSAGE.getName(),30), Color.white,
                     GraphicsDefault.StatusMenu.messageDetailBounds).setHorizontalAlignment(SwingConstants.LEFT);
             JButton backButton = ComponentCreator.getInstance().setButton("Back", messagePanel, "buttons2.png",
                     GraphicsDefault.StatusMenu.backMessageBounds, Color.white, 30, 0);

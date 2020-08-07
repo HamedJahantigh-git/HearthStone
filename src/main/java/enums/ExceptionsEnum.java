@@ -31,7 +31,8 @@ public enum ExceptionsEnum {
     rebornAttacked("Reborn Attacked"),
     doMoreHeroPower("Do More Hero Power"),
     doQuest("Do Quest"),
-    gameFinished("Game Finished");
+    gameFinished("Game Finished"),
+    WRONG_PORT("Wrong Network Port");
 
     private String message;
 

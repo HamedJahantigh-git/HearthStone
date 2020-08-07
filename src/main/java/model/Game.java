@@ -4,11 +4,8 @@ import controller.FileManagement;
 import defaults.FilesPath;
 import defaults.ModelDefault;
 import model.card.Card;
-import model.card.Minion;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class Game {
@@ -33,7 +30,7 @@ public class Game {
         isAttackSelected = false;
         doAttackInTurn = new ArrayList<>();
         newPlayedCard = new ArrayList<>();
-        ID = (FileManagement.getInstance().allFileNameInPath(FilesPath.gameModel).size() + 1);
+        ID = (FileManagement.getInstance().allFileNameInPath(FilesPath.GAME_MODEL).size() + 1);
         this.players = players;
         for (int i = 0; i < players.length; i++) {
             this.players[i].newPlayerGame();

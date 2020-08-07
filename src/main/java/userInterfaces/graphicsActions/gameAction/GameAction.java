@@ -11,10 +11,7 @@ import model.card.Card;
 import model.hero.Hero;
 import userInterfaces.Sounds;
 import userInterfaces.graphicsActions.MainMenuAction;
-import userInterfaces.myComponent.Bounds;
-import userInterfaces.myComponent.ComponentCreator;
-import userInterfaces.myComponent.MouseManager;
-import userInterfaces.myComponent.MyJPanel;
+import userInterfaces.myComponent.*;
 import userInterfaces.myComponent.gameComponent.CardDrawer;
 import userInterfaces.myComponent.gameComponent.HeroHeroPowerDrawer;
 import userInterfaces.myComponent.gameComponent.PanelComponentDrawer;
@@ -116,7 +113,7 @@ public class GameAction extends MainMenuAction {
                 MyJPanel messagePanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Message1.png",
                         GraphicsDefault.GameBoard.menuMessage, baseGameThread.getUserFrame().getPane(), false, MineGameLayer.message.getLayer());
                 ComponentCreator.getInstance().setText(MessageEnum.gameMenu.getText(),
-                        messagePanel, "FORTE", 35
+                        messagePanel, new MyFont(FontEnum.LABEl.getName(),35)
                         , Color.black, new Bounds(0, 0, GraphicsDefault.GameBoard.menuMessage.getWidth(), GraphicsDefault.GameBoard.menuMessage.getHeight()));
                 JButton mainMenu = ComponentCreator.getInstance().setButton("Main Menu", messagePanel, "buttons3.png",
                         GraphicsDefault.GameBoard.menuButtons(1), Color.white, 25, 1);

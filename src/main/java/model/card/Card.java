@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import model.hero.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @JsonTypeInfo(
@@ -16,7 +17,7 @@ import java.util.ArrayList;
         @JsonSubTypes.Type(value = Weapon.class, name = "Weapon"),
 })
 
-public class Card {
+public class Card implements Serializable {
 
     private int mana;
     private String name;

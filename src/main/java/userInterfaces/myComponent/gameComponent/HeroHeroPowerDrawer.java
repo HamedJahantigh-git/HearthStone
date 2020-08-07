@@ -2,9 +2,11 @@ package userInterfaces.myComponent.gameComponent;
 
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
+import enums.FontEnum;
 import model.hero.Hero;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MyFont;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +18,7 @@ public class HeroHeroPowerDrawer extends LayerDrawer {
     private Bounds cardBound;
     private JLabel[] text;
     private int fontSize;
-    private String fontName = "Belwe Bd BT Bold";
+    private String fontName = FontEnum.CARD.getName();
 
     private Hero hero;
 
@@ -33,14 +35,14 @@ public class HeroHeroPowerDrawer extends LayerDrawer {
             this.remove(text[0]);
         text = new JLabel[1];
         text[0] = ComponentCreator.getInstance().setText(Integer.toString(hero.getHealth()), this,
-                fontName, fontSize, Color.white,
+                new MyFont(fontName,fontSize), Color.white,
                 GraphicsDefault.GameBoard.heroBounds(-1, 2));
     }
 
     public void setHeroPowerMana() {
         text = new JLabel[1];
         text[0] = ComponentCreator.getInstance().setText(String.valueOf(hero.getHeroPowerMana()), this,
-                fontName, fontSize, Color.white,
+                new MyFont(fontName,fontSize), Color.white,
                 GraphicsDefault.GameBoard.heroPowerBounds(-1, 2));
     }
 }

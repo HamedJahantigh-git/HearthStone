@@ -1,9 +1,11 @@
 package userInterfaces.myComponent.gameComponent;
 
 import defaults.GraphicsDefault;
+import enums.FontEnum;
 import model.Player;
 import userInterfaces.myComponent.Bounds;
 import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MyFont;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,10 +25,10 @@ public class ManaDrawer extends LayerDrawer {
         removeAll();
         text = new JLabel[2];
         text[0] = ComponentCreator.getInstance().setText(Integer.toString(playerGame.getCurrentMana()), this,
-                "Belwe Bd BT Bold", 42, Color.white,
+                new MyFont(FontEnum.MANA.getName(),42), Color.white,
                 new Bounds(0, 0, GraphicsDefault.GameBoard.manaBar.getWidth() / 2, GraphicsDefault.GameBoard.manaBar.getHeight()));
         text[1] = ComponentCreator.getInstance().setText(Integer.toString(playerGame.getRandMana()), this,
-                "Belwe Bd BT Bold", 42, Color.white,
+                new MyFont(FontEnum.MANA.getName(),42), Color.white,
                 new Bounds(GraphicsDefault.GameBoard.manaBar.getWidth() / 2, 0, GraphicsDefault.GameBoard.manaBar.getWidth() / 2, GraphicsDefault.GameBoard.manaBar.getHeight()));
     }
 

@@ -2,7 +2,6 @@ package logs;
 
 import defaults.FilesPath;
 import model.Game;
-import model.Player;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -24,7 +23,7 @@ public class GameEventLogs {
         String[] logHeader = new String[2];
         try {
             Writer writer = new FileWriter(
-                    FilesPath.gameEventLogsPath + "/battle#" + game.getID() + ".log");
+                    FilesPath.GAME_EVENT_LOGS_PATH + "/battle#" + game.getID() + ".log");
             Date date = new Date();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
             logHeader[0] = "BATTLE_ID:" + game.getID();
@@ -43,7 +42,7 @@ public class GameEventLogs {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         try {
             BufferedWriter writer = new BufferedWriter(
-                    new FileWriter(FilesPath.gameEventLogsPath + "/battle#" + game.getID() + ".log", true));
+                    new FileWriter(FilesPath.GAME_EVENT_LOGS_PATH + "/battle#" + game.getID() + ".log", true));
             writer.newLine();
             writer.write("player#"+playerID+":\"" + event + "\" @ " + dateFormat.format(date) + " ---> " + eventDescription);
             writer.close();

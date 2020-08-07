@@ -6,16 +6,13 @@ import model.card.Minion;
 
 public class ShopController {
 
-    private static ShopController instance = new ShopController();
+    private Player player;
 
-    private ShopController() {
+    public ShopController(Player player) {
+        this.player = player;
     }
 
-    public static ShopController getInstance() {
-        return instance;
-    }
-
-    public void sellCard(Player player, Card card) {
+    public void sellCard(Card card) {
         for (int i = 0; i < player.getFreeDeck().getCards().size(); i++) {
             if (player.getFreeDeck().getCards().get(i).getName().equals(card.getName())) {
                 player.getFreeDeck().getCards().get(i).setNumber(player.getFreeDeck().getCards().get(i).getNumber() - 1);
@@ -26,7 +23,7 @@ public class ShopController {
         }
     }
 
-    public void buyCard(Player player, Card card) {
+    public void buyCard(Card card) {
         player.changeMoney(-card.getBuyCost());
         player.getFreeDeck().getCards().add(card);
        }

@@ -2,10 +2,12 @@ package userInterfaces.userMenu;
 
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
+import enums.FontEnum;
 import enums.StatusLayer;
 import model.Deck;
 import userInterfaces.graphicsActions.StatusMenuAction;
 import userInterfaces.myComponent.ComponentCreator;
+import userInterfaces.myComponent.MyFont;
 import userInterfaces.myComponent.MyJPanel;
 import userInterfaces.myComponent.gameComponent.LayerDrawer;
 
@@ -22,7 +24,7 @@ public class StatusMenu {
         this.userFrame = userFrame;
         mainPanel = new MyJPanel(FilesPath.graphicsPath.backgroundsPath + "/Status Menu.jpg",
                 GraphicsDefault.StatusMenu.mainBounds, userFrame.getPane(), false, StatusLayer.mainPanel.getLayer());
-        action = new StatusMenuAction(userFrame.getPlayerController(), this);
+        //action = new StatusMenuAction(userFrame.getPlayerController(), this);
     }
 
     public UserFrame getUserFrame() {
@@ -30,14 +32,14 @@ public class StatusMenu {
     }
 
     private void initMainPanel() {
-        ComponentCreator.getInstance().setText("Status Menu", mainPanel, "FORTE", 45, Color.green,
+        ComponentCreator.getInstance().setText("Status Menu", mainPanel, new MyFont(FontEnum.LABEl.getName(),45), Color.green,
                 GraphicsDefault.StatusMenu.titleBounds);
         JButton exitGame = ComponentCreator.getInstance().setButton("Exit Game", mainPanel, "buttons1.png",
                 GraphicsDefault.StatusMenu.exitGameBounds, Color.white, 30, 0);
         action.exitGame(exitGame);
         JButton back = ComponentCreator.getInstance().setButton("Back", mainPanel, "buttons1.png",
                 GraphicsDefault.StatusMenu.backBounds, Color.white, 30, 0);
-        action.backToUserMenu(back, userFrame);
+        action.backToMainMenu(back);
     }
 
     public void showTopDecks() {
@@ -48,8 +50,8 @@ public class StatusMenu {
             LayerDrawer deckShow = new LayerDrawer(FilesPath.graphicsPath.collectionPath + "/" +
                     topDeck.get(i).getHero().getHeroName() + " Deck.jpg",  GraphicsDefault.StatusMenu.deckSection(i, 1)
             ,mainPanel,userFrame.getPane(),StatusLayer.deckShow.getLayer());
-            ComponentCreator.getInstance().setText("Top#" + (i + 1) + " (" + topDeck.get(i).getName() + ")",mainPanel, "FORTE",
-                    20, Color.white,GraphicsDefault.StatusMenu.deckSection(i, 2));
+            ComponentCreator.getInstance().setText("Top#" + (i + 1) + " (" + topDeck.get(i).getName() + ")",mainPanel,
+                    new MyFont(FontEnum.LABEl.getName(),20), Color.white,GraphicsDefault.StatusMenu.deckSection(i, 2));
             deckShow.selectable();
             action.deckSelect(deckShow.getButton(), topDeck.get(i), i+1);
         }

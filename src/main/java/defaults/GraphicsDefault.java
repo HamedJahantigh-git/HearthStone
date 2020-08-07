@@ -1,6 +1,7 @@
 package defaults;
 
 import enums.CardType;
+import enums.ComponentEnum;
 import userInterfaces.myComponent.Bounds;
 
 import java.awt.*;
@@ -19,6 +20,41 @@ public class GraphicsDefault {
         public static int componentDistance = mainBounds.getHeight() / numberMenuPart;
         public static int componentHeight = componentDistance * 2 / 3;
         public static int componentWidth = mainBounds.getWidth() / 2;
+
+        public static Bounds networkPanel(ComponentEnum state){
+            Bounds result = null;
+            switch (state){
+                case MAIN_PANEL:
+                    result = messageBounds;
+                    break;
+                case TITLE:
+                    result = new Bounds(0, componentHeight*4 / 9, messageBounds.getWidth(), componentHeight * 2 / 3);
+
+                    break;
+                case IP_LABEL:
+                    result = new Bounds(0, componentHeight * 11 / 10 + 10,
+                            messageBounds.getWidth() *60/100, componentHeight * 18 / 30);
+                    break;
+                case IP_BOX:
+                    result = new Bounds(messageBounds.getWidth() *55/100, componentHeight * 11 / 10 + 10,
+                            messageBounds.getWidth() *35/100 - 30, componentHeight * 18 / 30);
+                    break;
+                case PORT_LABEL:
+                    result = new Bounds(0, componentHeight * 20 / 10 + 10,
+                            messageBounds.getWidth() *60/100, componentHeight * 18 / 30);
+                    break;
+                case PORT_BOX:
+                    result = new Bounds(messageBounds.getWidth() *55/100, componentHeight * 20 / 10 + 10,
+                            messageBounds.getWidth() *35/100 - 30, componentHeight * 18 / 30);
+                    break;
+                case BUTTON:
+                    result =new Bounds((messageBounds.getWidth() -componentWidth *2/ 3)/2,
+                            messageBounds.getHeight() - componentHeight*7/5,
+                            componentWidth *2/ 3, componentHeight * 8 / 10);
+                    break;
+            }
+            return result;
+            }
     }
 
     public static class GameBoard {

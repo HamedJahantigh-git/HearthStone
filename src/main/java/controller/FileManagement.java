@@ -85,7 +85,7 @@ public class FileManagement {
         Gson gson = new GsonBuilder().create();
         try {
             Writer writer = new FileWriter(
-                    FilesPath.gameModel + "/battle#" + game.getID() + ".txt");
+                    FilesPath.GAME_MODEL + "/battle#" + game.getID() + ".txt");
             gson.toJson(game, writer);
             writer.close();
         } catch (IOException e) {
@@ -97,7 +97,7 @@ public class FileManagement {
         Gson gson = new GsonBuilder().create();
         try {
             Writer writer = new FileWriter(
-                    FilesPath.heroDataPath + "/" + hero.getHeroName() + ".txt");
+                    FilesPath.HERO_DATA_PATH + "/" + hero.getHeroName() + ".txt");
             gson.toJson(hero, writer);
             writer.close();
         } catch (IOException e) {
@@ -192,7 +192,7 @@ public class FileManagement {
                     rarity, health, attack);
             try {
                 Writer writer = new FileWriter(
-                        FilesPath.minionDataPath + "/" + name + ".txt");
+                        FilesPath.MINION_DATA_PATH + "/" + name + ".txt");
                 gson.toJson(minion, writer);
                 writer.close();
             } catch (Exception e) {
@@ -208,7 +208,7 @@ public class FileManagement {
             try {
 
                 Writer writer = new FileWriter(
-                        FilesPath.spellDataPath + "/" + name + ".txt");
+                        FilesPath.SPELL_DATA_PATH + "/" + name + ".txt");
                 gson.toJson(spell, writer);
                 writer.close();
             } catch (Exception e) {
@@ -223,7 +223,7 @@ public class FileManagement {
                     buyCost, incomeSell, mechanics, description, rarity, durability, attack);
             try {
                 Writer writer = new FileWriter(
-                        FilesPath.weaponDataPath + "/" + name + ".txt");
+                        FilesPath.WEAPON_DATA_PATH + "/" + name + ".txt");
                 gson.toJson(weapon, writer);
                 writer.close();
             } catch (Exception e) {
@@ -239,9 +239,9 @@ public class FileManagement {
 
         public ArrayList<Minion> readMinion() {
             ArrayList<Minion> minionsCards = new ArrayList<>();
-            ArrayList<String> minionsName = allFileNameInPath(FilesPath.minionDataPath);
+            ArrayList<String> minionsName = allFileNameInPath(FilesPath.MINION_DATA_PATH);
             for (String s : minionsName) {
-                try (Reader reader = new FileReader(FilesPath.minionDataPath + "/" + s)) {
+                try (Reader reader = new FileReader(FilesPath.MINION_DATA_PATH + "/" + s)) {
                     minionsCards.add(gson.fromJson(reader, Minion.class));
                 } catch (Exception ignored) {
                 }
@@ -251,9 +251,9 @@ public class FileManagement {
 
         public ArrayList<Spell> readSpell() {
             ArrayList<Spell> spellsCards = new ArrayList<>();
-            ArrayList<String> spellsName = allFileNameInPath(FilesPath.spellDataPath);
+            ArrayList<String> spellsName = allFileNameInPath(FilesPath.SPELL_DATA_PATH);
             for (String s : spellsName) {
-                try (Reader reader = new FileReader(FilesPath.spellDataPath + "/" + s)) {
+                try (Reader reader = new FileReader(FilesPath.SPELL_DATA_PATH + "/" + s)) {
                     spellsCards.add(gson.fromJson(reader, Spell.class));
                 } catch (Exception ignored) {
                 }
@@ -263,9 +263,9 @@ public class FileManagement {
 
         public ArrayList<Weapon> readWeapon() {
             ArrayList<Weapon> weaponsCards = new ArrayList<>();
-            ArrayList<String> weaponsName = allFileNameInPath(FilesPath.weaponDataPath);
+            ArrayList<String> weaponsName = allFileNameInPath(FilesPath.WEAPON_DATA_PATH);
             for (String s : weaponsName) {
-                try (Reader reader = new FileReader(FilesPath.weaponDataPath + "/" + s)) {
+                try (Reader reader = new FileReader(FilesPath.WEAPON_DATA_PATH + "/" + s)) {
                     weaponsCards.add(gson.fromJson(reader, Weapon.class));
                 } catch (Exception ignored) {
                 }
@@ -294,7 +294,7 @@ public class FileManagement {
                 e.printStackTrace();
             }*/
             Gson gson = handleGsonProblems();
-            String path = FilesPath.playerDataPath + "/" + player.getUserName();
+            String path = FilesPath.PLAYER_DATA_PATH + "/" + player.getUserName();
             try {
                 Writer writer = new FileWriter(
                         path + ".txt");
@@ -316,7 +316,7 @@ public class FileManagement {
             Player player = null;
             Gson gson = handleGsonProblems();
             try (Reader reader = new FileReader(
-                    FilesPath.playerDataPath + "/" + name + ".txt")) {
+                    FilesPath.PLAYER_DATA_PATH + "/" + name + ".txt")) {
                 player = gson.fromJson(reader, Player.class);
             } catch (Exception ignored) {
             }
