@@ -10,5 +10,7 @@ public enum ProtocolType {
     DELETE_ACCOUNT,
     DELETE_ACCOUNT_SUCCESS,
     SHOP,
-    BACK_TO_MAIN_MENU;
+    COLLECTION,
+    BACK_TO_MAIN_MENU,
+    SAVE_TO_LOG
 }

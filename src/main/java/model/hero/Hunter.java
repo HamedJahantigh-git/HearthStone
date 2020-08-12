@@ -6,6 +6,7 @@ import enums.HeroType;
 import model.Player;
 import model.card.Card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 

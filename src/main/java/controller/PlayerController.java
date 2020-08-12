@@ -2,11 +2,12 @@ package controller;
 
 import com.google.gson.Gson;
 import defaults.FilesPath;
+import defaults.ModelDefault;
 import enums.ExceptionsEnum;
+import model.Deck;
 import model.Player;
-import network.protocol.NetworkProtocol;
-import network.protocol.ShopParameter;
-import network.protocol.ShopProtocol;
+import model.hero.Hero;
+import network.protocol.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -138,4 +139,26 @@ public class PlayerController {
         shopProtocol.setPlayerMoney(player.getMoney());
         networkProtocol.setShopProtocol(shopProtocol);
     }
+
+    public void creatCollectionProtocol(NetworkProtocol networkProtocol,
+                                        CollectionParameter collectionParameter) {
+        ArrayList<DeckProtocol> playerDecksProtocol = new ArrayList<>();
+        for (Deck deck : player.getPlayerDecks()) {
+            playerDecksProtocol.add(deckProtocolBuilder(deck));
+        }
+        DeckProtocol freeDeckProtocol = deckProtocolBuilder(player.getFreeDeck());
+        DeckProtocol gameDeck = deckProtocolBuilder(player.getGameDeck());
+        networkProtocol.collectionState(collectionParameter, playerDecksProtocol,
+                freeDeckProtocol, gameDeck, ModelDefault.deckDefaults.maxNumberCards,
+                ModelDefault.deckDefaults.minNumberCards);
+    }
+
+    private DeckProtocol deckProtocolBuilder(Deck deck) {
+        Hero hero = deck.getHero();
+        HeroProtocol heroProtocol = new HeroProtocol(hero.getHeroName(), hero.getHealth(), hero.getHeroPowerMana(),
+                hero.getHeroPowerCanUseInEveryTurn(), hero.isHeroPowerTargeted());
+        return new DeckProtocol(deck.getName(), deck.getCards(),
+                heroProtocol, deck.getVictoryNumber(), deck.getGameNumber());
+    }
+
 }

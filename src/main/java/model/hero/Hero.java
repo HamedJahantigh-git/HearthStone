@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import defaults.ModelDefault;
 import model.Player;
 
+import java.io.Serializable;
+
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,

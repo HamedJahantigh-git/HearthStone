@@ -1,10 +1,8 @@
 package network.server;
 
 
-import com.google.gson.Gson;
 import controller.FileManagement;
 import controller.PlayerController;
-import controller.ShopController;
 import enums.ExceptionsEnum;
 import enums.LogsEnum;
 import logs.PlayerLogs;
@@ -28,6 +26,7 @@ public class Transceiver extends MyThread {
     private AccountHandler accountHandler;
     private MainMenuHandler mainMenuHandler;
     private ShopMenuHandler shopMenuHandler;
+    private CollectionMenuHandler collectionMenuHandler;
 
     public Transceiver(PlayerController playerController) {
         this.playerController = playerController;
@@ -35,6 +34,7 @@ public class Transceiver extends MyThread {
         this.accountHandler = new AccountHandler();
         this.mainMenuHandler = new MainMenuHandler();
         this.shopMenuHandler = new ShopMenuHandler();
+        this.collectionMenuHandler = new CollectionMenuHandler();
 
         this.inputStream = playerController.getInputStream();
         this.mineOutputStream = playerController.getOutputStream();
@@ -72,6 +72,9 @@ public class Transceiver extends MyThread {
             case EXIT_GAME:
                 exitGame();
                 break;
+            case SAVE_TO_LOG:
+                saveToLog();
+                break;
             case SIGN_IN:
                 accountHandler.SignIn();
                 break;
@@ -87,7 +90,15 @@ public class Transceiver extends MyThread {
             case SHOP:
                 shopMenuHandler.handelReceiveShopProtocol();
                 break;
+            case COLLECTION:
+                collectionMenuHandler.handelReceiveCollectionProtocol();
         }
+    }
+
+    private void saveToLog() {
+        String event = networkProtocol.getParameter().get(ParameterTyp.EVENT);
+        String eventDescription = networkProtocol.getParameter().get(ParameterTyp.EVENT_DESCRIPTION);
+        PlayerLogs.addToLogBody(event, eventDescription, playerController.getPlayer());
     }
 
     private void exitGame() {
@@ -118,6 +129,7 @@ public class Transceiver extends MyThread {
                 String playerAuthToken = playerController.getPlayer().getAuthToken();
                 ServerModel.getInstance().addOnlinePlayer(playerAuthToken, playerController);
                 networkProtocol = new NetworkProtocol(playerAuthToken, ProtocolType.SIGN_IN_SUCCESS);
+                networkProtocol.signSuccess(playerController.getPlayer().getPlayerHeroes());
             } catch (Exception e) {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("wrongPassword").getMessage())) {
                     networkProtocol = new NetworkProtocol(networkProtocol.getAuthToken(), ProtocolType.ERROR);
@@ -142,6 +154,7 @@ public class Transceiver extends MyThread {
                 PlayerLogs.addToLogBody(LogsEnum.valueOf("sign").getEvent()[0],
                         LogsEnum.valueOf("sign").getEvent_description()[0], playerController.getPlayer());
                 networkProtocol = new NetworkProtocol(networkProtocol.getAuthToken(), ProtocolType.SIGN_IN_SUCCESS);
+                networkProtocol.signSuccess(playerController.getPlayer().getPlayerHeroes());
             } catch (Exception e) {
                 if (e.getMessage().equals(ExceptionsEnum.valueOf("emptyImport").getMessage())) {
                     networkProtocol = new NetworkProtocol(networkProtocol.getAuthToken(), ProtocolType.ERROR);
@@ -255,7 +268,152 @@ public class Transceiver extends MyThread {
                     LogsEnum.valueOf("shop").getEvent_description()[0], playerController.getPlayer());
             send();
         }
+    }
 
+    class CollectionMenuHandler {
+        private void handelReceiveCollectionProtocol() {
+            CollectionParameter collectionParameter = networkProtocol.
+                    getCollectionProtocol().getCollectionParameter();
+            switch (collectionParameter) {
+                case GO_COLLECTION:
+                    goCollection();
+                    break;
+                case NEW_DECK:
+                    newDeck();
+                    break;
+                case CARD_TO_DECK:
+                    cardToDeck();
+                    break;
+                case CARD_FROM_DECK:
+                    cardFromDeck();
+                    break;
+                case SELECT_DECK_GAME:
+                    selectDeckForGame();
+                    break;
+                case DELETE_DECK:
+                    deleteDeck();
+                    break;
+                case EDIT_DECK:
+                    editDeck();
+                    break;
+            }
+        }
+
+        private void editDeck() {
+            try {
+                String selectedDeckName = networkProtocol.getParameter().get(ParameterTyp.SELECTED_DECK);
+                String newDeckName = networkProtocol.getParameter().get(ParameterTyp.DECK_NAME);
+                String newHeroName = networkProtocol.getParameter().get(ParameterTyp.HERO_NAME);
+                playerController.getCollectionController().editDeckCharacteristics(
+                        selectedDeckName, newDeckName, newHeroName);
+                PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[12],
+                        LogsEnum.valueOf("collection").getEvent_description()[10] + newDeckName + "/" + newHeroName,
+                        playerController.getPlayer());
+                FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
+                networkProtocol = new NetworkProtocol(
+                        networkProtocol.getAuthToken(), ProtocolType.COLLECTION);
+                playerController.creatCollectionProtocol(networkProtocol, CollectionParameter.EDIT_DECK_SUCCESS);
+                send();
+            } catch (Exception e) {
+                networkProtocol = new NetworkProtocol(
+                        networkProtocol.getAuthToken(), ProtocolType.COLLECTION);
+                networkProtocol.collection(CollectionParameter.EDIT_DECK_UNSUCCESSFUL);
+                send();
+            }
+
+        }
+
+        private void deleteDeck() {
+            String deckName = networkProtocol.getParameter().get(ParameterTyp.SELECTED_DECK);
+            playerController.getCollectionController().deleteDeck(deckName);
+            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[10],
+                    LogsEnum.valueOf("collection").getEvent_description()[8] + deckName,
+                    playerController.getPlayer());
+            FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
+            networkProtocol = new NetworkProtocol(
+                    networkProtocol.getAuthToken(), ProtocolType.COLLECTION);
+            playerController.creatCollectionProtocol(networkProtocol, CollectionParameter.DELETE_DECK_SUCCESS);
+            send();
+        }
+
+        private void selectDeckForGame() {
+            String deckName = networkProtocol.getParameter().get(ParameterTyp.SELECTED_DECK);
+            playerController.getCollectionController().setGameDeck(deckName);
+            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[8],
+                    LogsEnum.valueOf("collection").getEvent_description()[6] + deckName,
+                    playerController.getPlayer());
+            FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
+            networkProtocol = new NetworkProtocol(
+                    networkProtocol.getAuthToken(), ProtocolType.COLLECTION);
+            playerController.creatCollectionProtocol(networkProtocol, CollectionParameter.SELECT_DECK_GAME_SUCCESS);
+            send();
+        }
+
+        private void cardToDeck() {
+            try {
+                String deckName = networkProtocol.getParameter().get(ParameterTyp.SELECTED_DECK);
+                String cardName = networkProtocol.getParameter().get(ParameterTyp.CARD_NAME);
+                playerController.getCollectionController().moveCardFromFreeToDeck(
+                        deckName, cardName);
+                PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[6],
+                        cardName + "_add_to:" + deckName, playerController.getPlayer());
+                FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
+                networkProtocol = new NetworkProtocol(
+                        networkProtocol.getAuthToken(), ProtocolType.COLLECTION);
+                playerController.creatCollectionProtocol(networkProtocol, CollectionParameter.TRANSFER_CARD_DECK_SUCCESS);
+                send();
+            } catch (Exception e) {
+//                if (e.getMessage().equals(ExceptionsEnum.valueOf("fullDeckCards").getMessage())){
+//
+//                }
+//                if (e.getMessage().equals(ExceptionsEnum.valueOf("fullDeckCards").getMessage())){
+//
+//                }
+//                if (e.getMessage().equals(ExceptionsEnum.valueOf("unMatchingCardAndDeck").getMessage())){
+//
+//                }
+//                if (e.getMessage().equals(ExceptionsEnum.valueOf("moreTowCardExist").getMessage())){
+//
+//                }
+            }
+        }
+
+        private void cardFromDeck() {
+            String deckName = networkProtocol.getParameter().get(ParameterTyp.SELECTED_DECK);
+            String cardName = networkProtocol.getParameter().get(ParameterTyp.CARD_NAME);
+            playerController.getCollectionController().moveCardFromDeckToFree(deckName, cardName);
+            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[7],
+                    cardName + "_removed_from" + deckName, playerController.getPlayer());
+            FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
+            networkProtocol = new NetworkProtocol(
+                    networkProtocol.getAuthToken(), ProtocolType.COLLECTION);
+            playerController.creatCollectionProtocol(networkProtocol, CollectionParameter.TRANSFER_CARD_DECK_SUCCESS);
+            send();
+        }
+
+        private void newDeck() {
+            String deckName = networkProtocol.getParameter().get(ParameterTyp.DECK_NAME);
+            String heroName = networkProtocol.getParameter().get(ParameterTyp.HERO_NAME);
+            playerController.getCollectionController().createNewDeck(deckName, heroName);
+            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[4],
+                    LogsEnum.valueOf("collection").getEvent_description()[3] + "_" + deckName + ":" + heroName, playerController.getPlayer());
+            FileManagement.getInstance().getPlayerFile().savePlayerToFile(playerController.getPlayer());
+            networkProtocol = new NetworkProtocol(
+                    networkProtocol.getAuthToken(), ProtocolType.COLLECTION);
+            playerController.creatCollectionProtocol(networkProtocol, CollectionParameter.NEW_DECK_SUCCESS);
+            send();
+        }
+
+        private void goCollection() {
+            networkProtocol = new NetworkProtocol(
+                    networkProtocol.getAuthToken(), ProtocolType.COLLECTION);
+            playerController.creatCollectionProtocol(networkProtocol, CollectionParameter.START_COLLECTION);
+            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[0],
+                    LogsEnum.valueOf("collection").getEvent_description()[0], playerController.getPlayer());
+            send();
+        }
 
     }
+
+
 }

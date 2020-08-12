@@ -6,6 +6,7 @@ import enums.ExceptionsEnum;
 import enums.LogsEnum;
 import enums.MessageEnum;
 import logs.PlayerLogs;
+import model.hero.Hero;
 import network.client.ClientNetwork;
 import userInterfaces.AccountMenu;
 import userInterfaces.MyGraphics;
@@ -18,6 +19,7 @@ import userInterfaces.myComponent.MessageCreator;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AccountMenuAction extends MyAction {
 
@@ -70,9 +72,10 @@ public class AccountMenuAction extends MyAction {
         });
     }
 
-    public void signSuccess() {
+    public void signSuccess(ArrayList<String> playerHeroesName) {
         myGraphics.getAccountMenu().getAccountSound().stopAudio();
         myGraphics.getAccountMenu().getAccountFrame().dispose();
+        myGraphics.setPlayerHeroesName(playerHeroesName);
         UserFrame userFrame = new UserFrame(myGraphics);
         myGraphics.setUserFrame(userFrame);
         userFrame.startMainMenu();

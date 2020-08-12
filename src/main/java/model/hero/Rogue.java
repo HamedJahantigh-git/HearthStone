@@ -6,6 +6,8 @@ import enums.HeroType;
 import model.Player;
 import model.card.Card;
 
+import java.io.Serializable;
+
 public class Rogue extends Hero {
 
     public Rogue() {

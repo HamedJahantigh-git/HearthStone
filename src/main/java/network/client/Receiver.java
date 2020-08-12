@@ -1,12 +1,10 @@
 package network.client;
 
 
-import network.protocol.ErrorNetworkEnum;
-import network.protocol.NetworkProtocol;
-import network.protocol.ParameterTyp;
-import network.protocol.ShopParameter;
+import network.protocol.*;
 import userInterfaces.MyGraphics;
 import userInterfaces.graphicsActions.AccountMenuAction;
+import userInterfaces.graphicsActions.CollectionMenuAction;
 import userInterfaces.graphicsActions.MainMenuAction;
 import userInterfaces.graphicsActions.ShopMenuAction;
 
@@ -24,10 +22,12 @@ public class Receiver {
     private AccountHandler accountHandler;
     private MainMenuHandler mainMenuHandler;
     private ShopMenuHandler shopMenuHandler;
+    private CollectionMenuHandler collectionMenuHandler;
 
     private AccountMenuAction accountMenuAction;
     private MainMenuAction mainMenuAction;
     private ShopMenuAction shopMenuAction;
+    private CollectionMenuAction collectionMenuAction;
 
     public Receiver(MyGraphics myGraphics, Socket socket) throws IOException {
         this.myGraphics = myGraphics;
@@ -36,6 +36,7 @@ public class Receiver {
         this.accountHandler = new AccountHandler();
         this.mainMenuHandler = new MainMenuHandler();
         this.shopMenuHandler = new ShopMenuHandler();
+        this.collectionMenuHandler = new CollectionMenuHandler();
 
         this.accountMenuAction = myGraphics.getAccountMenu().getAccountMenuAction();
     }
@@ -67,6 +68,9 @@ public class Receiver {
                 break;
             case SHOP:
                 shopMenuHandler.handelShopReceive();
+                break;
+            case COLLECTION:
+                collectionMenuHandler.handelCollectionReceive();
                 break;
         }
     }
@@ -101,7 +105,7 @@ public class Receiver {
 
         private void signSuccess() {
             myGraphics.getClientNetwork().setAuthToken(networkProtocol.getAuthToken());
-            accountMenuAction.signSuccess();
+            accountMenuAction.signSuccess(networkProtocol.getPlayerHeroesName());
             mainMenuAction = myGraphics.getUserFrame().getMainMenu().getAction();
         }
 
@@ -122,20 +126,20 @@ public class Receiver {
         }
     }
 
-    class MainMenuHandler{
-        public void wrongPasswordDeleteAccount(){
+    class MainMenuHandler {
+        public void wrongPasswordDeleteAccount() {
             mainMenuAction.deleteAccountUnsuccessful();
         }
 
-        public void deleteAccountSuccessful(){
+        public void deleteAccountSuccessful() {
             mainMenuAction.deleteAccountSuccessful();
         }
     }
 
-    class ShopMenuHandler{
-        private void handelShopReceive(){
+    class ShopMenuHandler {
+        private void handelShopReceive() {
             ShopParameter shopParameter = networkProtocol.getShopProtocol().getShopParameter();
-            switch (shopParameter){
+            switch (shopParameter) {
                 case START_SHOP:
                     startShopMenu();
                     break;
@@ -152,14 +156,73 @@ public class Receiver {
             shopMenuAction.sellSuccessful(networkProtocol.getShopProtocol());
         }
 
-        private void buySuccessful(){
+        private void buySuccessful() {
             shopMenuAction.buySuccessful(networkProtocol.getShopProtocol());
         }
 
-        private void startShopMenu(){
+        private void startShopMenu() {
             mainMenuAction.goShopSuccessFul(networkProtocol.getShopProtocol());
             shopMenuAction = myGraphics.getUserFrame().getShopMenu().getAction();
         }
     }
 
+    class CollectionMenuHandler {
+        private void handelCollectionReceive() {
+            CollectionParameter collectionParameter = networkProtocol.
+                    getCollectionProtocol().getCollectionParameter();
+            switch (collectionParameter) {
+                case START_COLLECTION:
+                    startCollectionMenu();
+                    break;
+                case NEW_DECK_SUCCESS:
+                    newDeckSuccess();
+                    break;
+                case TRANSFER_CARD_DECK_SUCCESS:
+                    transferCardDeckSuccess();
+                    break;
+                case EDIT_DECK_UNSUCCESSFUL:
+                    editDeckUnsuccessful();
+                    break;
+                case EDIT_DECK_SUCCESS:
+                    editDeckSuccess();
+                    break;
+                case DELETE_DECK_SUCCESS:
+                    deleteDeckSuccess();
+                    break;
+                case SELECT_DECK_GAME_SUCCESS:
+                    selectDeckGameSuccess();
+                break;
+            }
+        }
+
+        private void selectDeckGameSuccess() {
+            collectionMenuAction.selectDeckForGameSuccess(networkProtocol.getCollectionProtocol());
+        }
+
+        private void deleteDeckSuccess() {
+            collectionMenuAction.deleteDeckSuccess(networkProtocol.getCollectionProtocol());
+        }
+
+        private void editDeckSuccess() {
+            collectionMenuAction.editDeckSuccessful(networkProtocol.getCollectionProtocol());
+        }
+
+        private void editDeckUnsuccessful() {
+            collectionMenuAction.editDeckUnsuccessful();
+        }
+
+        private void startCollectionMenu() {
+            mainMenuAction.goCollectionSuccessFul(networkProtocol.getCollectionProtocol());
+            collectionMenuAction = myGraphics.getUserFrame().getCollectionMenu().getAction();
+        }
+
+        private void newDeckSuccess(){
+            collectionMenuAction.newDeckSuccess(networkProtocol.getCollectionProtocol());
+        }
+
+        private void transferCardDeckSuccess(){
+            collectionMenuAction.transferCardDeckSuccess(networkProtocol.getCollectionProtocol());
+        }
+
+    }
 }

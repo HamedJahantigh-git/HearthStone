@@ -64,7 +64,7 @@ public class MainMenu {
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 7 / 12,
                         GraphicsDefault.UserMenu.boxMainBounds.getWidth() * 6 / 10,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() / 7 - 10), Color.white, 27, 1);
-        action.goCollection(collectionButton, userFrame);
+        action.goCollection(collectionButton);
         JButton statusButton = ComponentCreator.getInstance().setButton("Status", boxPanel, "buttons3.png",
                 new Bounds(GraphicsDefault.UserMenu.boxMainBounds.getWidth() / 5,
                         GraphicsDefault.UserMenu.boxMainBounds.getHeight() * 9 / 12,

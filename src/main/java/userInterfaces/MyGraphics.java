@@ -1,13 +1,18 @@
 package userInterfaces;
 
+import model.hero.Hero;
 import network.client.ClientNetwork;
 import userInterfaces.userMenu.UserFrame;
+
+import java.util.ArrayList;
 
 public class MyGraphics {
     private ClientNetwork clientNetwork;
 
     private AccountMenu accountMenu;
     private UserFrame userFrame;
+
+    private ArrayList<String> playerHeroesName;
 
     public MyGraphics() {
     }
@@ -35,5 +40,13 @@ public class MyGraphics {
 
     public UserFrame getUserFrame() {
         return userFrame;
+    }
+
+    public ArrayList<String> getPlayerHeroesName() {
+        return playerHeroesName;
+    }
+
+    public void setPlayerHeroesName(ArrayList<String> playerHeroesName) {
+        this.playerHeroesName = playerHeroesName;
     }
 }

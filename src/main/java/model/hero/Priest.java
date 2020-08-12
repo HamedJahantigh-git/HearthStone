@@ -4,6 +4,8 @@ import defaults.ModelDefault;
 import enums.HeroType;
 import model.Player;
 
+import java.io.Serializable;
+
 public class Priest extends Hero {
 
     private int heroPowerRestore;

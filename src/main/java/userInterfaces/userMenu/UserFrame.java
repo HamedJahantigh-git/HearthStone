@@ -37,7 +37,8 @@ public class UserFrame {
         mainSounds = new Sounds("MainMenu.wav");
         mainMenu = new MainMenu(this);
         shopMenu = new ShopMenu(this);
-        //collectionMenu = new CollectionMenu(this);
+        collectionMenu = new CollectionMenu(this);
+        collectionMenu.getAction().setCollectionMenu(collectionMenu);
         //statusMenu = new StatusMenu(this);
         //settingMenu = new SettingMenu(this);
     }
@@ -58,7 +59,12 @@ public class UserFrame {
         return mainMenu;
     }
 
+    public CollectionMenu getCollectionMenu() {
+        return collectionMenu;
+    }
+
     public void startCollection() {
+        collectionMenu.setSelectedDeckIndex(-1);
         showPanel(AllMenuSwitch.collection);
         ArrayList<Card> cards = new ArrayList<>();
         collectionMenu.showDeckList();

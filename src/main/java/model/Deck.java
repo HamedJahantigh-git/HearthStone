@@ -4,9 +4,10 @@ import model.card.Card;
 import model.hero.Hero;
 import model.hero.Mage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Deck {
+public class Deck implements Serializable {
     private String name;
     private ArrayList<Card> cards;
     private Hero hero;

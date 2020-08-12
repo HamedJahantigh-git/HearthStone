@@ -6,6 +6,7 @@ import model.Deck;
 import model.Player;
 import model.card.Card;
 import model.hero.Hero;
+import network.protocol.DeckProtocol;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,90 +17,6 @@ public class CollectionController {
 
     public CollectionController(Player player) {
         this.player = player;
-    }
-
-    public ArrayList<Card> getCollectionCardsShow(String type, int mana, String searchWord, boolean userCards, boolean closedCards) {
-        ArrayList<Card> cards = collectionCards(userCards, closedCards);
-        typeFilter(cards, type);
-        manaFilter(cards, mana);
-        wordFilter(cards, searchWord);
-        return cards;
-    }
-
-    private void manaFilter(ArrayList<Card> cards, int mana) {
-        if (mana != 0) {
-            for (int i = 0; i < cards.size(); i++) {
-                if (cards.get(i).getMana() != mana) {
-                    cards.remove(i);
-                    i--;
-                }
-            }
-        }
-    }
-
-    private void typeFilter(ArrayList<Card> cards, String type) {
-        for (int i = 0; i < cards.size(); i++) {
-            if (!cards.get(i).getCardClass().equals(type)) {
-                cards.remove(i);
-                i--;
-            }
-        }
-    }
-
-    private void wordFilter(ArrayList<Card> cards, String word) {
-        for (int i = 0; i < cards.size(); i++) {
-            if (!cards.get(i).getName().toLowerCase().contains(word.toLowerCase())) {
-                cards.remove(i);
-                i--;
-            }
-        }
-    }
-
-    private ArrayList<Card> collectionCards(boolean userCards, boolean closedCards) {
-        ArrayList<Card> cards = new ArrayList<>();
-        ArrayList<Card> allCards = FileManagement.getInstance().getAllCardsFromFile();
-        if (userCards)
-            addPlayerCards(cards);
-        if (closedCards) {
-            boolean isDiffer = true;
-            for (int i = 0; i < allCards.size(); i++) {
-                isDiffer = true;
-                for (int j = 0; j < player.getFreeDeck().getCards().size(); j++) {
-                    if (player.getFreeDeck().getCards().get(j).getName().equals(allCards.get(i).getName())) {
-                        isDiffer = false;
-                    }
-                }
-                if (isDiffer) {
-                    cards.add(allCards.get(i));
-                }
-            }
-        }
-        return cards;
-    }
-
-    private void cardSortByName(ArrayList<Card> cards) {
-        for (int i = 0; i < cards.size() - 1; i++)
-            for (int j = 0; j < cards.size() - i - 1; j++)
-                if (cards.get(j).getName().compareToIgnoreCase(cards.get(j + 1).getName()) > 0)
-                    Collections.swap(cards, j, j + 1);
-    }
-
-    private void addPlayerCards(ArrayList<Card> cards) {
-        cardSortByName(player.getFreeDeck().getCards());
-        int counter = 1;
-        for (int i = 0; i < player.getFreeDeck().getCards().size() - 1; i++) {
-            if (player.getFreeDeck().getCards().get(i).getName().equals(player.getFreeDeck().getCards().get(i + 1).getName())) {
-                counter++;
-            } else {
-                cards.add(player.getFreeDeck().getCards().get(i));
-                cards.get(cards.size() - 1).setNumber(counter);
-                counter = 1;
-            }
-        }
-        if (player.getFreeDeck().getCards().size() != 0) {
-            cards.add(player.getFreeDeck().getCards().get(player.getFreeDeck().getCards().size() - 1));
-            cards.get(cards.size() - 1).setNumber(counter);
-        }
     }
 
     public void createNewDeck(String deckName, String heroName) {
@@ -113,21 +30,20 @@ public class CollectionController {
         }
     }
 
-    public void setGameDeck (Deck deck) throws Exception {
-        if(deck.getCards().size()<ModelDefault.deckDefaults.minNumberCards)
-            throw new Exception(ExceptionsEnum.valueOf("minDeckCard").getMessage());
-        player.setGameDeck(deck);
+    public void setGameDeck (String deckName){
+        player.setGameDeck(deckBuildFromName(deckName));
     }
 
-    public void moveCardFromFreeToDeck(Deck deck, Card card) throws Exception {
-        if (deck == null)
-            throw new Exception(ExceptionsEnum.valueOf("unSelectedDeck").getMessage());
-        if (deck.getCards().size() >= ModelDefault.deckDefaults.maxNumberCards)
-            throw new Exception(ExceptionsEnum.valueOf("fullDeckCards").getMessage());
-        if (!(deck.getHero().getHeroName().equals(card.getCardClass()) || card.getCardClass().equals("Neutral")))
-            throw new Exception(ExceptionsEnum.valueOf("unMatchingCardAndDeck").getMessage());
-        if (countCardInDeck(deck, card) >= 2)
-            throw new Exception(ExceptionsEnum.valueOf("moreTowCardExist").getMessage());
+    public void moveCardFromFreeToDeck(String deckName, String cardName) throws Exception {
+        Deck deck = deckBuildFromName(deckName);
+        Card card = cardBuildFromName(cardName);
+
+//      if (deck.getCards().size() >= ModelDefault.deckDefaults.maxNumberCards)
+//            throw new Exception(ExceptionsEnum.valueOf("fullDeckCards").getMessage());
+//        if (!(deck.getHero().getHeroName().equals(card.getCardClass()) || card.getCardClass().equals("Neutral")))
+//            throw new Exception(ExceptionsEnum.valueOf("unMatchingCardAndDeck").getMessage());
+//        if (countCardInDeck(deck, card) >= 2)
+//            throw new Exception(ExceptionsEnum.valueOf("moreTowCardExist").getMessage());
         for (int i = 0; i < player.getFreeDeck().getCards().size(); i++) {
             if (card.getName().equals(player.getFreeDeck().getCards().get(i).getName())) {
                 deck.addCard(card);
@@ -138,7 +54,22 @@ public class CollectionController {
         }
     }
 
-    public void moveCardFromDeckToFree(Deck deck, Card card) {
+    private Card cardBuildFromName(String cardName) {
+        ArrayList<Card> allCard = new ArrayList<>();
+        for (Deck deck: player.getPlayerDecks()) {
+            allCard.addAll(deck.getCards());
+        }
+        allCard.addAll(player.getFreeDeck().getCards());
+        for (Card card:allCard) {
+            if(cardName.equals(card.getName()))
+                return card;
+        }
+        return null;
+    }
+
+    public void moveCardFromDeckToFree(String deckName, String cardName) {
+        Deck deck = deckBuildFromName(deckName);
+        Card card = cardBuildFromName(cardName);
         for (int i = 0; i < deck.getCards().size(); i++) {
             if (card.getName().equals(deck.getCards().get(i).getName())) {
                 player.getFreeDeck().getCards().add(card);
@@ -148,7 +79,16 @@ public class CollectionController {
         }
     }
 
-    public void deleteDeck(Deck deck) {
+    private Deck deckBuildFromName(String deckName){
+        for (Deck deck:player.getPlayerDecks()) {
+            if(deckName.equals(deck.getName()))
+                return deck;
+        }
+        return null;
+    }
+
+    public void deleteDeck(String deckName) {
+        Deck deck = deckBuildFromName(deckName);
         player.getFreeDeck().getCards().addAll(deck.getCards());
         deck.getCards().removeAll(deck.getCards());
         player.setGameDeck(player.getFreeDeck());
@@ -160,7 +100,8 @@ public class CollectionController {
         }
     }
 
-    public void editDeckCharacteristics(Deck deck, String newName, String newHeroName) throws Exception {
+    public void editDeckCharacteristics(String selectedDeckName, String newName, String newHeroName) throws Exception {
+        Deck deck = deckBuildFromName(selectedDeckName);
         if (checkDeckHeroCard(deck.getHero().getHeroName(), deck)&&!newHeroName.equals(deck.getHero().getHeroName()))
             throw new Exception(ExceptionsEnum.valueOf("unEditableDeck").getMessage());
         deck.setName(newName);
@@ -181,16 +122,6 @@ public class CollectionController {
             }
         }
         return result;
-    }
-
-    private int countCardInDeck(Deck deck, Card card) {
-        int count = 0;
-        for (int i = 0; i < deck.getCards().size(); i++) {
-            if (card.getName().equals(deck.getCards().get(i).getName())) {
-                count++;
-            }
-        }
-        return count;
     }
 
 }

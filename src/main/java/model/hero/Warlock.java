@@ -4,7 +4,9 @@ import defaults.ModelDefault;
 import enums.HeroType;
 import model.Player;
 
-public class Warlock extends Hero {
+import java.io.Serializable;
+
+public class Warlock extends Hero{
 
     private int heroPowerEffect;
     public Warlock() {

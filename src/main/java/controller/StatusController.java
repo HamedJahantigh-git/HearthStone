@@ -51,7 +51,6 @@ public class StatusController {
         if (deck.getCards().size() == 0) {
             return "Deck has'nt Eny Card";
         }
-        System.out.println();
         for (int i = 0; i < deck.getCards().size() - 1; i++) {
             for (int j = 0; j < deck.getCards().size() - i - 1; j++) {
                 if (deck.getCards().get(j).getNumberUsage() < deck.getCards().get(j + 1).getNumberUsage()) {

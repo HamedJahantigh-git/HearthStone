@@ -2,10 +2,7 @@ package network.client;
 
 
 import model.card.Card;
-import network.protocol.NetworkProtocol;
-import network.protocol.ProtocolType;
-import network.protocol.ShopParameter;
-import network.protocol.ShopProtocol;
+import network.protocol.*;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -57,6 +54,12 @@ public class Sender {
         return collectionMenuHandler;
     }
 
+    public void saveToLog(String event, String eventDescription){
+        networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(),ProtocolType.SAVE_TO_LOG);
+        networkProtocol.setLog(event,eventDescription);
+        send();
+    }
+
     public void exitGame() {
         networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(), ProtocolType.EXIT_GAME);
         send();
@@ -94,6 +97,12 @@ public class Sender {
             networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(), ProtocolType.BACK_TO_MAIN_MENU);
             send();
         }
+
+        public void goCollection() {
+            networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(),ProtocolType.COLLECTION);
+            networkProtocol.collection(CollectionParameter.GO_COLLECTION);
+            send();
+        }
     }
 
     public class ShopMenuHandler{
@@ -127,6 +136,52 @@ public class Sender {
 
     public class CollectionMenuHandler{
 
+        public void newDeck(String deckName, String heroName) {
+            networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(), ProtocolType.COLLECTION);
+            networkProtocol.collection(CollectionParameter.NEW_DECK);
+            networkProtocol.getParameter().put(ParameterTyp.DECK_NAME, deckName);
+            networkProtocol.getParameter().put(ParameterTyp.HERO_NAME, heroName);
+            send();
+        }
+
+        public void playerCardSelect(DeckProtocol selectedDeck, Card card) {
+            networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(), ProtocolType.COLLECTION);
+            networkProtocol.collection(CollectionParameter.CARD_TO_DECK);
+            networkProtocol.getParameter().put(ParameterTyp.SELECTED_DECK, selectedDeck.getName());
+            networkProtocol.getParameter().put(ParameterTyp.CARD_NAME, card.getName());
+            send();
+        }
+
+        public void deckCardSelect(DeckProtocol selectedDeck, Card card) {
+            networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(), ProtocolType.COLLECTION);
+            networkProtocol.collection(CollectionParameter.CARD_FROM_DECK);
+            networkProtocol.getParameter().put(ParameterTyp.SELECTED_DECK, selectedDeck.getName());
+            networkProtocol.getParameter().put(ParameterTyp.CARD_NAME, card.getName());
+            send();
+        }
+
+        public void selectDeckForGame(DeckProtocol selectedDeck) {
+            networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(), ProtocolType.COLLECTION);
+            networkProtocol.collection(CollectionParameter.SELECT_DECK_GAME);
+            networkProtocol.getParameter().put(ParameterTyp.SELECTED_DECK, selectedDeck.getName());
+            send();
+        }
+
+        public void deleteDeck(DeckProtocol selectedDeck) {
+            networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(), ProtocolType.COLLECTION);
+            networkProtocol.collection(CollectionParameter.DELETE_DECK);
+            networkProtocol.getParameter().put(ParameterTyp.SELECTED_DECK, selectedDeck.getName());
+            send();
+        }
+
+        public void editDeck(DeckProtocol selectedDeck, String deckName, String heroName) {
+            networkProtocol = new NetworkProtocol(clientNetwork.getAuthToken(), ProtocolType.COLLECTION);
+            networkProtocol.collection(CollectionParameter.EDIT_DECK);
+            networkProtocol.getParameter().put(ParameterTyp.SELECTED_DECK, selectedDeck.getName());
+            networkProtocol.getParameter().put(ParameterTyp.DECK_NAME, deckName);
+            networkProtocol.getParameter().put(ParameterTyp.HERO_NAME, heroName);
+            send();
+        }
     }
 
 

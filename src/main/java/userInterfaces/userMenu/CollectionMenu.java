@@ -3,8 +3,9 @@ package userInterfaces.userMenu;
 import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import enums.FontEnum;
-import model.Deck;
 import model.card.Card;
+import network.protocol.CollectionProtocol;
+import network.protocol.DeckProtocol;
 import userInterfaces.graphicsActions.CollectionMenuAction;
 import userInterfaces.myComponent.*;
 
@@ -19,7 +20,10 @@ public class CollectionMenu {
     private CollectionMenuAction action;
     private UserFrame userFrame;
 
-    private Deck selectedDeck;
+    private CollectionProtocol collectionProtocol;
+    private ArrayList<String> playerHeroesName;
+
+    private int selectedDeckIndex;
     private String currentHeroSelected;
     private int cardPageIndex, decksPageIndex, cardInDeckIndex;
 
@@ -28,10 +32,11 @@ public class CollectionMenu {
 
     public CollectionMenu(UserFrame userFrame) {
         this.userFrame = userFrame;
-        //action = new CollectionMenuAction(userFrame.getPlayerController(), this);
+        this.playerHeroesName = userFrame.getMyGraphics().getPlayerHeroesName();
+        action = new CollectionMenuAction(userFrame.getMyGraphics());
         heroesButton = new ArrayList<>();
         currentHeroSelected = null;
-        selectedDeck = null;
+        selectedDeckIndex = -1;
         initMainPanel();
         initDeckPanel();
         initCardPanel();
@@ -49,12 +54,15 @@ public class CollectionMenu {
         return action;
     }
 
-    public Deck getSelectedDeck() {
-        return selectedDeck;
+    public DeckProtocol getSelectedDeck() {
+        if(selectedDeckIndex == -1){
+            return null;
+        }
+        return collectionProtocol.getPlayerDecks().get(selectedDeckIndex);
     }
 
-    public void setSelectedDeck(Deck selectedDeck) {
-        this.selectedDeck = selectedDeck;
+    public void setSelectedDeckIndex(int selectedDeckIndex) {
+        this.selectedDeckIndex = selectedDeckIndex;
     }
 
     public String getCurrentHeroSelected() {
@@ -81,17 +89,17 @@ public class CollectionMenu {
                         GraphicsDefault.UserMenu.mainBounds.getHeight() / 14), Color.white, 30, 0);
         action.backToMainMenu(back);
         ComponentCreator.getInstance().setText("Search By Name: ", mainPanel,
-                new MyFont(FontEnum.LABEl.getName(),20), Color.black,
+                new MyFont(FontEnum.LABEl.getName(), 20), Color.black,
                 GraphicsDefault.Collection.searchSection(1));
         JTextField searchCardName = ComponentCreator.getInstance().setImportBox(mainPanel, 30, new Color(0, 136, 204),
                 GraphicsDefault.Collection.searchSection(2));
         ComponentCreator.getInstance().setText("Mana:", mainPanel,
-                new MyFont(FontEnum.LABEl.getName(),20), Color.black,
+                new MyFont(FontEnum.LABEl.getName(), 20), Color.black,
                 GraphicsDefault.Collection.searchSection(3));
         JComboBox<Integer> manaFilter = ComponentCreator.getInstance().setIntComboBox(mainPanel, 0, 15, 4,
                 GraphicsDefault.Collection.searchSection(4), 15);
         ComponentCreator.getInstance().setText("Type Cards:", mainPanel,
-                new MyFont(FontEnum.LABEl.getName(),20), Color.black,
+                new MyFont(FontEnum.LABEl.getName(), 20), Color.black,
                 GraphicsDefault.Collection.searchSection(5));
         JComboBox<String> userHaveFilter = ComponentCreator.getInstance().setStrComboBox(mainPanel,
                 new String[]{"All Cards", "User Cards", "Close Cards"}, 3, GraphicsDefault.Collection.searchSection(6), 15);
@@ -103,8 +111,8 @@ public class CollectionMenu {
                 GraphicsDefault.Collection.heroesButtonBounds(1)));
         heroesButton.get(0).moveListener();
         String name;
-        for (int i = 0; i < action.getPlayerController().getPlayer().getPlayerHeroes().size(); i++) {
-            name = action.getPlayerController().getPlayer().getPlayerHeroes().get(i).getHeroName();
+        for (int i = 0; i < playerHeroesName.size(); i++) {
+            name = playerHeroesName.get(i);
             heroesButton.add(new MyCardButton(name, mainPanel, FilesPath.graphicsPath.collectionPath + "/" +
                     name + "Collection1.png", GraphicsDefault.Collection.heroesButtonBounds(i + 2)));
             heroesButton.get(i + 1).moveListener();
@@ -131,7 +139,7 @@ public class CollectionMenu {
     private void ShowCardPanelContent(String type, ArrayList<Card> cards) {
         cardPanel.removeAll();
         ComponentCreator.getInstance().setText("\"" + type + "\"", cardPanel,
-                new MyFont(FontEnum.LABEl.getName(),40), Color.black,
+                new MyFont(FontEnum.LABEl.getName(), 40), Color.black,
                 GraphicsDefault.Collection.cardsSection(0, 0));
         JButton nextPage = ComponentCreator.getInstance().setButton("", cardPanel, "Right Arrow.png",
                 GraphicsDefault.Collection.cardsSection(0, 1), Color.white, 30, 3);
@@ -158,11 +166,11 @@ public class CollectionMenu {
             card.moveListener();
             if (cards.get(i).getNumber() == 0) {
                 ComponentCreator.getInstance().setText("Closed",
-                        cardPanel, new MyFont(FontEnum.LABEl.getName(),30), Color.red, GraphicsDefault.Collection.cardsSection(i, 4));
+                        cardPanel, new MyFont(FontEnum.LABEl.getName(), 30), Color.red, GraphicsDefault.Collection.cardsSection(i, 4));
                 action.closedCardsSelect(card, cards.get(i));
             } else {
                 ComponentCreator.getInstance().setText("Number: " + cards.get(i).getNumber(),
-                        cardPanel, new MyFont(FontEnum.LABEl.getName(),20), Color.black, GraphicsDefault.Collection.cardsSection(i, 4));
+                        cardPanel, new MyFont(FontEnum.LABEl.getName(), 20), Color.black, GraphicsDefault.Collection.cardsSection(i, 4));
                 action.playerCardSelect(card, cards.get(i));
             }
         }
@@ -171,12 +179,12 @@ public class CollectionMenu {
 
     public void showDeckList() {
         deckPanel.removeAll();
-        ArrayList<Deck> playerDecks = action.getPlayerController().getPlayer().getPlayerDecks();
+        ArrayList<DeckProtocol> playerDecks = collectionProtocol.getPlayerDecks();
         ComponentCreator.getInstance().setText("My Decks", deckPanel,
-                new MyFont(FontEnum.LABEl.getName(),35), Color.black,
+                new MyFont(FontEnum.LABEl.getName(), 35), Color.black,
                 GraphicsDefault.Collection.deckSection(1, 1));
-        ComponentCreator.getInstance().setText("Game Deck: " + action.getPlayerController().getPlayer().getGameDeck().getName()
-                , deckPanel, new MyFont(FontEnum.LABEl.getName(),20), Color.black,
+        ComponentCreator.getInstance().setText("Game Deck: " + collectionProtocol.getGameDeck().getName()
+                , deckPanel, new MyFont(FontEnum.LABEl.getName(), 20), Color.black,
                 GraphicsDefault.Collection.deckSection(0, 8));
         JButton newDeck = ComponentCreator.getInstance().setButton("New Deck", deckPanel, "buttons1.png",
                 GraphicsDefault.Collection.deckSection(1, 2), Color.white, 30, 0);
@@ -199,19 +207,19 @@ public class CollectionMenu {
             MyCardButton card = new MyCardButton(deckPanel, FilesPath.graphicsPath.collectionPath + "/"
                     + playerDecks.get(i).getHero().getHeroName() + " Deck.jpg", GraphicsDefault.Collection.deckSection(i - decksPageIndex, 6));
             ComponentCreator.getInstance().setText(playerDecks.get(i).getName(), deckPanel,
-                    new MyFont(FontEnum.LABEl.getName(),25), Color.blue,
+                    new MyFont(FontEnum.LABEl.getName(), 25), Color.blue,
                     GraphicsDefault.Collection.deckSection(i - decksPageIndex, 7));
             card.moveListener();
-            action.selectDeck(card, playerDecks.get(i));
+            action.selectDeck(card, i);
         }
         deckPanel.paint(deckPanel.getGraphics());
     }
 
-    public void showSelectedDeck(Deck deck, int cardInDeckIndex) {
+    public void showSelectedDeck(DeckProtocol deck, int cardInDeckIndex) {
         this.cardInDeckIndex = cardInDeckIndex;
         deckPanel.removeAll();
         ComponentCreator.getInstance().setText(deck.getName(), deckPanel,
-                new MyFont(FontEnum.LABEl.getName(),35), Color.black,
+                new MyFont(FontEnum.LABEl.getName(), 35), Color.black,
                 GraphicsDefault.Collection.deckSection(1, 1));
         new MyCardButton(deckPanel, FilesPath.graphicsPath.collectionPath + "/"
                 + deck.getHero().getHeroName() + " Deck.jpg", GraphicsDefault.Collection.deckSection(0, 6));
@@ -253,12 +261,15 @@ public class CollectionMenu {
     public void offEnabledMenu() {
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(false);
+            component.setVisible(false);
         }
         for (Component component : cardPanel.getComponents()) {
             component.setEnabled(false);
+            component.setVisible(false);
         }
         for (Component component : deckPanel.getComponents()) {
             component.setEnabled(false);
+            component.setVisible(false);
         }
     }
 
@@ -266,15 +277,23 @@ public class CollectionMenu {
         userFrame.getPane().remove(userFrame.getPane().getComponentsInLayer(19)[0]);
         for (Component component : mainPanel.getComponents()) {
             component.setEnabled(true);
+            component.setVisible(true);
         }
         for (Component component : cardPanel.getComponents()) {
             component.setEnabled(true);
+            component.setVisible(true);
         }
         for (Component component : deckPanel.getComponents()) {
             component.setEnabled(true);
+            component.setVisible(true);
         }
-        mainPanel.paint(mainPanel.getGraphics());
-        cardPanel.paint(cardPanel.getGraphics());
-        deckPanel.paint(deckPanel.getGraphics());
+    }
+
+    public void setCollectionProtocol(CollectionProtocol collectionProtocol) {
+        this.collectionProtocol = collectionProtocol;
+    }
+
+    public CollectionProtocol getCollectionProtocol() {
+        return collectionProtocol;
     }
 }

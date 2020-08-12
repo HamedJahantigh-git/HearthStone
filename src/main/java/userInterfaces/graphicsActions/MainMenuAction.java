@@ -4,6 +4,7 @@ import defaults.FilesPath;
 import defaults.GraphicsDefault;
 import enums.*;
 import logs.PlayerLogs;
+import network.protocol.CollectionProtocol;
 import network.protocol.ShopProtocol;
 import userInterfaces.MyGraphics;
 import userInterfaces.Sounds;
@@ -92,12 +93,15 @@ public class MainMenuAction extends MyAction {
         });
     }
 
-    public void goCollection(JButton button, UserFrame userFrame) {
+    public void goCollection(JButton button) {
         button.addActionListener(actionEvent -> {
-            PlayerLogs.addToLogBody(LogsEnum.valueOf("collection").getEvent()[0],
-                    LogsEnum.valueOf("collection").getEvent_description()[0], playerController.getPlayer());
-            userFrame.startCollection();
-        });
+            clientNetwork.getSender().getMainMenuHandler().goCollection();
+          });
+    }
+
+    public void goCollectionSuccessFul(CollectionProtocol collectionProtocol){
+        myGraphics.getUserFrame().getCollectionMenu().setCollectionProtocol(collectionProtocol);
+        myGraphics.getUserFrame().startCollection();
     }
 
     public void goSetting(JButton button, UserFrame userFrame) {
