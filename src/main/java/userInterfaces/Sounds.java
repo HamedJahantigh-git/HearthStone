@@ -33,7 +33,7 @@ public class Sounds {
 
     public void playLoop() {
         // todo
-        //audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        audioClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void playOne() {

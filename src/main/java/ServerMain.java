@@ -15,6 +15,7 @@ public class ServerMain {
     private ServerMain() {
         this.configLoader = new ConfigLoader(FilesPath.CONFIGURATION_FILE);
         this.serverNetwork = new ServerNetwork(configLoader);
+        configLoader.readIP();
     }
 
     public static ServerMain getInstance() {
